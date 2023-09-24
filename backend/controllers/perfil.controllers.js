@@ -24,4 +24,32 @@ export const getPerfil = async (req,res) => {
         return res.status(500).json({message: error.message});
     }
 };
+export const createPerfil = async (req, res) => {
+    try {
+        
+        const{nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol} = req.body;
+        const[result] = await pool.query(
+            "INSERT INTO perfil (nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol) values (?,?,?,?,?,?,?,?)",
+            [nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol]
+        );
+        /*console.log (result); */
+        res.json({
+            id: result.insertId,
+            nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol
+        })
+    } catch (error) {
+        return res.status(500).json({message: error.message});    
+    }
+};
 
+ export const updatePerfil = async (req,res) =>{
+    try {
+        const result =await pool.query ("UPDATE perfil SET ? WHERE id = ?",[
+            req.body,
+            req.params.id
+        ]);
+        res.json(result);
+    } catch (error) {
+        return res.status(500).json({message: error.message});
+    }
+ };
