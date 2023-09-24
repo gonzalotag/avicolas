@@ -53,3 +53,18 @@ export const createPerfil = async (req, res) => {
         return res.status(500).json({message: error.message});
     }
  };
+
+ export const deletePerfil = async (req,res) =>{
+    try {
+        const [result] = await pool.query("DELETE FROM perfil WHERE id = ?",[
+            req.params.id,
+        ]);
+        if (result.affectedRows === 0) {
+            return res.status(404).json ({ message : "tarea no encontrada" });
+        } else {
+            return res.sendStatus(204);
+        }
+    } catch (error) {
+        return res.status(500).json({message: error.message});
+    }
+ };
