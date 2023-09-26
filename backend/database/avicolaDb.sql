@@ -67,3 +67,17 @@ insert into registro_compra (total, id_perfil) values
 (50,     1),
 (100,    1),
 (150,    1);
+
+create table perfil_contrasenia (
+    id int auto_increment primary key,
+    contrasenia varchar(20),
+    id_perfil int,
+    foreign key (id_perfil) references perfil (id) on delete cascade on update cascade
+);
+
+insert into perfil_contrasenia(
+    id_perfil,
+    contrasenia
+)values (
+    '1','clave'),
+    ('2','pass');
