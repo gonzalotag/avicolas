@@ -75,9 +75,10 @@ create table perfil_contrasenia (
     foreign key (id_perfil) references perfil (id) on delete cascade on update cascade
 );
 
-insert into perfil_contrasenia(
-    id_perfil,
-    contrasenia
-)values (
-    '1','clave'),
-    ('2','pass');
+-- insert into perfil_contrasenia(
+--     id_perfil,
+--     contrasenia
+-- )values (
+--     '1','clave'),
+--     ('2','pass');
+

@@ -26,7 +26,6 @@ export const getPerfil = async (req,res) => {
 };
 export const createPerfil = async (req, res) => {
     try {
-        
         const{nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol} = req.body;
         const[result] = await pool.query(
             "INSERT INTO perfil (nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol) values (?,?,?,?,?,?,?,?)",
@@ -69,4 +68,21 @@ export const createPerfil = async (req, res) => {
     }
  };
 
+ export const getUserByParams = async (req,res) =>{
+    try {
+        const{nombre,contrasenia} = req.body;
+        const [result] = await pool.query("select * from perfil where nombre = ? and contrasenia = ? " ,
+        [
+            nombre,
+            contrasenia
+        ]);
+
+    // console.log(result);
+    res.json({
+        result
+    })
+    } catch (error) {
+        return res.status(500).json({message: error.message});
+    }
+ }
  
