@@ -1,0 +1,73 @@
+.loginPerfilContainer{
+    color: white;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.loginContainer{
+    height: 50%;
+    width: 30% ;
+      /* From https://css.glass */
+background: rgba(122, 122, 122, 0.17);
+border-radius: 5px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.973);
+backdrop-filter: blur(4.8px);
+-webkit-backdrop-filter: blur(4.8px);
+border: 1px solid rgba(255, 255, 255, 0.24);
+}
+.loginTitle{
+    display: flex;
+    justify-content: center;
+    height: 20%;
+    align-items: flex-end;
+    
+
+}
+.loginInputs{
+
+    display: flex;
+    height: 60%;
+    flex-wrap: wrap;
+    
+}
+.loginInput{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 5%;
+    padding-right: 5%;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-content: center;
+    
+    row-gap: 10%;
+}
+.loginInput input{
+    height: 15%;
+    font-size: large;
+    padding-left: 1%;
+    border-radius: 5px;
+
+
+}
+.loginButton{
+    display: flex;
+    height: 20%;
+    justify-content: center;
+
+}
+.loginButton button {
+    height: 50%;
+    width: 30%;
+    font-size:larger;
+    border: none;
+    border-radius: 5px;
+    background-color:#8cabffe1 ;
+
+}
+
+.loginButton button:hover{
+    background-color: #ff79ffeb;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.973);
+}
