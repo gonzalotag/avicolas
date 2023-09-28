@@ -5,8 +5,9 @@ import {
     createPerfil,
     updatePerfil,
     deletePerfil,
-    getUserByParams
+    getUserByParams,
 } from "../controllers/perfil.controllers.js";
+
 
 const router = Router();
 
