@@ -1,5 +1,5 @@
 .adminPageContainer{
-    height: 100vh;
+    height: 80%;
     width: 100%;
     color: white;
 }
@@ -8,7 +8,7 @@
 
 }
 .espacioDisponible{
-    height: 80%;
+    height: 100%;
     /* flex-direction: row; */
     display: flex;
 

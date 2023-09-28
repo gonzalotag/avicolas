@@ -4,6 +4,8 @@ import './App.css'
 import { getRolRequest } from './api/rol.api.js';
 import AdministradorPage from './pages/AdministradorPage';
 import NotFound from './pages/NotFound';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 function App() {
   const [rol, setRol] = useState('');
@@ -27,13 +29,22 @@ function App() {
   if (rol === "administrador"){
     setPage(<AdministradorPage/>);
  }
- }
  
+ }
+ const onLogout=()=>{
+  localStorage.removeItem('userInfo');
+  window.location.reload()
+ }
   return (
-    <div>
+    <div className='appContainer'>
+      {/* <Navbar/> */}
+      {/* <button onClick={()=>{onLogout()}}>
+        loginout
+      </button> */}
       {
         page      
       }
+      {/* <Footer/> */}
     </div>
   )
 }
