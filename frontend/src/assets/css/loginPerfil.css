@@ -38,7 +38,7 @@ border: 1px solid rgba(255, 255, 255, 0.24);
     padding-left: 5%;
     padding-right: 5%;
     justify-content: center;
-    flex-wrap: wrap;
+    flex-direction: column;
     align-content: center;
     
     row-gap: 10%;

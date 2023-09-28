@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { login } from "../api/perfil.api";
 import "../assets/css/loginPerfil.css"
 
@@ -7,9 +7,13 @@ function LoginPerfil (props){
     const [contrasenia, setContrasenia] = useState("");
     const {setIsAuth} = props;
 
+    // useEffect(()=>{
+    //     cleanState()
+    // }),[]
+
     const cleanState = () =>{
         setNombre('');
-        setContrasenia('')
+        setContrasenia('');
     }
 
     const onLogin = async() => {
@@ -33,8 +37,10 @@ function LoginPerfil (props){
         <h1>
             login
         </h1>
+       
         </div>
-        <div className="loginInputs">
+        <div className="loginInputs" >
+       
             <div className="loginInput">
             {/* <p>nombre:</p> */}
         <input 
