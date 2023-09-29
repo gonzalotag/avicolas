@@ -1,8 +1,18 @@
 import "../assets/css/navBar.css"
 
-function Navbar(){
+function Navbar(props){
+    const{onLogout, isAuth}= props;
     return <div className="navbar">
-        soy Navbar
+        <div className="icono">
+            granja avicola
+        </div>
+        <div className="espacioDeNavbar">
+            espacio libre
+        </div>
+        <div className="buttonLogout" >
+            {isAuth ? <button onClick={()=>{onLogout()}}>cerrar sesion</button>: <></>}
+        </div>
+        
     </div>
 }
 

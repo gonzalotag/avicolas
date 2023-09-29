@@ -1,19 +1,17 @@
 .adminPageContainer{
-    height: 80%;
+    height: 80vh;
+    
+}
+.espacioDisponible{
     width: 100%;
-    color: white;
+    display: flex;
+    height: 100%;
 }
 .espacioDeTrabajo{
     width: 80%;
-
-}
-.espacioDisponible{
     height: 100%;
-    /* flex-direction: row; */
-    display: flex;
-
 }
-.espacioMenuAdmin{
+.barraMenuAdmin{
     height: 100%;
     width: 20%;
 }

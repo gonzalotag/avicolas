@@ -19,18 +19,23 @@ function Controller (){
     const userInfo = localStorage.getItem ('userInfo');
     if (userInfo){
       setIsAuth(true);
+    
     }   
 
   }), []
-
+  const onLogout=()=>{
+    localStorage.removeItem('userInfo');
+    window.location.reload()
+   }
   return (
     <div className='mainContainer'>
+      <Navbar onLogout={onLogout} isAuth={isAuth}/>
+
       <div className='mainPage'>
-      <Navbar/>
+        
       {isAuth ? <App/> : <LoginPerfil setIsAuth={setIsAuth}/>} 
-      <Footer/>
       </div>
-      
+      <Footer/>
     </div>
 
   )
