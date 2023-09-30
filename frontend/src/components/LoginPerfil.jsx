@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import { login } from "../api/perfil.api";
 import "../assets/css/loginPerfil.css"
+import { useNavigate } from "react-router-dom";
+import { getRolRequest } from "../api/rol.api";
+
 
 function LoginPerfil (props){
     const [nombre, setNombre] = useState("");
     const [contrasenia, setContrasenia] = useState("");
     const {setIsAuth} = props;
+    const navigate = useNavigate();
 
     // useEffect(()=>{
     //     cleanState()
@@ -16,15 +20,24 @@ function LoginPerfil (props){
         setContrasenia('');
     }
 
+    async function infoRol (id_rol) {
+        return await getRolRequest(id_rol);
+    }
+
     const onLogin = async() => {
         console.log(nombre);
         console.log(contrasenia);
         const userInfo = (await login(nombre,contrasenia)).data.result[0];
+
         // console.log(userInfo);
         if (userInfo) {
             setIsAuth(true);
             localStorage.setItem('userInfo', JSON.stringify(userInfo)) 
-            // console.log("funciona");
+            // const rol = infoRol(userInfo.id_rol);
+            const rol = await infoRol(userInfo.id_rol)
+                console.log(rol.data.tipo)
+                if (rol.data.tipo === "administrador") navigate('/admin')
+            
         } else {
             alert("usuario o contrasenia incorrectos");
             cleanState();

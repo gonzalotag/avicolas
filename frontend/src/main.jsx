@@ -5,14 +5,20 @@ import './index.css'
 import LoginPerfil from './components/LoginPerfil.jsx'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
+import {BrowserRouter} from 'react-router-dom'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Controller/>
+    {/* <Controller/> */}
+    <BrowserRouter>
+    <div className='mainContainer'>
+      <App/>
+      </div>
+    </BrowserRouter>
   </React.StrictMode>,
 )
 
-function Controller (){
+{/* function Controller (){
   const [isAuth, setIsAuth] = useState (false);
 
   useEffect(() => {
@@ -39,4 +45,4 @@ function Controller (){
     </div>
 
   )
-}
+} */}
