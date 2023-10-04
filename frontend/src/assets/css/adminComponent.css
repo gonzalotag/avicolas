@@ -1,3 +1,14 @@
 .espacioAdmin{
     height: 100%;
+    width: 100%;
+    display: flex;
+
+}
+.espacioMenuAdmin{
+    height: 100%;
+    width: 20%;
+}
+.espacioTrabajoAdmin{
+    height: 100%;
+    width: 80%;
 }

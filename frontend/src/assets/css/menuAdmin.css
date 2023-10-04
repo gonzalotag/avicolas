@@ -1,4 +1,48 @@
 .menuAdminContainer{
     height: 100%;
     width: 100%;
+    color: white;
+    
+}
+.userContainer{
+    height: 10%;
+    display: flex;
+}
+.buttonBox{
+    height: 90%;
+}
+.iconoAdmin{
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.nombreAdmin{
+    width:80% ;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+}
+.iconoUser{
+    height: 80%;
+    width: 100%;
+}
+
+.buttonAdminContainer :hover{
+    background-color:#d5f365;
+    color: black;
+    
+    
+}
+.buttonAdminContainer{
+    
+    height: 10%;
+    border-radius: 10px;
+    /* padding:2.5%; */
+    /* margin-top: 2.5%;
+    margin-left: 2.5%;
+    margin-right: 2.5%; */
+    padding-top: 2.5%;
+    padding-left: 2.5%;
+    padding-right: 2.5%;
 }

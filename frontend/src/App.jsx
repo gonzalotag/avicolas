@@ -25,7 +25,7 @@ function App() {
   return ( <>
   <Navbar onLogout={onLogout} isAuth={isAuth}/>
   <div className='mainPage'>
-  <Routes> 
+  <Routes>
     <Route path='/' element = {<HomeComponent/>}/>
     <Route path='/login' element = {<LoginPerfil setIsAuth= {setIsAuth}/>}/>
     <Route path='/admin' element ={<GuardiaComponent isAuth={isAuth} setIsAuth={setIsAuth} Component={<AdminComponent/>}/> }/>
@@ -35,6 +35,7 @@ function App() {
   </>
   );
 
+  
 //   const [rol, setRol] = useState('');
 //   useEffect(() =>{
 //     const userInfo = localStorage.getItem("userInfo");

@@ -1,0 +1,35 @@
+.buttonContainer{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background-color:hsl(150, 100%, 26%);
+    /* border-radius: 10px;
+    margin-top: 2.5%;
+    margin-left: 2.5%;
+    margin-right: 2.5%; */
+    border-radius: inherit;
+    
+
+}
+.iconoButton{
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: inherit;
+    
+}
+.nombreButton{
+    width: 60%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.chevron{
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: inherit;
+}
