@@ -1,4 +1,5 @@
 import "../assets/css/AdminComponent.css"
+import ContenidoAdmin from "./ContenidoAdmin";
 import MenuAdmin from "./MenuAdmin";
 
 function AdminComponent(){
@@ -8,10 +9,9 @@ function AdminComponent(){
             <MenuAdmin/>
         </div>
         <div className="espacioTrabajoAdmin">
-            espacio de trabajo
+            <ContenidoAdmin/>
         </div>
         
     </div>
 }
-
 export default AdminComponent;

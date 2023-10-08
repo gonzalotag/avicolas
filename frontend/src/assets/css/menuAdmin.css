@@ -2,6 +2,16 @@
     height: 100%;
     width: 100%;
     color: white;
+    /* From https://css
+    .glass */
+background: rgba(255, 255, 255, 0.46);
+border-radius: 10px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(7.7px);
+-webkit-backdrop-filter: blur(7.7px);
+border: 1px solid rgba(255, 255, 255, 0.767);
+
+
     
 }
 .userContainer{
@@ -10,6 +20,9 @@
 }
 .buttonBox{
     height: 90%;
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 .iconoAdmin{
     width: 20%;
@@ -27,22 +40,8 @@
     height: 80%;
     width: 100%;
 }
-
-.buttonAdminContainer :hover{
-    background-color:#d5f365;
+.buttonTarea :hover{
+    background-color: #d5f365;
     color: black;
-    
-    
 }
-.buttonAdminContainer{
-    
-    height: 10%;
-    border-radius: 10px;
-    /* padding:2.5%; */
-    /* margin-top: 2.5%;
-    margin-left: 2.5%;
-    margin-right: 2.5%; */
-    padding-top: 2.5%;
-    padding-left: 2.5%;
-    padding-right: 2.5%;
-}
+
