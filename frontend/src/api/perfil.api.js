@@ -6,6 +6,19 @@ async function login (nombre,contrasenia) {
     return result;
 };
 
+
+
+async function getPerfiles (){
+    const result = await axios.get("http://localhost:4000/perfil")
+    return result;
+}
+async function getPerfilesByRol (id_rol){
+    const body = {id_rol: id_rol}
+    const result = await axios.get("http://localhost:4000/perfil", body)
+    return result;
+}
 export{
-    login
+    login,
+    getPerfiles,
+    getPerfilesByRol
 }
