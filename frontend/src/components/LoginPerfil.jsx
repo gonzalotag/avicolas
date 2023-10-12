@@ -28,7 +28,6 @@ function LoginPerfil (props){
         console.log(nombre);
         console.log(contrasenia);
         const userInfo = (await login(nombre,contrasenia)).data.result[0];
-
         // console.log(userInfo);
         if (userInfo) {
             setIsAuth(true);
@@ -37,7 +36,6 @@ function LoginPerfil (props){
             const rol = await infoRol(userInfo.id_rol)
                 console.log(rol.data.tipo)
                 if (rol.data.tipo === "administrador") navigate('/admin')
-            
         } else {
             alert("usuario o contrasenia incorrectos");
             cleanState();

@@ -8,12 +8,12 @@ import TablaPersonal from "./TablaPersonal";
 
 function MenuAdmin (props){
     
-    const{setEspacioDeTrabajo}= props;
+    const{setEspacioDeTrabajo, perfiles, getPerfilesByRol, getRolesByName}= props;
 
-    function changeMostrarTablaState (){
-        setMostrarTabla(!mostrarTabla)
-        console.log(mostrarTabla);
-    }
+    // function changeMostrarTablaState (){
+    //     setMostrarTabla(!mostrarTabla)
+    //     console.log(mostrarTabla);
+    // }
     
     return <div className="menuAdminContainer">
         <div className="userContainer">
@@ -26,7 +26,7 @@ function MenuAdmin (props){
         <div className="buttonBox">
             
             <div className="buttonTarea"><ButtonComponent nombreButton={"almacen"} iconoButton={<FontAwesomeIcon icon={faWarehouse}/>} /></div>
-            <div onClick={()=>{setEspacioDeTrabajo(<TablaPersonal/>)}} className="buttonTarea"> <ButtonComponent nombreButton={"personal"}iconoButton={< FontAwesomeIcon icon={faPerson}/>}/> </div>
+            <div onClick={()=>{setEspacioDeTrabajo(<TablaPersonal perfiles={perfiles} getPerfilesByRol={getPerfilesByRol} getRolesByName={getRolesByName}/>)}} className="buttonTarea"> <ButtonComponent nombreButton={"personal"}iconoButton={< FontAwesomeIcon icon={faPerson}/>}/> </div>
             
         </div>
     </div>

@@ -14,3 +14,12 @@ export const getRol = async (req,res) => {
     }
 }
 
+export const getAllRoles = async(req,res) =>{
+    try {
+        const [result] = await pool.query("select * from rol");
+        res.json(result)
+        console.log(result)
+    } catch (error) {
+        return res.status(500).json({message: error.message})
+    }
+};
