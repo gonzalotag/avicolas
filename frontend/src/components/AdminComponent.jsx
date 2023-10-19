@@ -5,6 +5,7 @@ import MenuAdmin from "./MenuAdmin";
 import { getPerfiles, getPerfilesByRol } from "../api/perfil.api";
 import {getRolRequest,getAllRoles} from "../api/rol.api";
 
+
 function AdminComponent(){
     const [perfiles, setPerfiles] = useState([]);
     const [roles, setRoles] = useState([]);
@@ -12,7 +13,9 @@ function AdminComponent(){
         getPerfilesTotal(),
         getRolesByName()
     },[])
-
+//las funciones asincronas siempre van de la mano con un await esperando
+//respuesta desde la parte externa que este afuera del frontend puede ser una BD o hasta 
+//el mismo backend todo lo que es un sistema externo
     async function getPerfilesTotal(){
         setPerfiles(await getPerfiles())
         console.log( await getPerfiles());
@@ -24,11 +27,13 @@ function AdminComponent(){
     }
     const [espacioDeTrabajo, setEspacioDeTrabajo] = useState(<ContenidoAdmin/>)
     
-    //borrar los gets q no se estan utilizando y revisar de nuevo las funcionalidades 
+//     constructor ();{super();this.state={ nombre: "Reaccionar", showHideDemo1:false, 
+// showHideDemo2:false}}
     //revisar context
     return <div className="espacioAdmin">
         <div className="espacioMenuAdmin">
-            <MenuAdmin setEspacioDeTrabajo={setEspacioDeTrabajo} perfiles={perfiles} getPerfilesByRol={getPerfilesByRol} roles={roles} getRolesByName={getRolesByName} />
+            <MenuAdmin setEspacioDeTrabajo={setEspacioDeTrabajo} perfiles={perfiles} getPerfilesByRol={getPerfilesByRol} 
+                roles={roles} getRolesByName={getRolesByName} />
         </div>
         <div className="espacioTrabajoAdmin">
             {espacioDeTrabajo}
@@ -37,10 +42,3 @@ function AdminComponent(){
 }
 export default AdminComponent;
 
-// function handleTablaPersonal (){
-    //     return
-    //     {mostrarTabla ? <TablaPersonal/> : null}
-    // }
-    // function handleEspacioDeTrabajoAdmin(){
-    //     return
-    // }

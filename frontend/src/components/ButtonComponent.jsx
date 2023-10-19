@@ -5,8 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function ButtonComponent(props){
     const {nombreButton, iconoButton, isSelected} = props
-
-
     return <div className="buttonContainer" >
             {iconoButton}
             <p>{nombreButton}</p>
@@ -15,3 +13,4 @@ function ButtonComponent(props){
 }
 
 export default ButtonComponent;
+

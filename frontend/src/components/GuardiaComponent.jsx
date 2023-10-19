@@ -6,6 +6,7 @@ function GuardiaComponent (props){
     const [Permitido, setPermitido] = useState(<LoginPerfil setIsAuth ={setIsAuth}/> );
     useEffect (()=>{
         if(isAuth === true) setPermitido(Component)
+        //window.location.reload()
     }),[]
     return (Permitido);
 }

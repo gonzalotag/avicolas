@@ -6,15 +6,12 @@ import { useState } from "react";
 import TablaPersonal from "./TablaPersonal";
 
 
+
+
 function MenuAdmin (props){
     
     const{setEspacioDeTrabajo, perfiles, getPerfilesByRol, getRolesByName}= props;
-
-    // function changeMostrarTablaState (){
-    //     setMostrarTabla(!mostrarTabla)
-    //     console.log(mostrarTabla);
-    // }
-    
+   
     return <div className="menuAdminContainer">
         <div className="userContainer">
             <div className="iconoAdmin"><FontAwesomeIcon icon={faCircleUser} className="iconoUser"/> 
@@ -24,11 +21,12 @@ function MenuAdmin (props){
             </div>
         </div>
         <div className="buttonBox">
-            
             <div className="buttonTarea"><ButtonComponent nombreButton={"almacen"} iconoButton={<FontAwesomeIcon icon={faWarehouse}/>} /></div>
-            <div onClick={()=>{setEspacioDeTrabajo(<TablaPersonal perfiles={perfiles} getPerfilesByRol={getPerfilesByRol} getRolesByName={getRolesByName}/>)}} className="buttonTarea"> <ButtonComponent nombreButton={"personal"}iconoButton={< FontAwesomeIcon icon={faPerson}/>}/> </div>
-            
+            <div onClick={()=>{setEspacioDeTrabajo(<TablaPersonal perfiles={perfiles} getPerfilesByRol={getPerfilesByRol} getRolesByName={getRolesByName} />)}} className="buttonTarea"> 
+            <ButtonComponent nombreButton={"personal"}iconoButton={< FontAwesomeIcon icon={faPerson}/>}/> 
+            </div>
         </div>
+        
     </div>
 }
 

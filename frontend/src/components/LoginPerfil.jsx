@@ -19,28 +19,25 @@ function LoginPerfil (props){
         setNombre('');
         setContrasenia('');
     }
-
     async function infoRol (id_rol) {
         return await getRolRequest(id_rol);
     }
-
     const onLogin = async() => {
         console.log(nombre);
         console.log(contrasenia);
         const userInfo = (await login(nombre,contrasenia)).data.result[0];
-        // console.log(userInfo);
+                
         if (userInfo) {
             setIsAuth(true);
             localStorage.setItem('userInfo', JSON.stringify(userInfo)) 
-            // const rol = infoRol(userInfo.id_rol);
             const rol = await infoRol(userInfo.id_rol)
                 console.log(rol.data.tipo)
-                if (rol.data.tipo === "administrador") navigate('/admin')
+                //window.location.reload()
+                if (rol.data.tipo === "administrador") navigate('/admin')       
         } else {
             alert("usuario o contrasenia incorrectos");
             cleanState();
-            // console.log("no funciona");
-        }
+        }   
     }
     return <div className="loginPerfilContainer">
         <div className="loginContainer">
@@ -51,24 +48,20 @@ function LoginPerfil (props){
        
         </div>
         <div className="loginInputs" >
-       
             <div className="loginInput">
-            {/* <p>nombre:</p> */}
-        <input 
-        type="text"
-        value={nombre}
-        placeholder="Nombre"
-        onChange={(e) =>setNombre(e.target.value)}
-        
-        />
-        <input
+            <input 
+                type="text"
+                value={nombre}
+                placeholder="Nombre"
+                onChange={(e) =>setNombre(e.target.value)}
+            />
+            <input
             type= "password"
             value={contrasenia}
             placeholder="Password"
             onChange={(e)=>setContrasenia(e.target.value)}
-        />
+            />
             </div>
-        
         </div>
         <div className="loginButton">
         <button onClick={onLogin}>

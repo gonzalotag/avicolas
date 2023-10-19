@@ -4,13 +4,9 @@ import { useEffect, useState } from "react";
 
 function Navbar(props){
     const{onLogout, isAuth}= props;
-    const navigate = useNavigate();
-    const [estado, setEstado] = useState(isAuth);
-    // const [boton, setBoton] = useState(<button onClick={()=>{navigate('/login')}}> iniciar sesion</button>) 
+
     useEffect (()=>{
-        // if(isAuth === true ){
-        //     setBoton(<button onClick={()=>{onLogout()}}>cerrar sesion</button>)
-        // }
+    
     }),[isAuth]
     return <div className="navbar">
         <div className="icono">
@@ -20,13 +16,10 @@ function Navbar(props){
             espacio libre
         </div>
         <div className="buttonLogout" >
-            {isAuth ? <button onClick={()=>{onLogout()}}>cerrar sesion</button>: <button onClick={()=>{navigate('/login')}}> iniciar sesion</button>}
-            {/* {
-                boton
-            } */}
+            {isAuth ? <button onClick={()=>{onLogout()}}>cerrar sesion</button>: null} 
+            {/* reemplazar por "null" cuando requiera cambio de pagina <button onClick={()=>{navigate('/login')}}> iniciar sesion</button> */}
         </div>
         
     </div>
 }
-
 export default Navbar;
