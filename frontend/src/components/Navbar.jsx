@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import "../assets/css/navBar.css"
 import { useEffect, useState } from "react";
 
-function Navbar(props){
+function NavBar(props){
     const{onLogout, isAuth}= props;
 
     useEffect (()=>{
@@ -22,4 +22,4 @@ function Navbar(props){
         
     </div>
 }
-export default Navbar;
+export default NavBar;

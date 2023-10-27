@@ -11,10 +11,7 @@ function LoginPerfil (props){
     const {setIsAuth} = props;
     const navigate = useNavigate();
 
-    // useEffect(()=>{
-    //     cleanState()
-    // }),[]
-
+    
     const cleanState = () =>{
         setNombre('');
         setContrasenia('');
@@ -26,13 +23,13 @@ function LoginPerfil (props){
         console.log(nombre);
         console.log(contrasenia);
         const userInfo = (await login(nombre,contrasenia)).data.result[0];
-                
         if (userInfo) {
             setIsAuth(true);
             localStorage.setItem('userInfo', JSON.stringify(userInfo)) 
             const rol = await infoRol(userInfo.id_rol)
                 console.log(rol.data.tipo)
-                //window.location.reload()
+                //recarga la pagina automaticamente no usar si no es necesario
+                // window.location.reload() 
                 if (rol.data.tipo === "administrador") navigate('/admin')       
         } else {
             alert("usuario o contrasenia incorrectos");
@@ -49,12 +46,15 @@ function LoginPerfil (props){
         </div>
         <div className="loginInputs" >
             <div className="loginInput">
+                <label htmlFor="nombre">Nombre:</label>
             <input 
                 type="text"
                 value={nombre}
                 placeholder="Nombre"
                 onChange={(e) =>setNombre(e.target.value)}
             />
+            <br />
+            <label htmlFor="contraseña">Contraseña:</label>
             <input
             type= "password"
             value={contrasenia}

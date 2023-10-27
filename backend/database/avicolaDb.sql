@@ -15,7 +15,7 @@ create table perfil (
     foreign key (id_rol) references rol (id) on delete cascade on update cascade
 );
 insert into perfil (nombre, apellido_paterno, apellido_materno, direccion, telefono, email, estado, id_rol )values 
-('Juan', 'Perez','Lopez', 'av.mirador', 7894632,'asd@.gmail.com', true,2);
+('Juan', 'Perez','Lopez', 'av.mirador', 7894632,'asd@.gmail.com', true,2,'amosis');
 
 create table rol (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -74,6 +74,12 @@ create table perfil_contrasenia (
     id_perfil int,
     foreign key (id_perfil) references perfil (id) on delete cascade on update cascade
 );
-
-
+insert into perfil_contrasenia(contrasenia, id_perfil) values
+('clase', 3);
+-- id_perfil compara si es igual al id de perfil si son iguales asigna la contrasenia
+-- el update indica a q id de la tabla perfil se asigna la contrasenia no todos los 
+-- empleados pueden ser administrador
+UPDATE perfil
+SET contrasenia = 'amosis'
+WHERE id = 1;
 

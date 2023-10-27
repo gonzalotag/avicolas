@@ -27,13 +27,13 @@ function AdminComponent(){
     }
     const [espacioDeTrabajo, setEspacioDeTrabajo] = useState(<ContenidoAdmin/>)
     
-//     constructor ();{super();this.state={ nombre: "Reaccionar", showHideDemo1:false, 
-// showHideDemo2:false}}
     //revisar context
     return <div className="espacioAdmin">
         <div className="espacioMenuAdmin">
-            <MenuAdmin setEspacioDeTrabajo={setEspacioDeTrabajo} perfiles={perfiles} getPerfilesByRol={getPerfilesByRol} 
-                roles={roles} getRolesByName={getRolesByName} />
+            <MenuAdmin setEspacioDeTrabajo={setEspacioDeTrabajo} 
+            perfiles={perfiles}
+            getPerfilesByRol={getPerfilesByRol} 
+            roles={roles} getRolesByName={getRolesByName} />
         </div>
         <div className="espacioTrabajoAdmin">
             {espacioDeTrabajo}

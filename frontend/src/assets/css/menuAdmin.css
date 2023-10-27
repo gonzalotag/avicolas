@@ -10,10 +10,6 @@ box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 backdrop-filter: blur(7.7px);
 -webkit-backdrop-filter: blur(7.7px);
 border: 1px solid rgba(255, 255, 255, 0.767);
-
-
-
-    
 }
 .userContainer{
     height: 10%;
@@ -42,9 +38,10 @@ border: 1px solid rgba(255, 255, 255, 0.767);
 .iconoUser{
     height: 80%;
     width: 100%;
+    padding-left: 0%;
 }
+
 .buttonTarea :hover{
     background-color: #d5f365;
     color: black;
 }
-

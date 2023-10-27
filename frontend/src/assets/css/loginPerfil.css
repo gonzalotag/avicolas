@@ -25,7 +25,7 @@ border: 1px solid rgba(255, 255, 255, 0.24);
 
 }
 .loginInputs{
-
+    
     display: flex;
     height: 60%;
     flex-wrap: wrap;
@@ -40,7 +40,6 @@ border: 1px solid rgba(255, 255, 255, 0.24);
     justify-content: center;
     flex-direction: column;
     align-content: center;
-    
     row-gap: 10%;
 }
 .loginInput input{
@@ -48,8 +47,13 @@ border: 1px solid rgba(255, 255, 255, 0.24);
     font-size: large;
     padding-left: 1%;
     border-radius: 5px;
-
-
+}
+.loginInput label{
+    text-align: left;
+    padding-top: 0%;
+    padding-bottom: 0%;
+    margin-top: -50px;
+    margin-bottom: -15px;
 }
 .loginButton{
     display: flex;

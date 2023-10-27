@@ -4,15 +4,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
     background-color:#008542;
     border-radius: 10px;
     margin-bottom: 5px;
     
 }
-/* .buttonContainer :hover {
-    background: #d5f365;
-    color: black;
-    
-} */
