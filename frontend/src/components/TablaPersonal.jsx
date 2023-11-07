@@ -2,12 +2,8 @@ import { useEffect, useState, useRef } from "react";
 import "../assets/css/tablaPersonal.css"
 import { getRolRequest, getAllRoles } from "../api/rol.api";
 import {deletePersona, getPerfiles } from "../api/perfil.api";
-import RegistroPersonal from "./RegistroPersonal";
-import HomeComponent from "./HomeComponent"
 import { useNavigate } from "react-router-dom";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Almacen from "./Almacen";
-
 
 
 function TablaPersonal(props){
@@ -21,26 +17,6 @@ function TablaPersonal(props){
 //estado para mostrar ocultar    
     const [show,setShow ]= useState(true);
     const navigate = useNavigate();
-    const [tablaPers,setTablaPers]= useState(true);
-
-    const [valueForm, setValueForm]= useState({
-        name,
-        // lastname,
-        // email,
-        // password,
-        // rol: ''
-    });
-//agarra la data q se esta ingresando en los inputs para poder enviar
-    const handleInputChange =(event) =>{
-        const {name , valueForm}= event.target;
-        setValueForm({...valueForm,[name]: valueForm});
-    }
-//pone en espera los datos q se pusieron en el formulario
-    const handleForm =(event)=>{
-        event.preventDefault(valueForm)
-        console.log(valueForm);
-    }
-    
         
 //las funciones obtener para obtener(perfilesByRol,Roles) cada vez q mostremos algo en pantalla (renderiza)
     useEffect(()=>{
@@ -64,6 +40,7 @@ function TablaPersonal(props){
         setSelectRol(e.target.value);
     }
 
+//filtra rol comparando en las tablas rol y perfil 
      const filterRol = perfilesByRol.filter((perfil)=>
     {
 //perfil.id_rol === selectRol compara la id_rol con (selectRol) transformado a tipo de dato int
@@ -75,15 +52,24 @@ function TablaPersonal(props){
             return true;
         }
     });
+
+
     // funcion que elimina una fila de la tabla perfil en la base de datos
-    const DeleteRow = async (index) => {
+    const deleteRow = async (id) => {
         try {
-            const resp = await deletePersona(index);
+            const resp = await deletePersona(id);
             alert('Fila eliminada');
-            window.location.reload();
+            // window.location.reload();
+            console.log(resp)
             } catch (error) {
                 console.error(error);
             }
+    };
+    const [dataPer, setDataPer]=useState ([]);
+    const handleEliminar = (id) =>{
+      const newData = dataPer.filter((data)=> data.id !==id);
+      setDataPer(newData);
+      
     };
     // const {espacioReg ,setEspacioReg} =useState(<RegistroPersonal/>);
 
@@ -93,48 +79,23 @@ function TablaPersonal(props){
             <div  className="nuevoPersonal" >
             <div className="buttonNuevoPersonal">
             {/* al hacer clic le dice cuando mostrar o no */}
-            <button onClick={()=>{setShow(!show)}}>
-                {!show ? "Regresar":"Nuevo registro"}
-            </button>
+            <Link to="/registros">
+                <button>Nuevo Registro</button>
+            </Link>
             </div>
-            {!show && <div className="nuevoRegistro">
-                Registro de Personal
-                <form className="registroForm" action="" onSubmit= {handleForm}>
-                    <label htmlFor="">Nombre:</label>
-                    <input 
-                    type="text" 
-                    value={valueForm.name}
-                    name= "name"
-                    onChange={handleInputChange}
-                    />
-                    
-                    <br/>
-                    
-                    <label htmlFor="rol">Rol:</label>
-                    <select name="" id="">
-                        <option value=""></option>
-                        <option value="{data.id}" >Proveedor</option>
-                        <option value="{data.id}" >Cliente</option>
-                        <option value="data.tipo">Empleado</option>
-                        <option value="data.tipo">Adminstrador</option>
-                    </select>
-                    <br />
-                    <button type="submit">Guardar</button>
-                </form>
-            </div> }
             </div>
             <div className={show ? selectRol : null}>
             </div> 
             {/* para recolectar solo un dato para cambiar entre roles  */}
             <div className="tablaSelectRol">
             <div className="selectRol">
+                Seleccione Rol:
             <select  id= "selectRoles" name="selectRoles" onChange={handleSelect}>
                 <option></option>
                 {tipoRol.map((data,index)=>{
                     return( 
                     <option value={data.id} key={index}>{data.tipo}</option>
                 )})}
-                                
                 </select>
             </div>
             <div className="tabla">
@@ -163,13 +124,12 @@ function TablaPersonal(props){
                         <td>
                         {/* <Link to= "/editar">editar</Link> */}
                         {/* <button onClick={() => deleteRegistros()}>Eliminar</button> */}
-                        
-                        <Link to="/registros">
+                        {/* el button al interior de link nos redirecciona a registros  */}
+                        <Link to="/editar" onClick={(e)=>{e.preventDefault(); navigate('/editar')}}>
                             <button>pasar a editar</button>
                         </Link>
-                        
-                        <script></script>
-                        <button onClick={() => DeleteRow(index)}>Eliminar</button>
+                        {/* elimina una fila de la tabla de personal (buscar por q elimina solo al seleccionar rol y no sin seleccionar) */}
+                        <button onClick={() => handleEliminar(data.id)}>Eliminar</button>
                         </td>
                         
                     </tr>)
