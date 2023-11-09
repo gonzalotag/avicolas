@@ -53,7 +53,6 @@ function TablaPersonal(props){
         }
     });
 
-
     // funcion que elimina una fila de la tabla perfil en la base de datos
     const deleteRow = async (id) => {
         try {
@@ -69,7 +68,6 @@ function TablaPersonal(props){
     const handleEliminar = (id) =>{
       const newData = dataPer.filter((data)=> data.id !==id);
       setDataPer(newData);
-      
     };
     // const {espacioReg ,setEspacioReg} =useState(<RegistroPersonal/>);
 
@@ -122,8 +120,7 @@ function TablaPersonal(props){
                         <td>{data.email}</td>
                         <td>{data.id_rol}</td>
                         <td>
-                        {/* <Link to= "/editar">editar</Link> */}
-                        {/* <button onClick={() => deleteRegistros()}>Eliminar</button> */}
+                        <button onClick={() => deleteRegistros()}>Eliminar</button>
                         {/* el button al interior de link nos redirecciona a registros  */}
                         <Link to="/editar" onClick={(e)=>{e.preventDefault(); navigate('/editar')}}>
                             <button>pasar a editar</button>
