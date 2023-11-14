@@ -170,6 +170,7 @@ function RegistroPersonal(){
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="Email Requerido"
+                  autoComplete="off"
                   required
                 />
                 <br />
@@ -210,6 +211,7 @@ function RegistroPersonal(){
                     onChange={handleChange}
                     placeholder={formData.rol === "administrador" ?
                     "ingresa contrasenia" : "" }
+                    autoComplete="new-password"
                     />
                     <br />
                     </>
