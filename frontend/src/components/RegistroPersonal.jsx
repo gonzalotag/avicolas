@@ -4,6 +4,8 @@ import { useState } from "react";
 import TablaPersonal from "./TablaPersonal";
 import ContenidoAdmin from "./ContenidoAdmin";
 import MenuAdmin from "./MenuAdmin";
+import { postPerfil } from "../api/perfil.api";
+import axios from "axios";
 
 
 // import TablaPersonal from "./TablaPersonal"
@@ -18,27 +20,32 @@ function RegistroPersonal(){
           direccion:'',
           telefono:'',
           email: '',
-        //   estado: '',
+          estado: 'activo',
+          rol:'',
           contrasenia:'',
         });
-      
-        const [datosMostrados, setDatosMostrados] = useState([]);
-        const [selectEstado,setSelectEstado]=useState('inactivo')
-      
+        
+        const [selectEstado, setSelectEstado]=useState('');
+        const [vistaPrevia, setVistaPrevia]=useState(null);
+        
         const handleChange = (e) => {
-            const { id, value, name} = e.target;
-            // const newValue = type === 'radio' ? (checked ? value : '') : value;
-            setFormData({
-              ...formData,
+            const { id, value, name } = e.target;
+            setFormData((prevData) => ({
+              ...prevData,
               [id || name]: value,
-              estado: selectEstado,
-            });
-        };
+            }));
+          };
         const handleEstadoChange=(estado)=>{
             setSelectEstado(estado);
         }
+
+        const handleVistaPrevia =()=>{
+                setVistaPrevia(formData);
+                console.log("data previa",formData);
+            
+        };
+        // Restaurar el estado del formulario a valores vacios 
         const handleCancelar = () => {
-          // Restaurar el estado del formulario
           setFormData({
             nombre: '',
             apellido_paterno: '',
@@ -46,15 +53,15 @@ function RegistroPersonal(){
             direccion:'',
             telefono:'',
             email: '',
-            // estado: '',
+            estado: 'activo',
+            rol:'',
             contrasenia:'',
           });
+          setSelectEstado('activo')
+          setVistaPrevia(null);
         };
-        //funcion para controlar numeros de 
-        // function validarTelefono(phoneNum){
-        //     var regex=/^[0-9]{10}$/; 
-        //    return regex.test(phoneNum);
-        //  }
+        
+        
         // funcion isNumber para poder ingresar numeros en un input q pide solo texto
         function isNumber(evt){
            evt = (evt) ? evt : window.event;
@@ -65,21 +72,26 @@ function RegistroPersonal(){
              return false;
            }
            return true;
-         }
-         
+        }
         
-        const handleSubmit = (e) => {
+    
+        const handleSubmit = async (e) => {
           e.preventDefault();
           const dataToAdd = {
             ...formData,
             estado:selectEstado,
+        };
+        console.log('datos a guardar', dataToAdd)
 
-          };
-          // Almacenar los datos en el estado de datos mostrados
-          setDatosMostrados([...datosMostrados, dataToAdd]);
-      
-          // Restaurar el estado del formulario
-          handleCancelar();
+        try{
+            const response = await postPerfil(dataToAdd);
+                console.log('perfil guardado con exito' , response.data);
+                handleCancelar();
+            
+        }catch (error){
+            console.error('error al guardar el perfil',error);
+        }
+    
         };
       
         return (
@@ -99,7 +111,7 @@ function RegistroPersonal(){
                   type="text"
                   id="nombre"
                   name="nombre"
-                  
+                  placeholder="Ingresar Nombre"
                   value={formData.nombre}
                   onChange={handleChange}
                 />
@@ -111,6 +123,7 @@ function RegistroPersonal(){
                   name="apellidoPat"
                   value={formData.apellido_paterno}
                   onChange={handleChange}
+                  placeholder="Apellido Paterno"
                   required
                 />
                 <br />
@@ -121,6 +134,7 @@ function RegistroPersonal(){
                   name="apellidoMat"
                   value={formData.apellido_materno}
                   onChange={handleChange}
+                  placeholder="Apellido Materno"
                   required
                 />
                 <br />
@@ -131,6 +145,7 @@ function RegistroPersonal(){
                 name="direccion"
                 value={formData.direccion} 
                 onChange={handleChange}
+                placeholder="Ingresar Direccion"
                 required/>
                 <br />
                 <label htmlFor="telefono">Telefono:</label>
@@ -145,6 +160,7 @@ function RegistroPersonal(){
                 onClick = {isNumber}
                 // onBlur= {validarTelefono}
                 onChange={handleChange}
+                placeholder="Ingresar Telefono"
                 required/>
                 <br />
                 <label htmlFor="email">Correo Electrónico:</label>
@@ -153,6 +169,7 @@ function RegistroPersonal(){
                   id="email"
                   value={formData.email}
                   onChange={handleChange}
+                  placeholder="Email Requerido"
                   required
                 />
                 <br />
@@ -161,121 +178,71 @@ function RegistroPersonal(){
                 id="estado"
                 name="estado"
                 value={selectEstado}
+                
                 onChange={(e)=> handleEstadoChange(e.target.value)} required>
+                    <option value="" ></option>
                     <option value="activo">Activo</option>
                     <option value="inactivo">Inactivo</option>
                 </select>
-                    {/* <label htmlFor="activo">
-                      Activo
-                      <input
-                        type="radio"
-                        name="estado"
-                        id="activo"
-                        value="activo"
-                        onChange={()=>handleEstadoChange('activo')}
-                        checked={selectEstado === 'activo'}
-                        required
-                      />
-                    </label>
-                    <label htmlFor="inactivo">
-                      Inactivo
-                      <input
-                        type="radio"
-                        name="estado"
-                        id="inactivo"
-                        value="inactivo"
-                        onChange={()=>handleEstadoChange('inactivo')}
-                        checked={selectEstado ==='inactivo'}
-                        required
-                      />
-                    </label> */}
                     <label htmlFor="rol">Rol:</label>
-                        {/* <select name="" id="rolSelect">
-                            {roles && roles.map(role => (
-                                <option key={role._id}>{role.name}</option>
-                            ))}
-                          </select> */}
-                            <select name="" id="">
-                            <option value=""></option>
-                            <option value="administrador">Administrador</option>
-                            <option value="proveedor" >Proveedor</option>
-                            <option value="cliente" >Cliente</option>
-                            <option value="empleado">Empleado</option>
-                            </select>
+                        <select 
+                        name="rol" 
+                        // id=""
+                        value={formData.rol}
+                        onChange={handleChange}
+                        placeholder="seleccionar estado"
+                        >    
+                        <option value="">seleccion rol</option>
+                        <option value="administrador">Administrador</option>
+                        <option value="proveedor" >Proveedor</option>
+                        <option value="cliente" >Cliente</option>
+                        <option value="empleado">Empleado</option>
+                        </select>
                     <br />
-                    <label htmlFor="contrasenia">Contrasenia:</label>
-                    <input 
-                    type="contrasenia"
+                    {formData.rol === 'administrador' && (
+                    <>
+                    <label htmlFor="contrasenia">Contraseña:</label>
+                    <input
+                    type="password"
                     name="contrasenia"
-                    id="contrasenia" 
+                    id="contrasenia"
                     value={formData.contrasenia}
                     onChange={handleChange}
-                    
+                    placeholder={formData.rol === "administrador" ?
+                    "ingresa contrasenia" : "" }
                     />
-                    <br />  
+                    <br />
+                    </>
+                    )}
+                <button type="button" onClick={handleVistaPrevia}> 
+                    Vista previa</button>
                 <button type="submit" onSubmit={handleSubmit} >
                     Guardar
                 </button>
                 <button type="button" onClick={handleCancelar}>
-                  Cancelar
+                    Cancelar
                 </button>
               </div>
               <div className="objetoDatos">
+                <h2>datos nuevo registro</h2>
+                {vistaPrevia && (
                 <ul>
-                <li>Nombre: {formData.nombre}</li>
-                {/* <li>Apellido Paterno: {formData.apellidoPat}</li> */}
-                <li>Apellido Paterno: {formData.apellido_paterno}</li>
-                {/* <li>Apellido Materno: {formData.apellidoMat}</li> */}
-                <li>Apellido Materno: {formData.apellido_materno}</li>
-                <li>Direccion: {formData.direccion}</li>
-                <li>Telefono: {formData.telefono}</li>
-                <li>Email: {formData.email}</li>
-                <li>Estado: {formData.estado}</li>
-                <li>Rol: {formData.rol}</li>
-                <li>Contrasenia: {formData.contrasenia}</li>
+                <li>Nombre: {vistaPrevia.nombre}</li>
+                <li>Apellido Paterno: {vistaPrevia.apellido_paterno}</li>
+                <li>Apellido Materno: {vistaPrevia.apellido_materno}</li>
+                <li>Direccion: {vistaPrevia.direccion}</li>
+                <li>Telefono: {vistaPrevia.telefono}</li>
+                <li>Email: {vistaPrevia.email}</li>
+                <li>Estado: {vistaPrevia.estado}</li>
+                <li>Rol: {vistaPrevia.rol}</li>
+                {vistaPrevia.rol === 'administrador'&& (
+                <li>Contrasenia: {vistaPrevia.contrasenia}</li>
+                )}
                 </ul>
+                )}
             </div>
             </form>
-      
-            {datosMostrados.length > 0 && (
-              <div className="tablaPreReg">
-                <h3>Datos del formulario</h3>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Nombre</th>
-                      <th>Apellido Paterno</th>
-                      <th>Apellido Materno</th>
-                      <th>Direccion</th>
-                      <th>Telefono</th>
-                      <th>Correo Electrónico</th>
-                      <th>Estado</th>
-                      <th>Rol</th>
-                      <th>Contrasenia</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {datosMostrados.map((dato, index) => (
-                      <tr key={index}>
-                        <td>{dato.nombre}</td>
-                        <td>{dato.apellido_paterno}</td>
-                        <td>{dato.apellido_materno}</td>
-                        <td>{dato.direccion}</td>
-                        <td>{dato.telefono}</td>
-                        <td>{dato.email}</td>
-                        <td>{dato.estado}</td>
-                        <td>{dato.rol}</td>
-                        <td>{dato.contrasenia}</td>
-                      </tr>
-                      
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
           </div>
         );
-    
-        
 }
 export default RegistroPersonal;

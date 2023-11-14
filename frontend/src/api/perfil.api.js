@@ -27,11 +27,52 @@ async function deletePersona(id){
     const result =  await axios.delete("http://localhost:4000/perfil/" + id);
     return result;
 }
-async function postPerfil (){
-    //let data = JSON.stringify({nombre: nombre, apellido: apellido});
-    const result = await axios.post("http://localhost:4000/perfil", this.state);
+
+
+async function updatePersona(persona){
+    const result = await axios.put("http://localhost:4000/perfil", persona);
     return result;
-}
+    }
+async function createPersona(persona){  
+    const result = await axios.post("http://localhost:4000/perfil", persona);
+    return result;
+    }
+// funcion para REgsitroPersonal
+// async function registerPersonal(persona){
+//     const result = await axios.post("http://localhost:4000/registro-personal", persona);
+//     return result;
+//     }
+//funcion para registros de personal
+// async function registrarRegistrados(registrado){
+//     const result = await axios.post("http://localhost:4000/registrar-personal", registrado);
+//     return result;
+//     }
+//funcion para actualizar los registros de personal
+// async function actualizarRegistrados(registrado){
+//     const result = await axios.put("http://localhost:4000/actualizar-personal", registrado);
+//     return result;
+//     }
+//funcion para eliminar los registros de personal
+    
+   
+    
+//funcion para crear nuevo perfil this.state provoca funcionalidad de otra forma
+// cambiar this.state
+// async function postPerfil (){
+//     const result = await axios.post("http://localhost:4000/perfil", this.state);
+//     return result;
+// }
+export const postPerfil = async(data)=>{
+    try {
+        const result = await axios.post("http://localhost:4000/perfil", data);
+        return result;
+    } catch (error) {
+        console.log('Error al guardar el perfil', error);
+        throw error;
+    }
+};
+
+//funcion para actualizar perfil this.state lo mismo q post
 async function patchPerfil(){
     const result = await axios.patch("http://localhost:4000/perfil/"+this.props.match.params
     .id , this.state);
@@ -43,6 +84,7 @@ export{
     getPerfil,
     getPerfilesByRol,
     deletePersona,
-    postPerfil,
-    patchPerfil
+    patchPerfil,
+    updatePersona,
+    createPersona
 }

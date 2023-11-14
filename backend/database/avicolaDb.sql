@@ -15,7 +15,7 @@ create table perfil (
     contrasenia varchar(20),
     foreign key (id_rol) references rol (id) on delete cascade on update cascade
 );
-insert into perfil (nombre, apellido_paterno, apellido_materno, direccion, telefono, email, estado, id_rol )values 
+insert into perfil (nombre, apellido_paterno, apellido_materno, direccion, telefono, email, estado, id_rol, contrasenia )values 
 ('Juan', 'Perez','Lopez', 'av.mirador', 7894632,'asd@.gmail.com', true,3, 'clases');
 
 create table rol (

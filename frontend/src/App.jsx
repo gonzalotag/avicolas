@@ -12,6 +12,8 @@ import TablaPersonal from './components/TablaPersonal';
 import Almacen from './components/Almacen';
 import ContenidoAdmin from './components/ContenidoAdmin';
 import EditarPersonal from './components/EditarPersonal';
+import Produccion from './components/Produccion';
+import Reportes from './components/Reportes';
 
 
 function App() {
@@ -24,11 +26,6 @@ function App() {
     navigate('/login');
   }
    
-  const []= useState([
-    {id:1,nombre:'Dato1'},
-    {id:2,nombre:'Dato2'}
-  ]);
-
   return (
   <>
     <NavBar onLogout={onLogout} isAuth={isAuth}/>
@@ -39,10 +36,11 @@ function App() {
       <Route path='/login' element = {<LoginPerfil setIsAuth= {setIsAuth} onLogout={onLogout}/>}/>
       <Route path='/admin' element ={<GuardiaComponent isAuth={isAuth} setIsAuth={setIsAuth} Component={<AdminComponent/>}/>}/>
       <Route path='/personal' element={<TablaPersonal isAuth={isAuth} />}/>
-      <Route path='/produccion' element={<MenuAdmin isAuth={isAuth} Component={<AdminComponent/>}/>}/>
-      <Route path='/almacen' element={<MenuAdmin isAuth={isAuth} Component={<AdminComponent/>}/>}/>
+      <Route path='/produccion' element={<Produccion isAuth={isAuth} Component={<AdminComponent/>}/>}/>
+      <Route path='/almacen' element={<Almacen isAuth={isAuth} Component={<AdminComponent/>}/>}/>
       <Route path='/registros' element={<RegistroPersonal isAuth={isAuth}/>}/>
-      <Route path='/editar' element={< EditarPersonal/>} isAuth={isAuth} />
+      <Route path='/editar' element={<EditarPersonal/>} isAuth={isAuth} />
+      <Route path='/reportes' element={<Reportes/>} isAuth={isAuth} />
       
     </Routes>
     </div>

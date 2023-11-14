@@ -1,11 +1,12 @@
 import "../assets/css/menuAdmin.css"
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleUser,faIndustry,faPerson,faWarehouse} from "@fortawesome/free-solid-svg-icons";
+import { faCircleUser,faIndustry,faPerson,faWarehouse,faFileLines} from "@fortawesome/free-solid-svg-icons";
 import ButtonComponent from "./ButtonComponent.jsx";
 import TablaPersonal from "./TablaPersonal";
 import Suministros from "./Produccion";
 import Almacen from "./Almacen";
+import Reportes from "./Reportes.jsx";
 
 
 
@@ -35,6 +36,9 @@ function MenuAdmin (props){
             <div className="buttonTarea" onClick={()=>{setEspacioDeTrabajo(<Suministros perfiles={perfiles} getPerfilesByRol={getPerfilesByRol} getRolesByName={getRolesByName} />)}} > 
             <ButtonComponent nombreButton={"Produccion"}iconoButton={< FontAwesomeIcon icon={faIndustry}/>}/> 
             </div>
+            <div className="buttonTarea" onClick={()=>{setEspacioDeTrabajo(<Reportes perfiles={perfiles} getPerfilesByRol={getPerfilesByRol} getRolesByName={getRolesByName} />)}} > 
+            <ButtonComponent nombreButton={"Reportes"}iconoButton={< FontAwesomeIcon icon={faFileLines}/>}/> 
+            </div> 
             
         </div>
         
