@@ -57,15 +57,18 @@ async function createPersona(persona){
    
     
 //funcion para crear nuevo perfil this.state provoca funcionalidad de otra forma
-// cambiar this.state
+//cambiar this.state
 // async function postPerfil (){
 //     const result = await axios.post("http://localhost:4000/perfil", this.state);
 //     return result;
-// }
+// } 
+// este post perfil esta mal 
+
+
 export const postPerfil = async(data)=>{
     try {
         const result = await axios.post("http://localhost:4000/perfil", data);
-        return result;
+        return result.data;
     } catch (error) {
         console.log('Error al guardar el perfil', error);
         throw error;

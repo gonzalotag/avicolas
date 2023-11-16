@@ -88,7 +88,7 @@ function TablaPersonal(props){
             <div className="tablaSelectRol">
             <div className="selectRol">
                 Seleccione Rol:
-            <select  id= "selectRoles" name="selectRoles" onChange={handleSelect}>
+            <select  id= "selectRoles" title="selecetRol" name="selectRoles" onChange={handleSelect}>
                 <option></option>
                 {tipoRol.map((data,index)=>{
                     return( 
@@ -140,3 +140,4 @@ function TablaPersonal(props){
 }
 
 export default TablaPersonal;
+

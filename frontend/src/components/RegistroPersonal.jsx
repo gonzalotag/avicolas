@@ -74,15 +74,16 @@ function RegistroPersonal(){
            return true;
         }
         
-    
+        
         const handleSubmit = async (e) => {
           e.preventDefault();
           const dataToAdd = {
             ...formData,
             estado:selectEstado,
+            
         };
         console.log('datos a guardar', dataToAdd)
-
+        
         try{
             const response = await postPerfil(dataToAdd);
                 console.log('perfil guardado con exito' , response.data);
@@ -187,6 +188,7 @@ function RegistroPersonal(){
                 </select>
                     <label htmlFor="rol">Rol:</label>
                         <select 
+                        title="selectRol"
                         name="rol" 
                         // id=""
                         value={formData.rol}
@@ -213,6 +215,7 @@ function RegistroPersonal(){
                     "ingresa contrasenia" : "" }
                     autoComplete="new-password"
                     />
+
                     <br />
                     </>
                     )}

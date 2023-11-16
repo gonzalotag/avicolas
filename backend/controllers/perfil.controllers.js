@@ -24,24 +24,55 @@ export const getPerfil = async (req,res) => {
         return res.status(500).json({message: error.message});
     }
 };
+// crea un nuevo perfil para enviar a la base de datos 
 export const createPerfil = async (req, res) => {
     try {
-        const{nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol} = req.body;
+        const{
+            nombre, 
+            apellido_paterno, 
+            apellido_materno , 
+            direccion , 
+            telefono, 
+            email, 
+            estado ,
+            id_rol,
+            contrasenia
+            } = req.body;
+            let query ,values;
+            if (id_rol==='administrador'){
+                query= 
+                    "INSERT INTO perfil (nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol,contrasenia) values (?,?,?,?,?,?,?,?,?)";
+                values = {nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol, contrasenia};
+            }
+            else{
+                query= 
+                    "INSERT INTO perfil (nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol) values (?,?,?,?,?,?,?,?)";
+                    values = {nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol};
+            }
         const[result] = await pool.query(
             "INSERT INTO perfil (nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol,contrasenia) values (?,?,?,?,?,?,?,?,?)",
             [nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol, contrasenia]
-        );
-        /*console.log (result); */
+            );
+
         res.json({
             id: result.insertId,
-            nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol, contrasenia
-        })
+            nombre,
+            apellido_paterno, 
+            apellido_materno , 
+            direccion , 
+            telefono, 
+            email, 
+            estado ,
+            id_rol,
+            contrasenia
+        });
     } catch (error) {
-        return res.status(500).json({message: error.message});    
+        console.error('error al insertar en la base de datos',error )
+        return res.status(500).json({message: 'error interno del servidor',error: error.message});
     }
 };
 
- export const updatePerfil = async (req,res) =>{
+export const updatePerfil = async (req,res) =>{
     try {
         const result =await pool.query ("UPDATE perfil SET ? WHERE id = ?",[
             req.body,
