@@ -40,8 +40,12 @@ function RegistroPersonal(){
         }
 
         const handleVistaPrevia =()=>{
-                setVistaPrevia(formData);
-                console.log("data previa",formData);
+          const vistaPreviaData ={
+            ...formData,
+            estado: selectEstado === 'activo' ? 'Activo' : 'Inactivo'
+          }
+                setVistaPrevia(vistaPreviaData);
+                console.log("data previa",vistaPreviaData);
             
         };
         // Restaurar el estado del formulario a valores vacios 
