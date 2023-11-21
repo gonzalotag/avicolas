@@ -53,7 +53,8 @@ function TablaPersonal(props){
         }
     });
 
-    // funcion que elimina una fila de la tabla perfil en la base de datos
+    // funcion que elimina una fila de la tabla perfil en la base de datos pero no 
+    //hay similitud de indices al borrar, borra aleatoriamente
     const deleteRow = async (id) => {
         try {
             const resp = await deletePersona(id);
@@ -64,11 +65,11 @@ function TablaPersonal(props){
                 console.error(error);
             }
     };
-    const [dataPer, setDataPer]=useState ([]);
-    const handleEliminar = (id) =>{
-      const newData = dataPer.filter((data)=> data.id !==id);
-      setDataPer(newData);
-    };
+    // const [dataPersonal, setDataPersonal]=useState ([]);
+    // const handleEliminar = (id) =>{
+    //   const newData = dataPersonal.filter((data)=> data.id !==id);
+    //   setDataPersonal(newData);
+    // };
     // const {espacioReg ,setEspacioReg} =useState(<RegistroPersonal/>);
 
     return <div className="contenedorTabla">
@@ -120,13 +121,13 @@ function TablaPersonal(props){
                         <td>{data.email}</td>
                         <td>{data.id_rol}</td>
                         <td>
-                        <button onClick={() => deleteRegistros()}>Eliminar</button>
+                        {/* <button onClick={() => deleteRegistros()}>Eliminar</button> */}
                         {/* el button al interior de link nos redirecciona a registros  */}
                         <Link to="/editar" onClick={(e)=>{e.preventDefault(); navigate('/editar')}}>
                             <button>pasar a editar</button>
                         </Link>
                         {/* elimina una fila de la tabla de personal (buscar por q elimina solo al seleccionar rol y no sin seleccionar) */}
-                        <button onClick={() => handleEliminar(data.id)}>Eliminar</button>
+                        <button onClick={() => deleteRow(data.id)}>Eliminar</button>
                         </td>
                         
                     </tr>)

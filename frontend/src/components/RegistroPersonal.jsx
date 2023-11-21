@@ -20,7 +20,7 @@ function RegistroPersonal(){
           direccion:'',
           telefono:'',
           email: '',
-          estado: 'activo',
+          estado: true,
           rol:'',
           contrasenia:'',
         });
@@ -53,7 +53,7 @@ function RegistroPersonal(){
             direccion:'',
             telefono:'',
             email: '',
-            estado: 'activo',
+            estado: '',
             rol:'',
             contrasenia:'',
           });
@@ -79,7 +79,8 @@ function RegistroPersonal(){
           e.preventDefault();
           const dataToAdd = {
             ...formData,
-            estado:selectEstado,
+            estado:selectEstado === 'activo',
+            rol: formData.rol,
             
         };
         console.log('datos a guardar', dataToAdd)
@@ -87,8 +88,7 @@ function RegistroPersonal(){
         try{
             const response = await postPerfil(dataToAdd);
                 console.log('perfil guardado con exito' , response.data);
-                handleCancelar();
-            
+                handleCancelar();            
         }catch (error){
             console.error('error al guardar el perfil',error);
         }
@@ -180,7 +180,6 @@ function RegistroPersonal(){
                 id="estado"
                 name="estado"
                 value={selectEstado}
-                
                 onChange={(e)=> handleEstadoChange(e.target.value)} required>
                     <option value="" ></option>
                     <option value="activo">Activo</option>

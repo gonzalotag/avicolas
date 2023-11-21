@@ -35,23 +35,28 @@ export const createPerfil = async (req, res) => {
             telefono, 
             email, 
             estado ,
-            id_rol,
+            rol,
             contrasenia
             } = req.body;
+            //para obtener el id del rol q se seleccione
+            const [rolResult] = await pool.query("select id from rol where tipo =?", [rol] )
+            const id_rol = rolResult[0].id;
             let query ,values;
             if (id_rol==='administrador'){
                 query= 
                     "INSERT INTO perfil (nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol,contrasenia) values (?,?,?,?,?,?,?,?,?)";
-                values = {nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol, contrasenia};
+                values = {nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,rol, contrasenia};
             }
             else{
                 query= 
                     "INSERT INTO perfil (nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol) values (?,?,?,?,?,?,?,?)";
-                    values = {nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol};
+                    values = {nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,rol};
             }
+// convierte el valor de estado a un entero (1 para trur y 0 para false)
+        const estadoInt = estado === true ? 1 : 0;
         const[result] = await pool.query(
             "INSERT INTO perfil (nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol,contrasenia) values (?,?,?,?,?,?,?,?,?)",
-            [nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol, contrasenia]
+            [nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estadoInt ,rol, contrasenia]
             );
 
         res.json({
