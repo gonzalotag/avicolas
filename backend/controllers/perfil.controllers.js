@@ -39,24 +39,24 @@ export const createPerfil = async (req, res) => {
             contrasenia
             } = req.body;
             //para obtener el id del rol q se seleccione
-            const [rolResult] = await pool.query("select id from rol where tipo =?", [rol] )
+            const [rolResult] = await pool.query("SELECT id FROM rol WHERE tipo =?", [rol]);
             const id_rol = rolResult[0].id;
-            let query ,values;
-            if (id_rol==='administrador'){
-                query= 
-                    "INSERT INTO perfil (nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol,contrasenia) values (?,?,?,?,?,?,?,?,?)";
-                values = {nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,rol, contrasenia};
-            }
-            else{
-                query= 
-                    "INSERT INTO perfil (nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol) values (?,?,?,?,?,?,?,?)";
-                    values = {nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,rol};
-            }
+            // let query ,values;
+            // if (id_rol==='administrador'){
+            //     query= 
+            //         "INSERT INTO perfil (nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol,contrasenia) values (?,?,?,?,?,?,?,?,?)";
+            //     values = {nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol, contrasenia};
+            // }
+            // else{
+            //     query= 
+            //         "INSERT INTO perfil (nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol) values (?,?,?,?,?,?,?,?)";
+            //         values = {nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,rol};
+            // }
 // convierte el valor de estado a un entero (1 para trur y 0 para false)
         const estadoInt = estado === true ? 1 : 0;
         const[result] = await pool.query(
             "INSERT INTO perfil (nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol,contrasenia) values (?,?,?,?,?,?,?,?,?)",
-            [nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estadoInt ,rol, contrasenia]
+            [nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estadoInt ,id_rol, contrasenia]
             );
 
         res.json({
