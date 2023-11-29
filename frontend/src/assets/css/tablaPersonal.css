@@ -12,6 +12,7 @@ border: 1px solid rgba(255, 255, 255, 0.767);
 .contenedorTabla{
     display: block;
     overflow-y: scroll;
+    overflow-x: scroll;
     scroll-behavior: smooth;
     color: white;
     height: 100%;
@@ -25,9 +26,9 @@ backdrop-filter: blur(4.7px);
 -webkit-backdrop-filter: blur(4.7px);
 /* border: 1px solid rgba(255, 255, 255, 0.3); */
 }
-.contenedorTabla::-webkit-scrollbar{
-    display: none;
-}
+/* .contenedorTabla::-webkit-scrollbar{
+    display:
+} */
 .scrollContainer{
     display: block;
 }
@@ -58,9 +59,9 @@ backdrop-filter: blur(4.7px);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.973);
 }
 .selectRol{
-    width: 15%;
+    width: 20%;
     margin-left: 5px ;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); */
 }
 .listaPersonal{
     width: 100%;

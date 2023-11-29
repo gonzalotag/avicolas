@@ -1,24 +1,99 @@
 import"../assets/css/editarPersonal.css"
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import TablaPersonal from "./TablaPersonal";
-import { useState } from "react";
-import { getPerfil,getPerfilesByRol } from "../api/perfil.api";
+import { Link, useParams , useNavigate } from "react-router-dom";
+import { useEffect , useState } from "react";
+import { getPerfilesById, patchPerfil } from "../api/perfil.api";
 
-function EditarPersonal (dato, ){
+function EditarPersonal ( ){
     
-    const navigate=useNavigate();
-    const {nombre,setNombre}=useState(dato.nombre);
-    const handleSave=()=>{
-        const datosUpdate = {
-            ...dato,
-            nombre:nombre,
-            rol:rol
-        };
+  const {id} = useParams();
+  const navigate=useNavigate();
+  const [perfil ,setPerfil] = useState({
+    nombre: '',
+    apellido_paterno: '',
+    apellido_materno: '',
+    direccion:'',
+    telefono:'',
+    email: '',
+    estado: '',
+    rol:'',
+    contrasenia:'',
+  });
+  const [initialPerfil, setInitialPerfil]= useState({
+    nombre: '',
+    apellido_paterno: '',
+    apellido_materno: '',
+    direccion:'',
+    telefono:'',
+    email: '',
+    estado: '',
+    rol:'',
+    contrasenia:''
+  });
+  
 
-       
+  useEffect(()=>{
+    const obtenerDatos = async ()=> {
+      try {
+        const datosPerfil = await getPerfilesById(id);
+        setInitialPerfil(datosPerfil);
+        setPerfil(datosPerfil);
+      } catch (error) {
+        console.error('error al obtener datos del perfil', error);
+      }
     };
+    obtenerDatos();
+  },[id]);
 
-    
+  useEffect(()=>{
+    console.log ('Perfil',perfil);
+  },[perfil])
+
+  // useEffect(()=>{
+  //   const obtenerPerfil = async () =>{ 
+  //     try {
+  //       const respuesta =await getPerfilesById(id);
+  //       const datos = await respuesta.json();
+  //       setPerfil(datos);
+  //     } catch (error) {
+  //       console.error('error al obtener perfil', error)
+  //     }
+  //   }
+  //   obtenerPerfil();
+  // },[]);
+
+  const handleInputChange =  (e)=> {
+    const {name,value} = e.target;
+    setPerfil((prevPerfil) => ({
+      ...prevPerfil,
+      [name]:value,
+    }));
+  }
+  
+  const handleGuardar = async () => {
+    try {
+      await patchPerfil(id,perfil);
+      alert ("perfil actualizado con exito");
+      navigate(`/editar/${id}`);
+    } catch (error) {
+      console.log('error al guardar el perfil',error);
+    }
+  }
+
+  const handleCancelar =()=>{
+    setPerfil(initialPerfil);
+  }
+  
+  const soloNumeros = (event) =>{
+    const charCode = event.charCode || event.keycode;
+    if (charCode === 8 || charCode === 46){
+      return true;
+    }
+    if (charCode >= 48 && charCode <= 57){
+      return true;
+    }
+    return false;
+  }
+
     return<div className="editarEspacio">
             <div className="botonRegresar">
               <Link 
@@ -27,131 +102,111 @@ function EditarPersonal (dato, ){
                 <button> Regresar a Personal </button>
               </Link>
             </div>
-            <h1>Edición de personal</h1>
-            <div className="editContainer">
-            <form className="formEditar" onSubmit={"handleSubmit"}>
-              <div className="registroNuevoPers">
-                <label htmlFor="nombre">Nombre</label>
-                <input
-                  type="text"
-                  id="nombre"
-                  name="nombre"
-                  placeholder="Ingresar Nombre"
-                  value={"formData.nombre"}
-                  onChange={"handleChange"}
-                />
+            <h1>Editar Perfil</h1>
+            <div className="formulario">
+              <form action="">
+                <label htmlFor="">
+                  nombre
+                </label>
                 <br />
-                <label htmlFor="apellido_paterno">Apellido Paterno</label>
-                <input
-                  type="text"
-                  id="apellido_paterno"
-                  name="apellidoPat"
-                  value={"formData.apellido_paterno"}
-                  onChange={"handleChange"}
-                  placeholder="Apellido Paterno"
-                  required
-                />
-                <br />
-                <label htmlFor="apellido_materno">Apellido Materno</label>
-                <input
-                  type="text"
-                  id="apellido_materno"
-                  name="apellidoMat"
-                  value={"formData.apellido_materno"}
-                  onChange={"handleChange"}
-                  placeholder="Apellido Materno"
-                  required
-                />
-                <br />
-                <label htmlFor="direccion">Direccion:</label>
                 <input 
                 type="text"
-                id="direccion"
-                name="direccion"
-                value={"formData.direccion"} 
-                onChange={"handleChange"}
-                placeholder="Ingresar Direccion"
-                required/>
-                <br />
-                <label htmlFor="telefono">Telefono:</label>
-                <input 
-                type="tel" 
-                id="telefono"
-                name="telefono"
-                pattern="[0-9]{7,10}"
-                value={"formData.telefono"} 
-                maxLength='10'
-                minLength='7'
-                onClick = {"isNumber"}
-                // onBlur= {validarTelefono}
-                onChange={"handleChange"}
-                placeholder="Ingresar Telefono"
-                required/>
-                <br />
-                <label htmlFor="email">Correo Electrónico:</label>
-                <input
-                  type="email"
-                  id="email"
-                  value={"formData.email"}
-                  onChange={"handleChange"}
-                  placeholder="Email Requerido"
-                  autoComplete="off"
-                  required
+                id="nombre" 
+                name="nombre"
+                value={perfil.nombre || ''}
+                onChange={handleInputChange}
                 />
                 <br />
-                <label htmlFor="estado">Estado</label>
-                <select 
-                id="estado"
-                name="estado"
-                value={"selectEstado"}
-                // onChange={(e)=> handleEstadoChange(e.target.value)} 
-                required>
-                    <option value="" ></option>
-                    <option value="activo">Activo</option>
-                    <option value="inactivo">Inactivo</option>
+                <label htmlFor="">
+                  apellido_paterno
+                </label>
                 <br />
-                </select>
-                {/* para le select manejar el nombre no por el id */}
-                    <label htmlFor="rol">Rol:</label>
-                        <select 
-                        title="selectRol"
-                        name="rol" 
-                        // id=""
-                        value={"formData.rol"}
-                        onChange={"handleChange"}
-                        placeholder="seleccionar estado"
-                        >    
-                        <option value="">seleccion rol</option>
-                        <option value="administrador">Administrador</option>
-                        <option value="proveedor" >Proveedor</option>
-                        <option value="cliente" >Cliente</option>
-                        <option value="empleado">Empleado</option>
-                        </select>
-                    <br />
-                <button type="button" onClick={"handleVistaPrevia"}> 
-                    Vista previa</button>
-                <button type="submit" onSubmit={"handleSubmit"} >
-                    Guardar
-                </button>
-                <button type="button" onClick={"handleCancelar"}>
-                    Cancelar
-                </button>
-                </div>
-                </form>
-                <div className="tablaEditar" >
-                  <table className="editPersonal">
-                    <tr>
-                    <th>Nombre</th>
-                    <th>Apellidos</th>
-                    <th>Direccion</th>
-                    <th>Telefono</th>
-                    <th>Email</th>
-                    <th>Estado</th>
-                    <th>Nuevo rol </th>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-    </div>
+                <input type="text" 
+                id="apellido_paterno" 
+                name="apellido_paterno"
+                value={perfil.apellido_paterno}
+                onChange={handleInputChange}/>
+                <br />
+                <label htmlFor="">
+                  apellido_materno
+                </label>
+                <br />
+                <input type="text" 
+                id="apellido_materno" 
+                name="apellido_materno"
+                value={perfil.apellido_materno}
+                onChange={handleInputChange}/>
+                <br />
+                <label htmlFor="">
+                  direccion
+                </label>
+                <br />
+                <input type="text" 
+                id="direccion" 
+                name="direccion"
+                value={perfil.direccion}
+                onChange={handleInputChange}/>
+                <br />
+                <label htmlFor="">
+                  telefono
+                </label>
+                <br />
+                <input type="text"
+                id="telefono" 
+                name="telefono"
+                pattern="[0-9]{7,10}"
+                maxLength='10'
+                minLength='7'
+                value={perfil.telefono}
+                onChange={handleInputChange}
+                onKeyDown={soloNumeros}
+                />
+                <br />
+                <label htmlFor="">
+                  email
+                </label>
+                <br />
+                <input type="text"
+                id="email" 
+                name="email"
+                value={perfil.email}
+                onChange={handleInputChange}/>
+                <br />
+                <label htmlFor="">
+                  estado
+                </label>
+                <br />
+                <input type="text" 
+                id="estado" 
+                name="estado"
+                value={perfil.estado}
+                onChange={handleInputChange}/>
+                <br />
+                {/* <label htmlFor="">
+                  rol
+                </label>
+                <br />
+                <input type="text" 
+                id="rol" 
+                name="rol"
+                value={perfil.rol}
+                onChange={handleInputChange}/>
+                <br /> */}
+                <label htmlFor="">
+                  contrasenia
+                </label>
+                <br />
+                <input type="text" 
+                id="contrasenia" 
+                name="contrasenia"
+                value={perfil.contrasenia||''}
+                onChange={handleInputChange}/>
+                <br />
+                <button type="button" onClick={handleGuardar}>Guardar</button>
+                <button type="button" onClick={handleCancelar}>Cancelar</button>
+              </form>
+            </div>            
+          </div>
 }
+
 export default EditarPersonal;

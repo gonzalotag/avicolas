@@ -7,7 +7,6 @@ function GuardiaComponent (props){
     
     useEffect (()=>{
         if(isAuth === true) setPermitido(Component)
-        
     }),[]
     return (Permitido);
 }

@@ -81,6 +81,7 @@ function RegistroPersonal(){
         
         const handleSubmit = async (e) => {
           e.preventDefault();
+          const contraseniaValue= fomData.rol === 'administrador' ?formData.contrasenia :null;
           const dataToAdd = {
             ...formData,
             estado:selectEstado === 'activo',
@@ -163,7 +164,6 @@ function RegistroPersonal(){
                 maxLength='10'
                 minLength='7'
                 onClick = {isNumber}
-                // onBlur= {validarTelefono}
                 onChange={handleChange}
                 placeholder="Ingresar Telefono"
                 required/>

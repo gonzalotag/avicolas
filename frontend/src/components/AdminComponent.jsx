@@ -27,7 +27,6 @@ function AdminComponent(){
     }
     const [espacioDeTrabajo, setEspacioDeTrabajo] = useState(<ContenidoAdmin/>)
     
-    //revisar context
     return <div className="espacioAdmin">
         <div className="espacioMenuAdmin">
             <MenuAdmin setEspacioDeTrabajo={setEspacioDeTrabajo} 

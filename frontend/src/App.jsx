@@ -39,7 +39,7 @@ function App() {
       <Route path='/produccion' element={<Produccion isAuth={isAuth} Component={<AdminComponent/>}/>}/>
       <Route path='/almacen' element={<Almacen isAuth={isAuth} Component={<AdminComponent/>}/>}/>
       <Route path='/registros' element={<RegistroPersonal isAuth={isAuth}/>}/>
-      <Route path='/editar' element={<EditarPersonal/>} isAuth={isAuth} />
+      <Route path='/editar/:id' element={<EditarPersonal/>}  />
       <Route path='/reportes' element={<Reportes/>} isAuth={isAuth} />
       
     </Routes>
