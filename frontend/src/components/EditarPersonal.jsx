@@ -1,6 +1,6 @@
 import"../assets/css/editarPersonal.css"
 import { useParams , useNavigate } from "react-router-dom";
-import { useEffect , useState } from "react";
+import React, { useEffect , useState } from "react";
 import { getPerfilesById, patchPerfil } from "../api/perfil.api";
 
 function EditarPersonal ( ){
@@ -57,20 +57,14 @@ function EditarPersonal ( ){
   },[perfil, selectEstado, nuevoRol])
 
   const handleInputChange =  (e)=> {
-    if(e.target.name=== 'contrasenia'){
+    if(e.target.name === 'contrasenia'){
       setTieneContrasenia(e.target.value !== '');
-    }
-    // const {name,value} = e.target;
-    // setPerfil((prevPerfil) => ({
-    //   ...prevPerfil,
-    // [name]:value,
+    }  
     setPerfil({
-    perfil,
-    [e.target.name]: e.target.value,
+      perfil,
+      [e.target.name]: e.target.value,
     })
-    }
-    //));
-  
+  }
   
   const handleGuardar = async () => {
     try {
@@ -78,15 +72,13 @@ function EditarPersonal ( ){
       if (estadoInt === null) {
         throw new Error("el estado seleccionado no es valido");
       }
-
       const perfilActualizado = {
         ...perfil,
         rol: nuevoRol || perfil.rol,
         estado : estadoInt || perfil.estado, 
       }
-
       const updatePerfil = await patchPerfil(id,perfilActualizado);
-      console.log('perfil actualizado', updatePerfil);
+      // console.log('perfil actualizado', updatePerfil);
       setVistaPrevia({
         nombre:perfilActualizado.nombre,
         apellido_paterno:perfilActualizado.apellido_paterno,
@@ -122,11 +114,7 @@ function EditarPersonal ( ){
 
     return<div className="editarEspacio">
             <div className="botonRegresar">
-              {/* <Link 
-              onClick={(e)=>{e.preventDefault(); 
-              navigate("/personal")}}>
-                <button> Regresar a Personal </button>
-              </Link> */}
+              
               <button onClick={()=>navigate('/admin')}><h2>Regresar a Personal</h2></button>
             </div>
             <h1>Editar Perfil</h1>
@@ -229,7 +217,7 @@ function EditarPersonal ( ){
                 </select>
                 <br />
                 {tieneContrasenia &&(
-                <>
+                <React.Fragment>
                   <label htmlFor="contrasenia">
                   contrasenia
                 </label>
@@ -241,11 +229,12 @@ function EditarPersonal ( ){
                 onChange={handleInputChange}
                 />
                 <br />
-                </>)}
+                </React.Fragment>)}
                 
                 <button type="button" onClick={handleGuardar}>Guardar</button>
                 <button type="button" onClick={handleCancelar}>Cancelar</button>
-              </form>
+                <button>Vista Previa</button>
+              </form >
               {vistaPrevia &&(
                 <div className="objetoDatos">
                   <h2 className="titleList">datos nuevo</h2>

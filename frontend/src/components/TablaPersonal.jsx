@@ -46,8 +46,8 @@ function TablaPersonal(){
         try {
             await deletePersona(id);
             alert('Fila eliminada');
-            window.location.reload();
-            // navigate('/admin');
+            // window.location.reload();
+            navigate('/admin');
             } catch (error) {
                 console.error(error);
             }
@@ -99,13 +99,8 @@ function TablaPersonal(){
                         {/* <td>{data.id_rol}</td> */}
                         <td>{tipoRol.find((rol)=>rol.id === data.id_rol)?.tipo || "No definido "}</td>
                         <td>
-                        {/* <Link to="/editar" onClick={(e)=>{e.preventDefault(); navigate('/editar')}}>
-                            <button>pasar a editar</button>
-                        </Link> */}
-                        {/* <Link to ={`/editar/${data.id}`}>
-                            <button>editar</button>
-                        </Link> */}
-                        <button onClick={()=> navigate('/editar/${data.id}')}>editar </button>
+                        {/* boton q nos lleva de la pagina de '/personal' a '/editar' */}
+                        <button onClick={()=> navigate(`/editar/${data.id}`)}>Editar </button>
                         {/* elimina una fila de la tabla de personal (buscar por q elimina solo al seleccionar rol y no sin seleccionar) */}
                         <button onClick={() => deleteRow(data.id)}>Eliminar</button>
                         

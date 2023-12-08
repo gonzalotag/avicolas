@@ -36,22 +36,17 @@ export const getPerfilesById = async (id)=>{
      }
      return perfilData;
  }catch(error){
- console.error('error al obtener el perfil por id' , error)
- console.log(error);
+ console.error('error al obtener el perfil por id' , error,message);
+ console.log(error.response);
+ if (error.response) {
+    console.log('response data',error.response.data);
+    console.log('response status ',error.response.status);
+    console.log('response headers',error.response.headers);
+}
  throw error;
  }
 }
     
-  
-// export const getPerfilesById = async (id) =>{
-//     try {
-//         const result = await axios.get(`http://localhost:4000/perfil/${id}`);
-//         return result.data;
-//     } catch (error) {
-//         console.error('error al obtener el perfil por id', error)
-//         throw error;
-//     }
-// };
 async function getPerfilesByRol (id_rol){
     const result = await axios.get("http://localhost:4000/perfil/getEmpleadoByRol/"+id_rol)
     return result.data;
@@ -72,17 +67,12 @@ export const postPerfil = async(data)=>{
     }
 };
 
-//funcion para actualizar perfil this.state lo mismo q post
-// async function patchPerfil(){
-//     const result = await axios.patch("http://localhost:4000/perfil/"+this.props.match.params.id , this.state);
-//     return result;
-// }
 
 //funcion que actualiza la tabla perfil
-async function patchPerfil(id,perfilData){
+async function patchPerfil(id,perfilData,res){
     try {
         const result = await axios.patch(`http://localhost:4000/perfil/${id}`, perfilData);
-        res.status(200).json({message:'perfil no actualizzado correctamente '})
+        res.status(200).json({message:'perfil actualizzado correctamente '})
         return result.data;    
         
     } catch (error) {
@@ -96,7 +86,6 @@ export{
     getPerfiles,
     getPerfil,
     getPerfilesByRol,
-    // getPerfilesById,
     deletePersona,
     patchPerfil,
 }
