@@ -3,8 +3,6 @@ import "../assets/css/tablaPersonal.css"
 import {getAllRoles } from "../api/rol.api";
 import {deletePersona, getPerfiles } from "../api/perfil.api";
 import { useNavigate } from "react-router-dom";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-
 
 function TablaPersonal(){
     const [perfilesByRol,setPerfilesByRol]=useState([]);
@@ -15,7 +13,7 @@ function TablaPersonal(){
 //las funciones obtener para obtener(perfilesByRol,Roles) cada vez q mostremos algo en pantalla (renderiza)
     useEffect(()=>{
         obtenerPerfilesByRol()
-        console.log(perfilesByRol)
+        // console.log(perfilesByRol)
         obtenerRoles()
     },[])
     async function obtenerPerfilesByRol(){
@@ -24,7 +22,7 @@ function TablaPersonal(){
     }
     async function obtenerRoles(){
         setTipoRol (await  getAllRoles())
-        console.log(tipoRol)
+        // console.log(tipoRol)
     }
 //aqui es donde se guarda los el dato colectado poder seleccionar roles 
     const handleSelect=(e) =>{
@@ -60,9 +58,8 @@ function TablaPersonal(){
             <div  className="nuevoPersonal" >
             <div className="buttonNuevoPersonal">
             {/* al hacer clic le dice cuando mostrar o no */}
-            <Link to="/registros">
-                <button>Nuevo Registro</button>
-            </Link>
+            <button onClick={()=> navigate('/registros')}> <h2>Nuevo Registro</h2>
+            </button>
             </div>
             </div>
             {/* para recolectar solo un dato para cambiar entre roles  */}
@@ -82,7 +79,7 @@ function TablaPersonal(){
                 <thead>
                 <tr>
                     <th>Nombre</th>
-                    <th>Apellidos</th>
+                    <th>Apellido</th>
                     <th>Direccion</th>
                     <th>Telefono</th>
                     <th>Email</th>
@@ -99,14 +96,16 @@ function TablaPersonal(){
                         <td>{data.direccion}</td>
                         <td>{data.telefono}</td>
                         <td>{data.email}</td>
-                        <td>{data.id_rol}</td>
+                        {/* <td>{data.id_rol}</td> */}
+                        <td>{tipoRol.find((rol)=>rol.id === data.id_rol)?.tipo || "No definido "}</td>
                         <td>
                         {/* <Link to="/editar" onClick={(e)=>{e.preventDefault(); navigate('/editar')}}>
                             <button>pasar a editar</button>
                         </Link> */}
-                        <Link to ={`/editar/${data.id}`}>
+                        {/* <Link to ={`/editar/${data.id}`}>
                             <button>editar</button>
-                        </Link>
+                        </Link> */}
+                        <button onClick={()=> navigate('/editar/${data.id}')}>editar </button>
                         {/* elimina una fila de la tabla de personal (buscar por q elimina solo al seleccionar rol y no sin seleccionar) */}
                         <button onClick={() => deleteRow(data.id)}>Eliminar</button>
                         

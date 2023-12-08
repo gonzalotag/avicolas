@@ -1,5 +1,5 @@
 import"../assets/css/editarPersonal.css"
-import { Link, useParams , useNavigate } from "react-router-dom";
+import { useParams , useNavigate } from "react-router-dom";
 import { useEffect , useState } from "react";
 import { getPerfilesById, patchPerfil } from "../api/perfil.api";
 
@@ -29,7 +29,14 @@ function EditarPersonal ( ){
     rol:'',
     contrasenia:''
   });
-  
+  const [nuevoRol , setNuevoRol] = useState ('');
+  const [tieneContrasenia, setTieneContrasenia]=useState(false);
+  const [selectEstado, setSelectEstado]=useState('');
+  const [vistaPrevia,setVistaPrevia]= useState(null);
+
+  const handleEstadoChange=(estado)=>{
+    setSelectEstado(estado);
+  }
 
   useEffect(()=>{
     const obtenerDatos = async ()=> {
@@ -37,6 +44,7 @@ function EditarPersonal ( ){
         const datosPerfil = await getPerfilesById(id);
         setInitialPerfil(datosPerfil);
         setPerfil(datosPerfil);
+        setTieneContrasenia(!!datosPerfil.contrasenia);
       } catch (error) {
         console.error('error al obtener datos del perfil', error);
       }
@@ -46,36 +54,56 @@ function EditarPersonal ( ){
 
   useEffect(()=>{
     console.log ('Perfil',perfil);
-  },[perfil])
-
-  // useEffect(()=>{
-  //   const obtenerPerfil = async () =>{ 
-  //     try {
-  //       const respuesta =await getPerfilesById(id);
-  //       const datos = await respuesta.json();
-  //       setPerfil(datos);
-  //     } catch (error) {
-  //       console.error('error al obtener perfil', error)
-  //     }
-  //   }
-  //   obtenerPerfil();
-  // },[]);
+  },[perfil, selectEstado, nuevoRol])
 
   const handleInputChange =  (e)=> {
-    const {name,value} = e.target;
-    setPerfil((prevPerfil) => ({
-      ...prevPerfil,
-      [name]:value,
-    }));
-  }
+    if(e.target.name=== 'contrasenia'){
+      setTieneContrasenia(e.target.value !== '');
+    }
+    // const {name,value} = e.target;
+    // setPerfil((prevPerfil) => ({
+    //   ...prevPerfil,
+    // [name]:value,
+    setPerfil({
+    perfil,
+    [e.target.name]: e.target.value,
+    })
+    }
+    //));
+  
   
   const handleGuardar = async () => {
     try {
-      await patchPerfil(id,perfil);
+      const estadoInt = selectEstado === 'activo' ? 1 : selectEstado === "inactivo" ? 0 : null;
+      if (estadoInt === null) {
+        throw new Error("el estado seleccionado no es valido");
+      }
+
+      const perfilActualizado = {
+        ...perfil,
+        rol: nuevoRol || perfil.rol,
+        estado : estadoInt || perfil.estado, 
+      }
+
+      const updatePerfil = await patchPerfil(id,perfilActualizado);
+      console.log('perfil actualizado', updatePerfil);
+      setVistaPrevia({
+        nombre:perfilActualizado.nombre,
+        apellido_paterno:perfilActualizado.apellido_paterno,
+        apellido_materno:perfilActualizado.apellido_materno,
+        direccion:perfilActualizado.direccion,
+        telefono:perfilActualizado.telefono,
+        email:perfilActualizado.email,
+        estado: perfilActualizado.estado===1?'activo':'inactivo',
+        rol:tipoRol.find((rol)=>rol.id===perfilActualizado.id_rol)?.tipo||'no definido',
+        contrasenia:perfilActualizado.contrasenia||'',
+      
+      })
       alert ("perfil actualizado con exito");
       navigate(`/editar/${id}`);
     } catch (error) {
       console.log('error al guardar el perfil',error);
+      
     }
   }
 
@@ -83,29 +111,28 @@ function EditarPersonal ( ){
     setPerfil(initialPerfil);
   }
   
-  const soloNumeros = (event) =>{
-    const charCode = event.charCode || event.keycode;
-    if (charCode === 8 || charCode === 46){
-      return true;
+  const isNumber = (evt)=> {
+    evt = (evt) ? evt : window.event;
+    //cambiar evt = (evt) ? evt : window.event; a uno mas actual
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode<48 || charCode >57)) {
+       evt.preventDefault();
     }
-    if (charCode >= 48 && charCode <= 57){
-      return true;
-    }
-    return false;
-  }
+ };
 
     return<div className="editarEspacio">
             <div className="botonRegresar">
-              <Link 
+              {/* <Link 
               onClick={(e)=>{e.preventDefault(); 
               navigate("/personal")}}>
                 <button> Regresar a Personal </button>
-              </Link>
+              </Link> */}
+              <button onClick={()=>navigate('/admin')}><h2>Regresar a Personal</h2></button>
             </div>
             <h1>Editar Perfil</h1>
             <div className="formulario">
-              <form action="">
-                <label htmlFor="">
+              <form action="formEditar">
+                <label htmlFor="nombre">
                   nombre
                 </label>
                 <br />
@@ -117,7 +144,7 @@ function EditarPersonal ( ){
                 onChange={handleInputChange}
                 />
                 <br />
-                <label htmlFor="">
+                <label htmlFor="apellido_apaterno">
                   apellido_paterno
                 </label>
                 <br />
@@ -127,7 +154,7 @@ function EditarPersonal ( ){
                 value={perfil.apellido_paterno}
                 onChange={handleInputChange}/>
                 <br />
-                <label htmlFor="">
+                <label htmlFor="apellido_materno">
                   apellido_materno
                 </label>
                 <br />
@@ -137,7 +164,7 @@ function EditarPersonal ( ){
                 value={perfil.apellido_materno}
                 onChange={handleInputChange}/>
                 <br />
-                <label htmlFor="">
+                <label htmlFor="direccion">
                   direccion
                 </label>
                 <br />
@@ -147,7 +174,7 @@ function EditarPersonal ( ){
                 value={perfil.direccion}
                 onChange={handleInputChange}/>
                 <br />
-                <label htmlFor="">
+                <label htmlFor="telefono">
                   telefono
                 </label>
                 <br />
@@ -159,10 +186,10 @@ function EditarPersonal ( ){
                 minLength='7'
                 value={perfil.telefono}
                 onChange={handleInputChange}
-                onKeyDown={soloNumeros}
+                onKeyDown={isNumber}
                 />
                 <br />
-                <label htmlFor="">
+                <label htmlFor="email">
                   email
                 </label>
                 <br />
@@ -172,27 +199,38 @@ function EditarPersonal ( ){
                 value={perfil.email}
                 onChange={handleInputChange}/>
                 <br />
-                <label htmlFor="">
-                  estado
+                <label htmlFor="estado">Estado</label>
+                <br />
+                <select 
+                id="estado"
+                name="estado" 
+                value={selectEstado}
+                onChange= {(e) => {handleEstadoChange(e.target.value)}}>
+                  <option value=""></option>
+                  <option value="activo">Activo</option>
+                  <option value="inactivo">Inactivo</option>
+                </select>
+                <br />
+                <label htmlFor="rol">
+                   Nuevo Rol:
                 </label>
                 <br />
-                <input type="text" 
-                id="estado" 
-                name="estado"
-                value={perfil.estado}
-                onChange={handleInputChange}/>
+                <select 
+                name="rol" 
+                id="rol"
+                value={nuevoRol}
+                onChange={(e) =>setNuevoRol(e.target.value)}
+                >
+                  <option value=""></option>
+                  <option value="administrador">Administrador</option>
+                  <option value="proveedor">Proveedor</option>
+                  <option value="cliente">Cliente</option>
+                  <option value="empleado">Empleado</option>
+                </select>
                 <br />
-                {/* <label htmlFor="">
-                  rol
-                </label>
-                <br />
-                <input type="text" 
-                id="rol" 
-                name="rol"
-                value={perfil.rol}
-                onChange={handleInputChange}/>
-                <br /> */}
-                <label htmlFor="">
+                {tieneContrasenia &&(
+                <>
+                  <label htmlFor="contrasenia">
                   contrasenia
                 </label>
                 <br />
@@ -200,11 +238,32 @@ function EditarPersonal ( ){
                 id="contrasenia" 
                 name="contrasenia"
                 value={perfil.contrasenia||''}
-                onChange={handleInputChange}/>
+                onChange={handleInputChange}
+                />
                 <br />
+                </>)}
+                
                 <button type="button" onClick={handleGuardar}>Guardar</button>
                 <button type="button" onClick={handleCancelar}>Cancelar</button>
               </form>
+              {vistaPrevia &&(
+                <div className="objetoDatos">
+                  <h2 className="titleList">datos nuevo</h2>
+                  <ul>
+                  <li>Nombre:{vistaPrevia.nombre}</li>
+                  <li>Apellido Paterno{vistaPrevia.apellido_paterno}</li>
+                  <li>Apellido Materno{vistaPrevia.apellido_materno}</li>
+                  <li>Direccion{vistaPrevia.direccion}</li>
+                  <li>Telefono{vistaPrevia.telefono}</li>
+                  <li>Email{vistaPrevia.email}</li>
+                  <li>Estado{vistaPrevia.estado}</li>
+                  <li>Rol{vistaPrevia.rol}</li>
+                  {vistaPrevia.rol === 'administrador'&&(
+                  <li>Contrasenia{vistaPrevia.contrasenia}</li>
+                  )}
+                  </ul>
+                </div>
+                )}
             </div>            
           </div>
 }

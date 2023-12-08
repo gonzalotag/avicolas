@@ -1,97 +1,91 @@
 import "../assets/css/registroPersonal.css"
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import TablaPersonal from "./TablaPersonal";
-import ContenidoAdmin from "./ContenidoAdmin";
-import MenuAdmin from "./MenuAdmin";
 import { postPerfil } from "../api/perfil.api";
-import axios from "axios";
 
-
-// import TablaPersonal from "./TablaPersonal"
 function RegistroPersonal(){
     
-    const navigate=useNavigate();
+  const navigate=useNavigate();
     
-        const [formData, setFormData] = useState({
-          nombre: '',
-          apellido_paterno: '',
-          apellido_materno: '',
-          direccion:'',
-          telefono:'',
-          email: '',
-          estado: true,
-          rol:'',
-          contrasenia:'',
-        });
+    const [formData, setFormData] = useState({
+      nombre: '',
+      apellido_paterno: '',
+      apellido_materno: '',
+      direccion:'',
+      telefono:'',
+      email: '',
+      estado: true,
+      rol:'',
+      contrasenia:'',
+    });
         
-        const [selectEstado, setSelectEstado]=useState('');
-        const [vistaPrevia, setVistaPrevia]=useState(null);
-        
-        const handleChange = (e) => {
-            const { id, value, name } = e.target;
-            setFormData((prevData) => ({
-              ...prevData,
-              [id || name]: value,
-            }));
-          };
-        const handleEstadoChange=(estado)=>{
-            setSelectEstado(estado);
-        }
+  const [selectEstado, setSelectEstado]=useState('');
+  const [vistaPrevia, setVistaPrevia]=useState(null);
 
-        const handleVistaPrevia =()=>{
-          const vistaPreviaData ={
-            ...formData,
-            estado: selectEstado === 'activo' ? 'Activo' : 'Inactivo'
-          }
-                setVistaPrevia(vistaPreviaData);
-                console.log("data previa",vistaPreviaData);
+  const handleChange = (e) => {
+    const { id, value, name } = e.target;
+      setFormData((prevData) => ({
+        ...prevData,
+        [id || name]: value,
+      }));
+  };
+
+  const handleEstadoChange=(estado)=>{
+    setSelectEstado(estado);
+  }
+
+  const handleVistaPrevia =()=>{
+    const vistaPreviaData ={
+      ...formData,
+      estado: selectEstado === 'activo' ? 'Activo' : 'Inactivo'
+    }
+    setVistaPrevia(vistaPreviaData);
+      console.log("data previa",vistaPreviaData);
             
-        };
-        // Restaurar el estado del formulario a valores vacios 
-        const handleCancelar = () => {
-          setFormData({
-            nombre: '',
-            apellido_paterno: '',
-            apellido_materno: '',
-            direccion:'',
-            telefono:'',
-            email: '',
-            estado: '',
-            rol:'',
-            contrasenia:'',
-          });
-          setSelectEstado('activo')
-          setVistaPrevia(null);
-        };
+  };
+  // Restaurar el estado del formulario a valores vacios 
+  const handleCancelar = () => {
+    setFormData({
+      nombre: '',
+      apellido_paterno: '',
+      apellido_materno: '',
+      direccion:'',
+      telefono:'',
+      email: '',
+      estado: '',
+      rol:'',
+      contrasenia:'',
+    });
+    setSelectEstado('activo')
+    setVistaPrevia(null);
+  };
         
         
         // funcion isNumber para poder ingresar numeros en un input q pide solo texto
-        function isNumber(evt){
+        const isNumber = (evt)=> {
            evt = (evt) ? evt : window.event;
            //cambiar evt = (evt) ? evt : window.event; a uno mas actual
            var charCode = (evt.which) ? evt.which : evt.keyCode;
-           if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !==
-           46 ) {
-             return false;
+           if (charCode > 31 && (charCode<48 || charCode >57)) {
+              evt.preventDefault();
            }
-           return true;
-        }
-        
+        };
+           
         
         const handleSubmit = async (e) => {
           e.preventDefault();
-          const contraseniaValue= fomData.rol === 'administrador' ?formData.contrasenia :null;
+          const contraseniaValue= formData.rol === 'administrador' ? formData.contrasenia :null;
           const dataToAdd = {
             ...formData,
             estado:selectEstado === 'activo',
             rol: formData.rol,
-            
+            contrasenia: contraseniaValue,
         };
         console.log('datos a guardar', dataToAdd)
         
         try{
             const response = await postPerfil(dataToAdd);
+              alert('perfil creado con exito');
                 console.log('perfil guardado con exito' , response.data);
                 handleCancelar();            
         }catch (error){
@@ -102,13 +96,13 @@ function RegistroPersonal(){
       
         return (
           <div className="regPersonal">
-            <div className="contenedorByT">
+            <div className="contenedorButtonAndTitle">
             <div className="buttonRegresar">
-                <Link to="/personal" >
-                        <button> regresar a personal </button>
-                </Link>
+                <button onClick={()=>navigate('/admin')}> 
+                  <h2>Regresar a Personal</h2>
+                </button>
             </div>    
-            <div className="tituloRegistro">Registrar Personal</div>
+            <h2 className="titleForm"> Registrar Personal</h2>
             </div>
             <form className="formRegistro" onSubmit={handleSubmit}>
               <div className="registroNuevoPers">
@@ -163,7 +157,7 @@ function RegistroPersonal(){
                 value={formData.telefono} 
                 maxLength='10'
                 minLength='7'
-                onClick = {isNumber}
+                onKeyPress = {isNumber}
                 onChange={handleChange}
                 placeholder="Ingresar Telefono"
                 required/>
@@ -195,9 +189,7 @@ function RegistroPersonal(){
                         name="rol" 
                         // id=""
                         value={formData.rol}
-                        onChange={handleChange}
-                        placeholder="seleccionar estado"
-                        >    
+                        onChange={handleChange}>    
                         <option value="">seleccion rol</option>
                         <option value="administrador">Administrador</option>
                         <option value="proveedor" >Proveedor</option>
@@ -225,14 +217,12 @@ function RegistroPersonal(){
                 <button type="button" onClick={handleVistaPrevia}> 
                     Vista previa</button>
                 <button type="submit" onSubmit={handleSubmit} >
-                    Guardar
-                </button>
+                    Guardar</button>
                 <button type="button" onClick={handleCancelar}>
-                    Cancelar
-                </button>
+                    Cancelar</button>
               </div>
               <div className="objetoDatos">
-                <h2>datos nuevo registro</h2>
+                <h2 className="titleList">Datos Nuevo Registro</h2>
                 {vistaPrevia && (
                 <ul>
                 <li>Nombre: {vistaPrevia.nombre}</li>
@@ -248,7 +238,7 @@ function RegistroPersonal(){
                 )}
                 </ul>
                 )}
-            </div>
+              </div>
             </form>
           </div>
         );

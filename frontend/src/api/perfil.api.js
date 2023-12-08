@@ -37,6 +37,8 @@ export const getPerfilesById = async (id)=>{
      return perfilData;
  }catch(error){
  console.error('error al obtener el perfil por id' , error)
+ console.log(error);
+ throw error;
  }
 }
     
@@ -78,8 +80,15 @@ export const postPerfil = async(data)=>{
 
 //funcion que actualiza la tabla perfil
 async function patchPerfil(id,perfilData){
-    const result = await axios.patch(`http://localhost:4000/perfil/${id}`, perfilData);
-    return result;
+    try {
+        const result = await axios.patch(`http://localhost:4000/perfil/${id}`, perfilData);
+        res.status(200).json({message:'perfil no actualizzado correctamente '})
+        return result.data;    
+        
+    } catch (error) {
+        console.error('error al hacer solicitud patch',error);
+        res.status(500).json({message:'error interno del servidor al actualizar el perfil'});
+    }
 }
 
 export{

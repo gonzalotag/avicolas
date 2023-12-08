@@ -26,11 +26,13 @@ function LoginPerfil (props){
         if (userInfo) {
             setIsAuth(true);
             localStorage.setItem('userInfo', JSON.stringify(userInfo)) 
-            const rol = await infoRol(userInfo.id_rol)
+            const rol = await infoRol(userInfo.id_rol);
                 console.log(rol.data.tipo)
                 //recarga la pagina automaticamente no usar si no es necesario
-                // window.location.reload() 
-                if (rol.data.tipo === "administrador") navigate('/admin')       
+                //window.location.reload() 
+                // if (rol.data.tipo === "administrador") 
+                navigate(`/admin`)   
+
         } else {
             alert("usuario o contrasenia incorrectos");
             cleanState();

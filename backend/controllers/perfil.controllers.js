@@ -43,7 +43,7 @@ export const createPerfil = async (req, res) => {
             const [rolResult] = await pool.query("SELECT id FROM rol WHERE tipo =?", [rol]);
             const id_rol = rolResult[0].id;
             
-// convierte el valor de estado a un entero (1 para trur y 0 para false)
+// convierte el valor de estado a un entero (1 para true y 0 para false)
         const estadoInt = estado === true ? 1 : 0;
         const[result] = await pool.query(
             "INSERT INTO perfil (nombre, apellido_paterno, apellido_materno , direccion , telefono, email, estado ,id_rol,contrasenia) values (?,?,?,?,?,?,?,?,?)",
@@ -70,12 +70,43 @@ export const createPerfil = async (req, res) => {
 
 export const updatePerfil = async (req,res) =>{
     try {
-        const result =await pool.query ("UPDATE perfil SET ? WHERE id = ?",[
-            req.body,
-            req.params.id
-        ]);
+        const {
+            id,
+            nombre,
+            apellido_paterno,
+            apellido_materno,
+            direccion,
+            telefono,
+            email,
+            estado,
+            rol,
+            contrasenia,
+        }= req.body;
+        const [rolResult]=await pool.query("SELECT id FROM rol where tipo=?", [rol]);
+        const id_rol = rolResult.length > 0 ? rolResult[0].id :null;
+
+        const estadoInt = estado === true || estado === false ?(estado === true ? 1 : 0):null;
+        
+        const [result] =await pool.query (
+            "UPDATE perfil SET nombre=? apellido_paterno=?, apellido_materno=?, direccion=?, telefono=?, email=?, estado=?, id_rol=?, contrasenia=? WHERE id = ?",
+            [
+            nombre,
+            apellido_paterno,
+            apellido_materno,
+            direccion,
+            telefono,
+            email,
+            estado,
+            id_rol,
+            contrasenia,
+            id,
+            ]
+        );
+        // console.log('Datos a actualizar',req.body);
         res.json(result);
+        // console.log('conectado a la base de datos ')
     } catch (error) {
+        console.error('Error en le controlador ',error);
         return res.status(500).json({message: error.message});
     }
  };
