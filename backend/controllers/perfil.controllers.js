@@ -70,6 +70,7 @@ export const createPerfil = async (req, res) => {
 
 export const updatePerfil = async (req,res) =>{
     try {
+        //extrae los datos del cuerpo de la solicitud request body
         const {
             id,
             nombre,
@@ -78,17 +79,11 @@ export const updatePerfil = async (req,res) =>{
             direccion,
             telefono,
             email,
-            estado,
-            rol,
-            contrasenia,
+            
         }= req.body;
-        const [rolResult]=await pool.query("SELECT id FROM rol where tipo=?", [rol]);
-        const id_rol = rolResult.length > 0 ? rolResult[0].id :null;
-
-        const estadoInt = estado === true || estado === false ?(estado === true ? 1 : 0):null;
-        
+        //se realiza la consulta sql para actualizar el perfil en la BD
         const [result] =await pool.query (
-            "UPDATE perfil SET nombre=? apellido_paterno=?, apellido_materno=?, direccion=?, telefono=?, email=?, estado=?, id_rol=?, contrasenia=? WHERE id = ?",
+            "UPDATE perfil SET nombre=?, apellido_paterno=?, apellido_materno=?, direccion=?, telefono=?, email=? WHERE id = ?",
             [
             nombre,
             apellido_paterno,
@@ -96,15 +91,12 @@ export const updatePerfil = async (req,res) =>{
             direccion,
             telefono,
             email,
-            estado,
-            id_rol,
-            contrasenia,
             id,
             ]
         );
-        // console.log('Datos a actualizar',req.body);
+        console.log('Datos a actualizar',req.body);
+        //responde los resultados en formato json
         res.json(result);
-        // console.log('conectado a la base de datos ')
     } catch (error) {
         console.error('Error en le controlador ',error);
         return res.status(500).json({message: error.message});
@@ -160,3 +152,14 @@ export const updatePerfil = async (req,res) =>{
         return res.status(500).json({message: error.message});
     }
  }
+//funcion getPerfilesById
+// export const getPerfilesById = async (req,res)=>{
+//     const id= req.params.id;
+//     const [result]=await getPerfilesByRol(req,res);
+//     const perfil=result.find((perfil)=>perfil.id===parseInt(id));
+//     if(!perfil){
+//         return res.status(404).json({message:'No se encontro el Perfil'})
+//         }else{
+//             return res.json(perfil);
+//             }
+// };

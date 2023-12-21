@@ -6,7 +6,7 @@ import { postPerfil } from "../api/perfil.api";
 function RegistroPersonal(){
     
   const navigate=useNavigate();
-    
+    //es el estado donde se pondra desde el nombre hasta la contrasenia
     const [formData, setFormData] = useState({
       nombre: '',
       apellido_paterno: '',
@@ -18,10 +18,11 @@ function RegistroPersonal(){
       rol:'',
       contrasenia:'',
     });
-        
+  
   const [selectEstado, setSelectEstado]=useState('');
+  //estado para poder mostrar el formData antes de guardar el formulario
   const [vistaPrevia, setVistaPrevia]=useState(null);
-
+//es para manejar las actualizaciones al formData segun los cambios en el formulario
   const handleChange = (e) => {
     const { id, value, name } = e.target;
       setFormData((prevData) => ({
@@ -33,7 +34,7 @@ function RegistroPersonal(){
   const handleEstadoChange=(estado)=>{
     setSelectEstado(estado);
   }
-
+//donde se va a poner los nuevos datos temporalmente para luego mostrarlos en el html
   const handleVistaPrevia =()=>{
     const vistaPreviaData ={
       ...formData,
@@ -41,7 +42,6 @@ function RegistroPersonal(){
     }
     setVistaPrevia(vistaPreviaData);
       console.log("data previa",vistaPreviaData);
-            
   };
   // Restaurar el estado del formulario a valores vacios 
   const handleCancelar = () => {
@@ -59,40 +59,35 @@ function RegistroPersonal(){
     setSelectEstado('activo')
     setVistaPrevia(null);
   };
-        
-        
-        // funcion isNumber para poder ingresar numeros en un input q pide solo texto
-        const isNumber = (evt)=> {
-           evt = (evt) ? evt : window.event;
-           //cambiar evt = (evt) ? evt : window.event; a uno mas actual
-           var charCode = (evt.which) ? evt.which : evt.keyCode;
-           if (charCode > 31 && (charCode<48 || charCode >57)) {
-              evt.preventDefault();
-           }
-        };
-           
-        
-        const handleSubmit = async (e) => {
-          e.preventDefault();
-          const contraseniaValue= formData.rol === 'administrador' ? formData.contrasenia :null;
-          const dataToAdd = {
-            ...formData,
-            estado:selectEstado === 'activo',
-            rol: formData.rol,
-            contrasenia: contraseniaValue,
-        };
-        console.log('datos a guardar', dataToAdd)
-        
-        try{
-            const response = await postPerfil(dataToAdd);
-              alert('perfil creado con exito');
-                console.log('perfil guardado con exito' , response.data);
-                handleCancelar();            
-        }catch (error){
-            console.error('error al guardar el perfil',error);
-        }
-    
-        };
+// funcion isNumber para poder ingresar solo numeros en un input
+  const isNumber = (evt)=> {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+      if (charCode > 31 && (charCode<48 || charCode >57)) {
+          evt.preventDefault();
+      }
+  };
+
+//se utiliza para procesar y enviar los datos del formulario al servidor
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const contraseniaValue= formData.rol === 'administrador' ? formData.contrasenia :null;
+    const dataToAdd = {
+      ...formData,
+      estado:selectEstado === 'activo',
+      rol: formData.rol,
+      contrasenia: contraseniaValue,
+    };
+    console.log('datos a guardar', dataToAdd)
+    try{
+      const response = await postPerfil(dataToAdd);
+      alert('perfil creado con exito');
+      console.log('perfil guardado con exito' , response.data);
+      handleCancelar();            
+    }catch (error){
+      console.error('error al guardar el perfil',error);
+    }  
+  };
       
         return (
           <div className="regPersonal">
@@ -187,7 +182,6 @@ function RegistroPersonal(){
                         <select 
                         title="selectRol"
                         name="rol" 
-                        // id=""
                         value={formData.rol}
                         onChange={handleChange}>    
                         <option value="">seleccion rol</option>

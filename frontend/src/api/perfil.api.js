@@ -22,8 +22,10 @@ async function getPerfil(){
 
 export const getPerfilesById = async (id)=>{
  try{
-     const result = await axios.get(`http://localhost:4000/perfil/${id}`);
-     const perfilData ={
+    const result = await axios.get(`http://localhost:4000/perfil/${id}`); 
+    //una vez que se recibe los datos de .get se extraen y transforman los datos del perfil 
+    //y se los almacena dentro de perfilData
+    const perfilData ={
         id: result.data.id,
         nombre: result.data.nombre,
         apellido_paterno: result.data.apellido_paterno,
@@ -31,10 +33,9 @@ export const getPerfilesById = async (id)=>{
         direccion: result.data.direccion,
         telefono: result.data.telefono,
         email: result.data.email,
-        estado: result.data.estado,
-        contrasenia: result.data.contrasenia,
-     }
-     return perfilData;
+    }
+    // console.log('perfil data', perfilData);
+    return perfilData;
  }catch(error){
  console.error('error al obtener el perfil por id' , error,message);
  console.log(error.response);
@@ -69,15 +70,26 @@ export const postPerfil = async(data)=>{
 
 
 //funcion que actualiza la tabla perfil
-async function patchPerfil(id,perfilData,res){
+async function patchPerfil(id,perfilData,callback){
     try {
+        //pide la tarea patch a la api para actualizar le perfil con el id seleccionado
         const result = await axios.patch(`http://localhost:4000/perfil/${id}`, perfilData);
-        res.status(200).json({message:'perfil actualizzado correctamente '})
+        console.log('perfil actualizado correctamente ', result.data);
+        //verifica la devolucion de la llamada y si esta es una funcion
+        if(callback && typeof callback === 'function'){
+            callback({status:200 ,data: result.data});
+        }
         return result.data;    
-        
     } catch (error) {
         console.error('error al hacer solicitud patch',error);
-        res.status(500).json({message:'error interno del servidor al actualizar el perfil'});
+        //verifica si se hizo una devolucion de la llamada y si tambien hay un error
+        if(callback && error.response){
+            console.log('codigo estado', error.response.status);
+            callback({status: error.response.status , data :null});
+        }else if (callback){
+            callback({status: 500,data:null});
+        }
+        return null;
     }
 }
 

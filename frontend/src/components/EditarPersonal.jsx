@@ -4,47 +4,27 @@ import React, { useEffect , useState } from "react";
 import { getPerfilesById, patchPerfil } from "../api/perfil.api";
 
 function EditarPersonal ( ){
-    
+  //se usa useParams para no esta batallando en menejar el id del perfil a editar
   const {id} = useParams();
   const navigate=useNavigate();
+  //state perfil para almacenar los datos de perfil q se van a editar 
   const [perfil ,setPerfil] = useState({
     nombre: '',
     apellido_paterno: '',
     apellido_materno: '',
-    direccion:'',
-    telefono:'',
+    direccion: '',
+    telefono: '',
     email: '',
-    estado: '',
-    rol:'',
-    contrasenia:'',
   });
-  const [initialPerfil, setInitialPerfil]= useState({
-    nombre: '',
-    apellido_paterno: '',
-    apellido_materno: '',
-    direccion:'',
-    telefono:'',
-    email: '',
-    estado: '',
-    rol:'',
-    contrasenia:''
-  });
-  const [nuevoRol , setNuevoRol] = useState ('');
-  const [tieneContrasenia, setTieneContrasenia]=useState(false);
-  const [selectEstado, setSelectEstado]=useState('');
-  const [vistaPrevia,setVistaPrevia]= useState(null);
-
-  const handleEstadoChange=(estado)=>{
-    setSelectEstado(estado);
-  }
-
+  
+  const [mostrarVistaPrevia,setMostrarVistaPrevia]= useState(false);
+  //el hook useEffect para cargar los datos de perfil cuando vayamos a editar 
   useEffect(()=>{
     const obtenerDatos = async ()=> {
       try {
         const datosPerfil = await getPerfilesById(id);
-        setInitialPerfil(datosPerfil);
+        console.log('datos obtenidos de perfil', datosPerfil);
         setPerfil(datosPerfil);
-        setTieneContrasenia(!!datosPerfil.contrasenia);
       } catch (error) {
         console.error('error al obtener datos del perfil', error);
       }
@@ -52,73 +32,56 @@ function EditarPersonal ( ){
     obtenerDatos();
   },[id]);
 
-  useEffect(()=>{
-    console.log ('Perfil',perfil);
-  },[perfil, selectEstado, nuevoRol])
-
+  const handleVistaPrevia = () => {
+    setMostrarVistaPrevia(true);
+  };
+//maneja los nuevos cambios en perfil y actualiza el perfil 
   const handleInputChange =  (e)=> {
-    if(e.target.name === 'contrasenia'){
-      setTieneContrasenia(e.target.value !== '');
-    }  
-    setPerfil({
-      perfil,
-      [e.target.name]: e.target.value,
-    })
+    const {name, value} = e.target;
+    setPerfil((prevPerfil) =>({
+      ...prevPerfil,
+      [name]: value,
+    }));
+    setMostrarVistaPrevia(false);
   }
-  
+//guarda los cambios mediante el uso del api patchPerfil
   const handleGuardar = async () => {
     try {
-      const estadoInt = selectEstado === 'activo' ? 1 : selectEstado === "inactivo" ? 0 : null;
-      if (estadoInt === null) {
-        throw new Error("el estado seleccionado no es valido");
-      }
-      const perfilActualizado = {
-        ...perfil,
-        rol: nuevoRol || perfil.rol,
-        estado : estadoInt || perfil.estado, 
-      }
-      const updatePerfil = await patchPerfil(id,perfilActualizado);
-      // console.log('perfil actualizado', updatePerfil);
-      setVistaPrevia({
-        nombre:perfilActualizado.nombre,
-        apellido_paterno:perfilActualizado.apellido_paterno,
-        apellido_materno:perfilActualizado.apellido_materno,
-        direccion:perfilActualizado.direccion,
-        telefono:perfilActualizado.telefono,
-        email:perfilActualizado.email,
-        estado: perfilActualizado.estado===1?'activo':'inactivo',
-        rol:tipoRol.find((rol)=>rol.id===perfilActualizado.id_rol)?.tipo||'no definido',
-        contrasenia:perfilActualizado.contrasenia||'',
-      
-      })
-      alert ("perfil actualizado con exito");
-      navigate(`/editar/${id}`);
+      console.log('perfil actualizado antes de patchPerfil',perfil);
+      await patchPerfil(id,perfil,(response) =>{
+        if(response && response.status === 200){
+          alert('perfil actualizado con exito');
+          navigate(`/editar/${id}`);
+        }else{
+          console.log('error al guardar el perfil',response); 
+        }
+      });
     } catch (error) {
-      console.log('error al guardar el perfil',error);
-      
+      console.log('error al guardar el perfil',error); 
     }
   }
-
-  const handleCancelar =()=>{
-    setPerfil(initialPerfil);
+//restablece el estado del perfil y lo reinicia al estado inicial
+  const handleCancelar = async () => {
+    const datosOriginales = await getPerfilesById(id);
+    setPerfil(datosOriginales);
+    navigate(`/editar/${id}`);
   }
-  
+// validacion de solo numeros para el campo de telefono 
   const isNumber = (evt)=> {
     evt = (evt) ? evt : window.event;
-    //cambiar evt = (evt) ? evt : window.event; a uno mas actual
     var charCode = (evt.which) ? evt.which : evt.keyCode;
     if (charCode > 31 && (charCode<48 || charCode >57)) {
        evt.preventDefault();
     }
- };
+  };
 
-    return<div className="editarEspacio">
+    return(
+    <div className="editarEspacio">
             <div className="botonRegresar">
-              
               <button onClick={()=>navigate('/admin')}><h2>Regresar a Personal</h2></button>
             </div>
             <h1>Editar Perfil</h1>
-            <div className="formulario">
+            <div className="formularioEdit">
               <form action="formEditar">
                 <label htmlFor="nombre">
                   nombre
@@ -189,72 +152,25 @@ function EditarPersonal ( ){
                 <br />
                 <label htmlFor="estado">Estado</label>
                 <br />
-                <select 
-                id="estado"
-                name="estado" 
-                value={selectEstado}
-                onChange= {(e) => {handleEstadoChange(e.target.value)}}>
-                  <option value=""></option>
-                  <option value="activo">Activo</option>
-                  <option value="inactivo">Inactivo</option>
-                </select>
-                <br />
-                <label htmlFor="rol">
-                   Nuevo Rol:
-                </label>
-                <br />
-                <select 
-                name="rol" 
-                id="rol"
-                value={nuevoRol}
-                onChange={(e) =>setNuevoRol(e.target.value)}
-                >
-                  <option value=""></option>
-                  <option value="administrador">Administrador</option>
-                  <option value="proveedor">Proveedor</option>
-                  <option value="cliente">Cliente</option>
-                  <option value="empleado">Empleado</option>
-                </select>
-                <br />
-                {tieneContrasenia &&(
-                <React.Fragment>
-                  <label htmlFor="contrasenia">
-                  contrasenia
-                </label>
-                <br />
-                <input type="text" 
-                id="contrasenia" 
-                name="contrasenia"
-                value={perfil.contrasenia||''}
-                onChange={handleInputChange}
-                />
-                <br />
-                </React.Fragment>)}
-                
                 <button type="button" onClick={handleGuardar}>Guardar</button>
                 <button type="button" onClick={handleCancelar}>Cancelar</button>
-                <button>Vista Previa</button>
+                <button type="button" onClick={handleVistaPrevia}>Vista Previa</button>
               </form >
-              {vistaPrevia &&(
+              {mostrarVistaPrevia &&(
                 <div className="objetoDatos">
-                  <h2 className="titleList">datos nuevo</h2>
+                  <h2 className="titleList">Datos Modificados</h2>
                   <ul>
-                  <li>Nombre:{vistaPrevia.nombre}</li>
-                  <li>Apellido Paterno{vistaPrevia.apellido_paterno}</li>
-                  <li>Apellido Materno{vistaPrevia.apellido_materno}</li>
-                  <li>Direccion{vistaPrevia.direccion}</li>
-                  <li>Telefono{vistaPrevia.telefono}</li>
-                  <li>Email{vistaPrevia.email}</li>
-                  <li>Estado{vistaPrevia.estado}</li>
-                  <li>Rol{vistaPrevia.rol}</li>
-                  {vistaPrevia.rol === 'administrador'&&(
-                  <li>Contrasenia{vistaPrevia.contrasenia}</li>
-                  )}
+                  <li>Nombre: {perfil.nombre}</li>
+                  <li>Apellido Paterno: {perfil.apellido_paterno}</li>
+                  <li>Apellido Materno: {perfil.apellido_materno}</li>
+                  <li>Direccion: {perfil.direccion}</li>
+                  <li>Telefono: {perfil.telefono}</li>
+                  <li>Email: {perfil.email}</li>
                   </ul>
                 </div>
                 )}
             </div>            
           </div>
+    );
 }
-
 export default EditarPersonal;

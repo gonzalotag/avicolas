@@ -15,7 +15,7 @@ const corsOptions ={
 
 const app = express();
 // const cors = require('cors');
-app.use(cors());
+// app.use(cors());
 app.use(cors(corsOptions)); //{origin:"http://locallhost:5173"}
 app.use(express.json());
 app.use(perfilRoutes);
