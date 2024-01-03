@@ -152,14 +152,3 @@ export const updatePerfil = async (req,res) =>{
         return res.status(500).json({message: error.message});
     }
  }
-//funcion getPerfilesById
-// export const getPerfilesById = async (req,res)=>{
-//     const id= req.params.id;
-//     const [result]=await getPerfilesByRol(req,res);
-//     const perfil=result.find((perfil)=>perfil.id===parseInt(id));
-//     if(!perfil){
-//         return res.status(404).json({message:'No se encontro el Perfil'})
-//         }else{
-//             return res.json(perfil);
-//             }
-// };

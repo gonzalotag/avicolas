@@ -23,7 +23,7 @@ function EditarPersonal ( ){
     const obtenerDatos = async ()=> {
       try {
         const datosPerfil = await getPerfilesById(id);
-        console.log('datos obtenidos de perfil', datosPerfil);
+        // console.log('datos obtenidos de perfil', datosPerfil);
         setPerfil(datosPerfil);
       } catch (error) {
         console.error('error al obtener datos del perfil', error);
@@ -47,7 +47,7 @@ function EditarPersonal ( ){
 //guarda los cambios mediante el uso del api patchPerfil
   const handleGuardar = async () => {
     try {
-      console.log('perfil actualizado antes de patchPerfil',perfil);
+      // console.log('perfil actualizado antes de patchPerfil',perfil);
       await patchPerfil(id,perfil,(response) =>{
         if(response && response.status === 200){
           alert('perfil actualizado con exito');
@@ -149,8 +149,6 @@ function EditarPersonal ( ){
                 name="email"
                 value={perfil.email}
                 onChange={handleInputChange}/>
-                <br />
-                <label htmlFor="estado">Estado</label>
                 <br />
                 <button type="button" onClick={handleGuardar}>Guardar</button>
                 <button type="button" onClick={handleCancelar}>Cancelar</button>

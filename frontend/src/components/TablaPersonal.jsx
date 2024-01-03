@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import "../assets/css/tablaPersonal.css"
 import {getAllRoles } from "../api/rol.api";
 import {deletePersona, getPerfiles } from "../api/perfil.api";

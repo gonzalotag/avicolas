@@ -23,7 +23,7 @@ function MenuAdmin (props){
             </div>
             <div className="nombreAdmin">
                 nombre
-                {/* {nombreAdmin} */}
+                
             </div>
         </div>
         <div className="buttonBox">

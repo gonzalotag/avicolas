@@ -74,7 +74,7 @@ async function patchPerfil(id,perfilData,callback){
     try {
         //pide la tarea patch a la api para actualizar le perfil con el id seleccionado
         const result = await axios.patch(`http://localhost:4000/perfil/${id}`, perfilData);
-        console.log('perfil actualizado correctamente ', result.data);
+        // console.log('perfil actualizado correctamente ', result.data);
         //verifica la devolucion de la llamada y si esta es una funcion
         if(callback && typeof callback === 'function'){
             callback({status:200 ,data: result.data});

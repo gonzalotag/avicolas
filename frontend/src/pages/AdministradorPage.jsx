@@ -1,6 +1,6 @@
 import "../assets/css/administradorPage.css"
-import Navbar from "../components/Navbar";
-import Footer from '../components/Footer';
+// import Navbar from "../components/Navbar";
+// import Footer from '../components/Footer';
 import MenuAdmin from "../components/MenuAdmin";
 
 function AdministradorPage (){
@@ -14,10 +14,6 @@ function AdministradorPage (){
                 espacio de trabajo
         </div>
         </div>
-        
-        
-        
-        
     </div>
 }
 

@@ -3,8 +3,8 @@ import "../assets/css/AdminComponent.css"
 import ContenidoAdmin from "./ContenidoAdmin";
 import MenuAdmin from "./MenuAdmin";
 import { getPerfiles, getPerfilesByRol } from "../api/perfil.api";
-import {getRolRequest,getAllRoles} from "../api/rol.api";
-import { Routes,Route,useNavigate, Router } from "react-router-dom";
+import {getAllRoles} from "../api/rol.api";
+import { useNavigate} from "react-router-dom";
 
 function AdminComponent(){
     const [perfiles, setPerfiles] = useState([]);

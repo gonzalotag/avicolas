@@ -1,13 +1,13 @@
 .editarEspacio{
-    height: 594px;
+    height: 100%;
     width: 100%;
     color: white;
     background: rgba(255, 255, 255, 0.46);
     border-radius: 10px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(6.4px);
+    /* backdrop-filter: blur(6.4px);
     -webkit-backdrop-filter: blur(6.4px);
-    border: 1px solid rgba(255, 255, 255, 0.23);
+    border: 1px solid rgba(255, 255, 255, 0.23); */
     display: flex;
     flex-direction: column;
     overflow-y: scroll;

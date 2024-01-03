@@ -14,11 +14,15 @@ import ContenidoAdmin from './components/ContenidoAdmin';
 import EditarPersonal from './components/EditarPersonal';
 import Produccion from './components/Produccion';
 import Reportes from './components/Reportes';
+import Lote from './components/Lote';
+import Medicinas from './components/Medicinas';
+import Galpon from './components/Galpon';
+import Alimentos from './components/Alimentos';
 
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
-  const [checkAuth , setCheckAuth] = useState(true);
+  // const [checkAuth , setCheckAuth] = useState(true);
   const navigate = useNavigate();
 
   useEffect(()=>{
@@ -26,7 +30,7 @@ function App() {
     if (userInfo) {
       setIsAuth(true);
       } 
-      setCheckAuth(false);
+      // setCheckAuth(false);
   },[])
   const onLogout=()=>{
     localStorage.removeItem('userInfo');
@@ -45,12 +49,16 @@ function App() {
       <Route path='/' element = {<LoginPerfil setIsAuth= {setIsAuth}/>}/>
       <Route path='/login' element = {<LoginPerfil setIsAuth= {setIsAuth} onLogout={onLogout}/>}/>
       <Route path='/admin/*' element ={<GuardiaComponent isAuth={isAuth} setIsAuth={setIsAuth} Component={<AdminComponent/>}/>}/>
-      <Route path='/admin/personal' element={<TablaPersonal isAuth={isAuth} Component={<ContenidoAdmin/>}/>}/>
+      {/* <Route path='/admin/personal' element={<TablaPersonal isAuth={isAuth} Component={<ContenidoAdmin/>}/>}/> */}
       <Route path='/produccion' element={<Produccion isAuth={isAuth} Component={<AdminComponent/>}/>}/>
       <Route path='/almacen' element={<Almacen isAuth={isAuth} Component={<AdminComponent/>}/>}/>
       <Route path='/registros' element={<RegistroPersonal isAuth={isAuth}/>}/>
       <Route path='/editar/:id' element={<EditarPersonal/>}  />
       <Route path='/reportes' element={<Reportes/>} isAuth={isAuth} />
+      <Route path='/lote' element={<Lote isAuth={isAuth} Component={<AdminComponent/>}/>}/>
+      <Route path='/medicina' element={<Medicinas isAuth={isAuth} Component={<AdminComponent/>}/>}/>
+      <Route path='/galpon' element={<Galpon isAuth={isAuth} Component={<AdminComponent/>}/>}/>
+      <Route path='/alimentos' element={<Alimentos isAuth={isAuth} Component={<AdminComponent/>}/>}/>
     </Routes>
     </div>
     <Footer/>

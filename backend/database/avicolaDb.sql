@@ -85,3 +85,40 @@ UPDATE perfil
 SET contrasenia = 'amosis'
 WHERE id = 1;
 
+create table almacen(
+    id int AUTO_INCREMENT primary key,
+    galpones int,
+    alimentos varchar(20),
+    pollos_de_engorde int,
+    medicinas varchar(20)
+);
+create table alimentos(
+    id int AUTO_INCREMENT PRIMARY KEY,
+    nombre varchar(40),
+    precio float,
+    stock int,
+    fecha_vencimiento date,
+    id_almacen int,
+    FOREIGN KEY(id_almacen) REFERENCES almacen(id)
+    ON DELETE CASCADE ON UPDATE CASCADE
+);
+create table galpones(
+    id int AUTO_INCREMENT PRIMARY KEY,
+    num_gallina int not null,
+    capacidad int,
+    disponible BOOLEAN,
+    id_almacen int,
+    FOREIGN KEY(id_almacen) REFERENCES almacen(id)
+);
+create table medicinas(
+    id int AUTO_INCREMENT PRIMARY KEY,
+    nombre varchar(60),
+    dosificacion varchar(80),
+    presentacion varchar(60),
+    precio float,
+    stock int,
+    fecha_vencimiento date,
+    id_almacen int,
+    FOREIGN KEY(id_almacen) REFERENCES almacen(id)
+);
+
