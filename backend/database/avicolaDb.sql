@@ -90,35 +90,37 @@ create table almacen(
     galpones int,
     alimentos varchar(20),
     pollos_de_engorde int,
-    medicinas varchar(20)
+    medicinas varchar(20),
+    id_alimentos int,
+    id_galpones int,
+    id_medicinas int,
+    foreign key (id_alimentos) references alimentos (id),
+    foreign key (id_galpones) references galpon (id),
+    foreign key (id_medicinas) references medicina (id)
+    
 );
-create table alimentos(
+create table alimento(
     id int AUTO_INCREMENT PRIMARY KEY,
     nombre varchar(40),
     precio float,
     stock int,
-    fecha_vencimiento date,
-    id_almacen int,
-    FOREIGN KEY(id_almacen) REFERENCES almacen(id)
+    
     ON DELETE CASCADE ON UPDATE CASCADE
 );
-create table galpones(
+create table galpon(
     id int AUTO_INCREMENT PRIMARY KEY,
     num_gallina int not null,
     capacidad int,
     disponible BOOLEAN,
-    id_almacen int,
-    FOREIGN KEY(id_almacen) REFERENCES almacen(id)
+    
 );
-create table medicinas(
+create table medicina(
     id int AUTO_INCREMENT PRIMARY KEY,
     nombre varchar(60),
-    dosificacion varchar(80),
-    presentacion varchar(60),
+    tipo varchar(20),
+    num_dosis int,
     precio float,
-    stock int,
-    fecha_vencimiento date,
-    id_almacen int,
-    FOREIGN KEY(id_almacen) REFERENCES almacen(id)
+    cantidad int,
+    
 );
 

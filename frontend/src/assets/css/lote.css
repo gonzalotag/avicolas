@@ -1,5 +1,7 @@
-.lotecontainer{
+.loteContainer{
     height: 100%;
     width: 100%;
-    display: flex;
+    
+    background: rgba(255, 255, 255, 0.46);
+    color: black;
 }

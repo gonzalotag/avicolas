@@ -11,6 +11,7 @@ export const getPerfiles = async(req, res) =>{
         return res.status(500).json({message: error.message})    
     }
 };
+
 export const getPerfil = async (req,res) => {
     try {
         const[result] = await pool.query("SELECT * FROM perfil WHERE id= ?",[

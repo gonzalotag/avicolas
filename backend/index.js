@@ -4,6 +4,8 @@ import { PORT } from "./config.js";
 import cors from "cors";
 import perfilRoutes from "./routes/perfil.routes.js"
 import rolRoutes from "./routes/rol.routes.js"
+import medicinaRoutes from "./routes/medicinas.routes.js"
+
 
 // para manejar el cache-control 'stale-while-revalidate=604800'
 const corsOptions ={
@@ -20,6 +22,7 @@ app.use(cors(corsOptions)); //{origin:"http://locallhost:5173"}
 app.use(express.json());
 app.use(perfilRoutes);
 app.use(rolRoutes);
+app.use(medicinaRoutes);
 app.listen(PORT);
 
 console.log("EJECUTANDO EN PUERTO", PORT);

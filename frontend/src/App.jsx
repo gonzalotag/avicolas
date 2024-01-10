@@ -50,13 +50,13 @@ function App() {
       <Route path='/login' element = {<LoginPerfil setIsAuth= {setIsAuth} onLogout={onLogout}/>}/>
       <Route path='/admin/*' element ={<GuardiaComponent isAuth={isAuth} setIsAuth={setIsAuth} Component={<AdminComponent/>}/>}/>
       {/* <Route path='/admin/personal' element={<TablaPersonal isAuth={isAuth} Component={<ContenidoAdmin/>}/>}/> */}
-      <Route path='/produccion' element={<Produccion isAuth={isAuth} Component={<AdminComponent/>}/>}/>
-      <Route path='/almacen' element={<Almacen isAuth={isAuth} Component={<AdminComponent/>}/>}/>
+      {/* <Route path='/produccion' element={<Produccion isAuth={isAuth} Component={<AdminComponent/>}/>}/> */}
+      {/* <Route path='/almacen' element={<Almacen isAuth={isAuth} Component={<AdminComponent/>}/>}/> */}
       <Route path='/registros' element={<RegistroPersonal isAuth={isAuth}/>}/>
       <Route path='/editar/:id' element={<EditarPersonal/>}  />
-      <Route path='/reportes' element={<Reportes/>} isAuth={isAuth} />
+      {/* <Route path='/reportes' element={<Reportes/>} isAuth={isAuth} /> */}
       <Route path='/lote' element={<Lote isAuth={isAuth} Component={<AdminComponent/>}/>}/>
-      <Route path='/medicina' element={<Medicinas isAuth={isAuth} Component={<AdminComponent/>}/>}/>
+      <Route path='/medicinas' element={<Medicinas isAuth={isAuth} Component={<AdminComponent/>}/>}/>
       <Route path='/galpon' element={<Galpon isAuth={isAuth} Component={<AdminComponent/>}/>}/>
       <Route path='/alimentos' element={<Alimentos isAuth={isAuth} Component={<AdminComponent/>}/>}/>
     </Routes>
