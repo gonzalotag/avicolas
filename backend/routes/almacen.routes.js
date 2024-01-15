@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { getAlmacen, getAlmacenes } from "../controllers/almacen.controllers";
+import { getAlmacen,
+        getAlmacenes } from "../controllers/almacen.controllers.js";
 
 const router = Router();
 

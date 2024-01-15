@@ -2,9 +2,7 @@ import { pool } from "../db.js";
 
 export const getGalpones =async (req,res)=>{
     try {
-        const [result]=await pool.query(
-            `SELECT * FROM galpon`
-        );
+        const [result]=await pool.query(`SELECT * FROM galpon`);
         res.status(200).json({status:'success',data: result});
     } catch (error) {
         console.log(error);
@@ -27,21 +25,20 @@ export const getGalpon = async (req,res)=>{
 };
 
 export const createGalpon =async(req,res)=>{
-    const campos = ['num_gallina','capacidad','disponible'];
-    const valores = Object.keys(req.body).map(i => `'${req.body[i]}'`).join(',');
-        const query = `INSERT INTO galpon (${campos.join(' ,')
-        }) VALUES (${valores})`;
-        try {
-            const { insertId } = await pool.execute(query);
-            res.status(201).json({
-                status: 'succes',
-                data:{...req.body,id_galpon :insertId},
-                });
-        } catch (error) {
-                    console.log(error);
-                    res.status(500).json({status:'fail',message:'Error alcrear el Galpón'});
-        }
+    const {num_gallina, capacidad, disponible }= req.body
+    const query = 'INSERT INTO galpon (num_gallina,capacidad , disponible) VALUES (?,?,?)';
+    try {
+        const [result] = await pool.execute(query, [num_gallina, capacidad, disponible]);
+        res.status(201).json({
+            status: 'succes',
+            data:{...req.body, id: result.insertId},
+        });
+    }catch(error){
+        console.error("error en create galpon ",error);
+        res.status(500).json({status: 'fail' , message:'error al crear el galpon '});
+    }
 };
+
 export const updateGalpon = async (req,res)=>{
     const {id}=req.params;
     const datoActualizar=req.body;

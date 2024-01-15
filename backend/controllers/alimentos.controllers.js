@@ -28,23 +28,20 @@ export const getAlimento = async(req,res)=>{
 
 //controlador para insertar un nuevo alimento
 export const createAlimento =async(req,res)=>{
-    const {nombre,precio,stock,fecha_vencimiento}
-    = req.body;
+    const {nombre,precio,stock}= req.body;
     //validacion de campos vacios
-    if (!nombre || !precio||!stock||!fecha_vencimiento )
+    if (!nombre || !precio||!stock )
     return res.status(400).json({msg:"Faltan datos"})
-//verificando si la fecha es valida
-const dateNow = new Date();
-if(new Date(fecha_vencimiento)<dateNow)
-return res.status(400).json({msg:"La fecha de vencimiento debeser mayor a la actual"})
-try{
-    const resultado =await pool.query("INSERT INTO alimento SET ?",[{nombre, precio, stock, fecha_vencimiento, id_almac}]);
-    const [results]=await pool.query("INSERT INTO `alimento` (`nombre`,`precio`,`stock`,`fecha_vencimiento`,`id_almacen`) VALUES(?,?,?,?,?)",[nombre,precio,stock,fecha_vencimiento,id_almacen]);res.json({msg:`Se agrego correctamente el alimento con el id${results.insertId}`})
-        }catch(e){
-            console.log(e);
-            return res.status(500).json({msg: "Hubo un error enel servidor"})
-            }
+    try{
+        const [result]=await pool.query("INSERT INTO `alimento` (`nombre`,`precio`,`stock`) VALUES(?,?,?)",
+        [nombre,precio,stock]);
+        res.json({msg:`Se agrego correctamente el alimento con el id${result.insertId}`})
+    }catch(e){
+        console.error(error);
+        return res.status(500).json({msg: "Hubo un error enel servidor"})
+    }
 };
+
 export const updateAlimento = async(req,res)=>{
     const{id}=req.params;
     const{nombre, descripcion}=req.body;
@@ -73,7 +70,7 @@ export const updateAlimento = async(req,res)=>{
 export const deleteAlimento = async (req,res)=>{
     const id=req.params.id;
     try{
-        await pool.query('DELETE FROM `alimento` WHERE `id`=?AND NOT EXISTS(SELECT 1 FROM recetas WHERE `ingredientes`.`alimento_id`=`alimento`.`id`)',[id]);
+        await pool.query('DELETE FROM `alimento` WHERE `id`=?',[id]);
         //si devuelve una fila afectada es que si hay receta
         //con ese alimento y por lo tanto no se puede borrar
         if(!(await pool.query('SELECT COUNT(*) FROM `ingredientes`WHERE `alimento id`=?', [id]))[0]['COUNT(*)']){

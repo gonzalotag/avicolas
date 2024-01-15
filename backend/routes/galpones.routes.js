@@ -1,12 +1,18 @@
 import { Router } from "express";
-import { createGalpon, deleteGalpon, getGalpon, getGalpones, updateGalpon } from "../controllers/galpones.controllers";
+import { 
+    getGalpones, 
+    getGalpon, 
+    createGalpon,
+    updateGalpon,
+    deleteGalpon 
+} from "../controllers/galpones.controllers.js";
 
 const router = Router();
 
-router.get("/galon",getGalpones);
-router.get("/galon:id",getGalpon);
-router.post("/galon",createGalpon);
-router.patch("/galon:id",updateGalpon);
-router.delete("/galon:id",deleteGalpon);
+router.get("/galpones",getGalpones);
+router.get("/galpones/:id",getGalpon);
+router.post("/galpones",createGalpon);
+router.patch("/galpones/:id",updateGalpon);
+router.delete("/galpones/:id",deleteGalpon);
 
 export default router;

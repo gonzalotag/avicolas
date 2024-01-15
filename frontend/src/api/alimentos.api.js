@@ -18,9 +18,9 @@ async function deleteAlimento(id){
             throw error;
             }
 }
-async function postAlimentos(id,data){
+async function postAlimentos(data){
     try {
-        const result = await axios.post(`http://localhost:4000/alimento/${id}`, data);
+        const result = await axios.post(`http://localhost:4000/alimento`, data);
         return result.data;
     } catch (error) {
         console.error('error al guardar alimento', error )

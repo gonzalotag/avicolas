@@ -8,6 +8,6 @@ const router = Router();
 
 router.get('/rol/:id', getRol);
 
-router.get('/rol', getAllRoles)
+router.get('/rol', getAllRoles);
 
 export default router;

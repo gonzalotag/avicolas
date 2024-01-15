@@ -91,13 +91,15 @@ create table almacen(
     alimentos varchar(20),
     pollos_de_engorde int,
     medicinas varchar(20),
-    id_alimentos int,
-    id_galpones int,
-    id_medicinas int,
-    foreign key (id_alimentos) references alimentos (id),
-    foreign key (id_galpones) references galpon (id),
-    foreign key (id_medicinas) references medicina (id)
-    
+    id_alimento int,
+    id_galpon int,
+    id_medicina int,
+    id_empleados
+    foreign key (id_alimento) references alimento (id),
+    foreign key (id_galpon) references galpon (id),
+    foreign key (id_medicina) references medicina (id),
+    foreign key (id_lote) references lote(id),
+    foreign key (id_empleado) refernces empleado(id)
 );
 create table alimento(
     id int AUTO_INCREMENT PRIMARY KEY,
@@ -124,3 +126,10 @@ create table medicina(
     
 );
 
+create table lote(
+    id int AUTO_INCREMENT PRIMARY KEY,
+    raza varchar (20),
+    fecha_ingreso timestamp default current_timestamp,
+    cantidad int,
+    valor_unidad decimal(10,2)
+);

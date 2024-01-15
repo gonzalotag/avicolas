@@ -25,12 +25,6 @@ export const getMedicina=(req,res)=>{
         .catch((err)=>console.log(err));
 }
 
-
-// async function getAllMedicinas (){
-//     let medicinaLista=await pool.query('SELECT * FROM medicina');
-//     return medicinaLista;
-// }
-
 export const updateMedicinas =async (req,res)=>{
     try {
     //validar si el id es numerico
@@ -101,6 +95,3 @@ export const deleteMedicina =async (req,res)=>{
             res.status(500).json({message: 'Error Interno del Servidor', code: error.code});
         }
 }
-
-// export{
-// getAllMedicinas}

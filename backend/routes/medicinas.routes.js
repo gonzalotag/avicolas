@@ -4,8 +4,7 @@ import {
     getMedicina, 
     createMedicinas, 
     updateMedicinas, 
-    deleteMedicina
-    
+    deleteMedicina  
 } from "../controllers/medicinas.controllers.js";
 
 const router = Router();
@@ -16,4 +15,4 @@ router.post("/medicina",createMedicinas);
 router.patch("/medicina",updateMedicinas);
 router.delete("/medicina",deleteMedicina);
 
-export default router
+export default router;

@@ -69,6 +69,21 @@ function Almacen (){
                 
             </tbody>
         </table>
+        <div><h2>lotes</h2></div>
+        <button onClick={()=> navigate('/alimentos')}>
+            <h2>registrar lotes</h2></button>
+        <table>
+            <thead>
+                <tr>
+                <th>pollos recien nacidos</th>
+                <th>Nro. obreros asignados</th>
+                <th>distribucion de galpones</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
     </div>)
 }
 
