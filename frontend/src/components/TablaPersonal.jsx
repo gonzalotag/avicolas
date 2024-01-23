@@ -96,7 +96,6 @@ function TablaPersonal(){
                         <td>{data.direccion}</td>
                         <td>{data.telefono}</td>
                         <td>{data.email}</td>
-                        {/* <td>{data.id_rol}</td> */}
                         <td>{tipoRol.find((rol)=>rol.id === data.id_rol)?.tipo || "No definido "}</td>
                         <td>
                         {/* boton q nos lleva de la pagina de '/personal' a '/editar' */}

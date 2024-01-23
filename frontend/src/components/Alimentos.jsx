@@ -1,23 +1,22 @@
 import "../assets/css/alimentos.css"
 import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom"
-import { postAlimentos } from "../api/alimentos.api";
+import {  postAlimentos } from "../api/alimentos.api";
+
 
 function Alimentos (){
     const navigate = useNavigate();
-
+    
     const [formData , setFormData] = useState({
         nombre:'',
         precio:'',
         stock:'',
-        
     });
 
     const handleChange =(e)=>{
         setFormData({
             ...formData,
                 [e.target.name]: e.target.value
-            
         })
     }
 

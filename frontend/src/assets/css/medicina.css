@@ -4,3 +4,14 @@
     background: rgba(255, 255, 255, 0.46);
     color: black;
 }
+table{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,td{
+    border:1px solid #dddd;
+    text-align: left;
+    padding: 8px;
+}

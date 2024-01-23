@@ -1,28 +1,30 @@
 import { pool } from "../db.js";
 
 export const getAllMedicinas =async (req,res)=>{
-    try{
-        const result=await pool.query('SELECT * FROM medicina');
-        res.status(200).json({message:"Lista de Medicamentos",data:result});
-        }catch(error){
-            console.log(error);
-            res.status(400).json({message: 'Error al obtener la lista de Medicamentos'})
-        }
+    try {
+        const [result] = await pool.query("SELECT * FROM medicina");
+        res.json(result);
+        console.log(result);
+    } catch (error) {
+        return res.status(500).json({message: error.message})
+    }
+    
 };
 
 //funcion para seleccionar un medicamento mediante el id
 export const getMedicina=(req,res)=>{
     const {id}=req.params;
-    const consulta= `SELECT * FROM medicina WHERE id_medicina=${id}`;
-    pool.query(consulta)
-    .then((response)=>{
-        if(response.length>0){
-            res.status(200).json(response[0]);
-            }else{
-                res.status(404).json({message:'No se encontró el Medicamento con ese ID'});
-            }
-        })
-        .catch((err)=>console.log(err));
+    try {
+        const [consult]= pool.query(`SELECT * FROM medicina WHERE id=${id}`);
+        if (consult.length > 0) {
+            res.status(200).json(result[0]);
+        } else {
+            res.status(404).json({message:"no se encontro medicamento con ese id "})
+        }
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({message:"error interno del servidor"})
+    }
 }
 
 export const updateMedicinas =async (req,res)=>{

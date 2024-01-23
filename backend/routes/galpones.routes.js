@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { 
-    getGalpones, 
+    getAllGalpones, 
     getGalpon, 
     createGalpon,
     updateGalpon,
@@ -9,7 +9,7 @@ import {
 
 const router = Router();
 
-router.get("/galpones",getGalpones);
+router.get("/galpones",getAllGalpones);
 router.get("/galpones/:id",getGalpon);
 router.post("/galpones",createGalpon);
 router.patch("/galpones/:id",updateGalpon);

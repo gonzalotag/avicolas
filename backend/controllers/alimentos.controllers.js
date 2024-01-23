@@ -2,13 +2,11 @@ import { pool } from "../db.js";
 
 export const getAlimentos = async(req,res)=>{
     try {
-        const [result] = await pool.query(
-            'SELECT * FROM alimento'
-        );
+        const [result] = await pool.query('SELECT * FROM alimento');
         res.json(result)
     } catch (error) {
         console.log(error);
-        return res.status (500).json({message: error.message})
+        return res.status (500).json({message:"error interno server"})
 
     }
 };

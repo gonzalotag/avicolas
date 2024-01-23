@@ -1,8 +1,15 @@
 import axios from "axios";
 
 async function getAllMedicinas (){
-    const response = await axios.get('http://localhost:4000/medicina');
-                
+    try {
+        const response = await axios.get('http://localhost:4000/medicina');
+        console.log("toda la data de medicinas", response);
+        return response.data;
+        
+    } catch (error) {
+        console.log("error al obtener medicinas",error)
+        throw error;
+    }
 }
 
 async function getMedicina(id) {
@@ -19,7 +26,7 @@ async function postMedicina(formData) {
         const response = await axios.post('http://localhost:4000/medicina',formData);
         if (response && response.status==200) {
             console.log("medicina agregada correctamente");
-            Navigate("/admin");
+            navigate("/admin");
         } else {
             // console.log("error al agregar la medicina, verifique los datos");
         }

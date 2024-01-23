@@ -30,11 +30,11 @@ function Galpon (){
     return(
     <div className="galponContainer">
         <button onClick={()=>navigate('/admin')}>
-            <h2>regresar a lamacen</h2>
+            <h2>regresar a almacen</h2>
         </button>
         <h1>Galpon</h1>
         <form onSubmit={handleSubmit}>
-        <label htmlFor='num_gallina'>numemor de gallinas:
+        <label htmlFor='num_gallina'>numero de gallinas:
             <input 
             type='text' 
             name='num_gallina' 
@@ -52,16 +52,16 @@ function Galpon (){
             onChange={handleChange}
             required/>   
         </label><br/><br/>
-        <label htmlFor='nombre'>disponible:
-             <select 
-             name="disponible" 
-             id="disponible"
-             value={formData.disponible}
-             onChange={handleChange}
-             >
+        <label htmlFor='disponible'>disponible:
+            <select 
+            name="disponible" 
+            id="disponible"
+            value={formData.disponible}
+            onChange={handleChange}
+            >
                 <option value="si ">si </option>
                 <option value="no ">no </option>
-             </select>
+            </select>
         </label>
         <br/><br/>
         <button type="submit"> guardar</button>

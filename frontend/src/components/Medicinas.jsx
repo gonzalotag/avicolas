@@ -1,11 +1,11 @@
 import "../assets/css/medicina.css"
-import React from "react";
+import React,{ useState} from "react";
 import { postMedicina } from "../api/medicinas.api";
 import { useNavigate } from "react-router-dom"
 
 function Medicinas (){
     const navigate = useNavigate();
-
+    
     const handleSubmit= async (event)=>{
         event.preventDefault();
 
@@ -15,24 +15,21 @@ function Medicinas (){
         dosisMedicina:event.target.dosisMedicina.value,
         precioMedicina:parseFloat(event.target.precioMedicina.value),
         cantidadMedicina:event.target.cantidadMedicina.value,
-        
     }
-    console.log("datos del formulario", formData);
-
-    try{
-        const response = await postMedicina(formData);
-        if(response && response.status === 200){
-            // alert("medicina agregada");
-            navigate("/admin");
-        }else{
-            alert("no se agrego la medicina ,verificar los datos")
-        }
-    }catch{
+        try{
+            const response = await postMedicina(formData);
+            if(response && response.status === 200){
+                navigate("/admin");
+                console.log("medicamento guardado correctamente",response)
+            }else{
+                alert("no se agrego la medicina ,verificar los datos")
+            }
+        }catch{
         // console.error("error al agergar la medicina");
         // alert("error al agregar la medicina , consultar la consola para mas detalles ");
-    }
-    }
+        }
 
+    }
     return(
         <div className="medContainer">
             <button onClick={()=>navigate('/admin')}>
@@ -61,6 +58,7 @@ function Medicinas (){
                 </label><br/><br/>
             <button type="submit">guardar</button>
             </form>
+           
         </div>
     )
 }

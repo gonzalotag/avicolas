@@ -1,25 +1,19 @@
 import { pool } from "../db.js";
 
 export const getAllLotes = async(req,res) =>{
-    try{
-        const result = await pool.query('SELECT * FROM LOTES');
-        res.status(200).json({
-            status: 'success',
-            data:{lotes:result.rows}
-            });
-    }catch(error){
-        console.error(error);
-        res.status(400).json({
-        status:'fail',
-        message:"Error al obtener los lotes"
-        });
-    };
+    try {
+        const [result]= await pool.query("select * from lote");
+        res.status(200).json(result);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({message:" erro al obtener los lote"});
+    }
 }
 
 export const getLote = async(req,res)=>{
     try {
         const {id}= req.params;
-        const result=await pool.query("SELECT * FROM LOTES WHERE ID=$1",[parseInt(id)]);
+        const result=await pool.query("SELECT * FROM LOTE WHERE ID=$1",[parseInt(id)]);
         if (result.rowCount>0){
             res.status(200).json({
                 status:'succes',
@@ -70,7 +64,7 @@ export const updateLote = async(req,res)=>{
     const {raza,cantidad,valor_unidad}=req.body;
         try{
             const result = await pool.query(
-                "UPDATE LOTES SET raza=$2, cantidad=$3, valor_undad=$4 WHERE id=$1 RETURNING *",
+                "UPDATE LOTE SET raza=$2, cantidad=$3, valor_undad=$4 WHERE id=$1 RETURNING *",
                 [id,raza,cantidad,valor_unidad,id]);
                 if(result.rowCount<=0){
                     return res.status(404).json({
@@ -95,7 +89,7 @@ export const updateLote = async(req,res)=>{
 export const deleteLote=async (req,res) =>{
     const {id} = req.params;
     try{
-        const result =await pool.query('DELETE FROM Lotes WHERE id=$1 RETURNING',[id]);
+        const result =await pool.query('DELETE FROM Lote WHERE id=$1 RETURNING',[id]);
     if(!result || !result.rowCount){
         return  res.status(404).json({
         status : 'not found',

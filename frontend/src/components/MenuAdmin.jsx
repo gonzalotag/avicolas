@@ -7,6 +7,7 @@ import Almacen from "./Almacen";
 import Reportes from "./Reportes.jsx";
 import {useNavigate } from "react-router-dom"; 
 import Produccion from "./Produccion";
+import { AlmacenProvider } from "./AlmacenContext.jsx";
 
 function MenuAdmin (props){
     const{setEspacioDeTrabajo, perfiles, getPerfilesByRol, getRolesByName}= props;
@@ -28,7 +29,7 @@ function MenuAdmin (props){
         </div>
         <div className="buttonBox">
            
-            <div className="buttonTarea" onClick={()=>{renderEspacioDeTrabajo(<Almacen />, 'almacen')}}>
+            <div className="buttonTarea" onClick={()=>{renderEspacioDeTrabajo(<AlmacenProvider><Almacen /></AlmacenProvider>, 'almacen')}}>
             <ButtonComponent nombreButton={"Almacen"} iconoButton={<FontAwesomeIcon icon={faWarehouse}/>} />
             </div>
             <div className="buttonTarea" onClick={()=>{renderEspacioDeTrabajo(<TablaPersonal perfiles={perfiles} getPerfilesByRol={getPerfilesByRol} getRolesByName={getRolesByName}/>,'/personal')}}> 

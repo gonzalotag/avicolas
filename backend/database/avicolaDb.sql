@@ -94,20 +94,23 @@ create table almacen(
     id_alimento int,
     id_galpon int,
     id_medicina int,
-    id_empleados
+    id_lote int,
+    id_perfil int,
     foreign key (id_alimento) references alimento (id),
     foreign key (id_galpon) references galpon (id),
     foreign key (id_medicina) references medicina (id),
     foreign key (id_lote) references lote(id),
-    foreign key (id_empleado) refernces empleado(id)
+    foreign key (id_empleado) references empleado(id)
 );
+INSERT INTO almacen (galpones, alimentos, pollos_de_engorde, medicinas, id_perfil)
+VALUES (10, 'Granos', 100, 'Vitaminas', (SELECT id FROM perfil WHERE id_rol 
+= (SELECT id FROM rol WHERE tipo = 'empleado')));
 create table alimento(
     id int AUTO_INCREMENT PRIMARY KEY,
     nombre varchar(40),
     precio float,
     stock int,
     
-    ON DELETE CASCADE ON UPDATE CASCADE
 );
 create table galpon(
     id int AUTO_INCREMENT PRIMARY KEY,

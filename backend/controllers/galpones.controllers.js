@@ -1,14 +1,15 @@
 import { pool } from "../db.js";
 
-export const getGalpones =async (req,res)=>{
+export const getAllGalpones =async (req,res)=>{
     try {
-        const [result]=await pool.query(`SELECT * FROM galpon`);
-        res.status(200).json({status:'success',data: result});
+        const [result]=await pool.query("SELECT * FROM galpon");
+        res.status(200).json(result);
     } catch (error) {
         console.log(error);
         res.status(500).json({status:'fail',message:"Error interno del servidor"});
     }
 }
+
 export const getGalpon = async (req,res)=>{
     const id= req.params.id;
     if(!isNaN(parseInt(id))){

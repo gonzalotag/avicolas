@@ -1,12 +1,13 @@
 import axios from "axios";
 
-async function getGalpones() {
-    const response = await axios.get("http://localhost:4000/galpon");
+async function getAllGalpones() {
+    const response = await axios.get("http://localhost:4000/galpones");
+    console.log("toda la data de galpones", response)
     return response;    
 }
 
 async function getGalpon(id) {
-    const response = await axios.get(`http://localhost:4000/galpon/${id}`);
+    const response = await axios.get(`http://localhost:4000/galpones/${id}`);
         return response.data;
 }
 async function postGalpones(formData){
@@ -21,7 +22,7 @@ async function postGalpones(formData){
 
 async function patchGalpon(id,galponData) {
     try {
-        const result = await axios.patch(`http://localhost:4000/galpon/${id}`,galponData);
+        const result = await axios.patch(`http://localhost:4000/galpones/${id}`,galponData);
         return result.galponData;
     } catch (error) {
         console.error('error al hacer solicitud patch',error);
@@ -31,7 +32,7 @@ async function patchGalpon(id,galponData) {
 async function deleteGalpon(id) {
     try {
         
-        const res =await axios.delete(`http://localhost:4000/galpon/${id}`);
+        const res =await axios.delete(`http://localhost:4000/galpones/${id}`);
         //console.log(res.data);
         if(!res.data.success)
             throw new Error(res.data.message);
@@ -45,7 +46,7 @@ async function deleteGalpon(id) {
     }
 
  export {
-    getGalpones,
+    getAllGalpones,
     getGalpon,
     postGalpones,
     patchGalpon,
