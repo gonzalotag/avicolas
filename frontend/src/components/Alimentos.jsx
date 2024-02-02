@@ -10,18 +10,19 @@ function Alimentos (){
     const [formData , setFormData] = useState({
         nombre:'',
         precio:'',
-        stock:'',
+        cantidad:'',
     });
 
     const handleChange =(e)=>{
-        setFormData({
-            ...formData,
-                [e.target.name]: e.target.value
-        })
+        if (e.target.name === "nombre" && !/^[a-zA-Z\s]*$/.test(e.target.value)) {
+            return;
+        }
+        setFormData({...formData,[e.target.name]:e.target.value});
     }
 
     const handleSubmit = async (e) =>{
         e.preventDefault();
+        
         try {
             const result = await postAlimentos(formData);
             console.log(result);
@@ -29,7 +30,21 @@ function Alimentos (){
             console.error('error al enviar datos al servidor', error)
         }
     }
-
+    const handlePrecioChange = (event) =>{
+        const inputValue = event.target.value;
+        const isValidInput= /^\d+(\.\d*)?$/.test(inputValue);
+        if (isValidInput || inputValue === ""){
+            setFormData({ ...formData, precio: inputValue });
+        }
+    }
+    
+    const handleCantidadChange =(event)=>{
+        const inputValue = event.target.value;
+        const isValidInput = /^\d+$/.test (inputValue);
+        if (isValidInput || inputValue ==="") {
+            setFormData({...formData, cantidad:inputValue})
+        }
+    }
     return(
         <div className="alimentosContainer">
             <button onClick={()=>navigate('/admin')}>
@@ -46,27 +61,27 @@ function Alimentos (){
                 onChange={handleChange}
                 required/>   
                 </label><br/><br/>
-                <label htmlFor='precio'>precio:
+                <label htmlFor='precio'>precio de compra:
                 <input 
                 type='text' 
                 name='precio' 
                 id='precio' 
+                placeholder="decimales separados por '.'" 
                 value={formData.precio}
-                onChange={handleChange}
+                onChange={handlePrecioChange}
                 required/>   
                 </label><br/><br/>
-                <label htmlFor='stock'>stock:
+                <label htmlFor='cantidad'>cantidad adquirida:
                 <input 
                 type='text' 
-                name='stock' 
-                id='stock' 
-                value={formData.stock}
-                onChange={handleChange}
+                name='cantidad' 
+                id='cantidad' 
+                value={formData.cantidad}
+                onChange={handleCantidadChange}
                 required/>   
                 </label><br/><br/>
                 <button type= "submit"> Guardar </button>
             </form>
-            
         </div>)
 }
 export default Alimentos;

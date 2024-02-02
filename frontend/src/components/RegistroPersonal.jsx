@@ -87,8 +87,15 @@ function RegistroPersonal(){
     }catch (error){
       console.error('error al guardar el perfil',error);
     }  
-  };
-      
+  }
+
+  const handleTextChange =(e, fieldName)=>{
+    const regex = /^[a-zA-Z\s]*$/;
+    if(!regex.test(e.target.value)) {
+        return;
+    }
+    setFormData({...formData,[fieldName]:e.target.value});
+  }
         return (
           <div className="regPersonal">
             <div className="contenedorButtonAndTitle">
@@ -108,7 +115,7 @@ function RegistroPersonal(){
                   name="nombre"
                   placeholder="Ingresar Nombre"
                   value={formData.nombre}
-                  onChange={handleChange}
+                  onChange={(e)=> handleTextChange(e, "nombre")}
                 />
                 <br />
                 <label htmlFor="apellido_paterno">Apellido Paterno</label>
@@ -117,7 +124,7 @@ function RegistroPersonal(){
                   id="apellido_paterno"
                   name="apellidoPat"
                   value={formData.apellido_paterno}
-                  onChange={handleChange}
+                  onChange={(e)=> handleTextChange(e, "apellido_paterno")}
                   placeholder="Apellido Paterno"
                   required
                 />
@@ -128,7 +135,7 @@ function RegistroPersonal(){
                   id="apellido_materno"
                   name="apellidoMat"
                   value={formData.apellido_materno}
-                  onChange={handleChange}
+                  onChange={(e)=> handleTextChange(e, "apellido_materno")}
                   placeholder="Apellido Materno"
                   required
                 />
@@ -161,6 +168,7 @@ function RegistroPersonal(){
                 <input
                   type="email"
                   id="email"
+                  name="email"
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="Email Requerido"
@@ -204,7 +212,6 @@ function RegistroPersonal(){
                     "ingresa contrasenia" : "" }
                     autoComplete="new-password"
                     />
-
                     <br />
                     </>
                     )}

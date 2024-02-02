@@ -88,24 +88,16 @@ export const updateLote = async(req,res)=>{
 
 export const deleteLote=async (req,res) =>{
     const {id} = req.params;
-    try{
-        const result =await pool.query('DELETE FROM Lote WHERE id=$1 RETURNING',[id]);
-    if(!result || !result.rowCount){
-        return  res.status(404).json({
-        status : 'not found',
-        message : `El lote con id "${id}" no fue encontrado`});
-    }else{
-        res.status(200).json({
-        status : 'sucess',
-        message : "Se elimino correctamente",
-        data : result.rows
-        });
-    };
-    }catch(e){
-        console.log(e);
-        res.status(500).json({
-        status : 'Error Interno del servidor',
-        error : e
-        })
+    try {
+        const result = await pool.query('delete from lote where id = ?',[id]);
+        if (result.afectedRows>0) {
+            console.log('lote con ${id} eliminado con exito', result);
+        } else {
+            console.log('no se encontro ningun con  este id ${id}');
+            return result;
+        }
+        console.log('res del server', res);
+    }catch{
+        return res.status(400).send({message:"Error interno del servidor"});
     }
 }

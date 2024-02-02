@@ -18,6 +18,13 @@ function Lote(){
             [name]: value,
         });
     };
+    const handleCantidadChange =(event)=>{
+        const inputValue = event.target.value;
+        const isValidInput = /^\d+$/.test (inputValue);
+        if (isValidInput || inputValue ==="") {
+            setFormData({...formData, cantidad:inputValue})
+        }
+    }
     const handleSubmit =async (e) =>{
         e.preventDefault();
         try {
@@ -26,6 +33,13 @@ function Lote(){
         
         } catch (error) {
             console.error("error al crear lote",error);
+        }
+    }
+    const handleUnidadChange = (event) =>{
+        const inputValue = event.target.value;
+        const isValidInput= /^\d+(\.\d*)?$/.test(inputValue);
+        if (isValidInput || inputValue === ""){
+            setFormData({ ...formData, valor_unidad: inputValue });
         }
     }
     return(
@@ -40,12 +54,13 @@ function Lote(){
                 name='raza'
                 id='raza' 
                 value={formData.raza}
-                onChange={handelInputChange}
-                required>
-                
+                onChange={handelInputChange}>
                 <option value="">selecciona una raza</option>
                 <option value="plymouth rock">plymouth rock</option>
                 <option value="cornish">cornish</option>
+                <option value="sussex clara">sussex clara</option>
+                <option value="new hampshire">new hampshire</option>
+
                 </select>
                 </label><br/><br/>
                 
@@ -55,7 +70,7 @@ function Lote(){
                 name='cantidad'
                 id='cantidad' 
                 value={formData.cantidad}
-                onChange={handelInputChange}
+                onChange={handleCantidadChange}
                 required/>   
                 </label><br/><br/>
                 <label htmlFor='valor_unidad'>valor unidad:
@@ -64,7 +79,7 @@ function Lote(){
                 name='valor_unidad' 
                 id='valor_unidad' 
                 value={formData.valor_unidad}
-                onChange={handelInputChange}
+                onChange={handleUnidadChange}
                 required/>   
                 </label><br/><br/>
                 <button type="submit">guardar</button>

@@ -2,7 +2,7 @@ import axios from "axios";
 
 async function getAllGalpones() {
     const response = await axios.get("http://localhost:4000/galpones");
-    console.log("toda la data de galpones", response)
+    // console.log("toda la data de galpones", response)
     return response;    
 }
 
@@ -33,12 +33,8 @@ async function deleteGalpon(id) {
     try {
         
         const res =await axios.delete(`http://localhost:4000/galpones/${id}`);
-        //console.log(res.data);
-        if(!res.data.success)
-            throw new Error(res.data.message);
-        else{
-            return `Se ha eliminado correctamente el Galpón ${id}`;
-            }
+        console.log('resu del server',res.data);
+        return res;
     } catch (error) {
         return  error.response.data.message;
         }

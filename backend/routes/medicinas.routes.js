@@ -13,6 +13,6 @@ router.get("/medicina",getAllMedicinas);
 router.get("/medicina/:id",getMedicina);
 router.post("/medicina",createMedicinas);
 router.patch("/medicina",updateMedicinas);
-router.delete("/medicina",deleteMedicina);
+router.delete("/medicina/:id",deleteMedicina);
 
 export default router;

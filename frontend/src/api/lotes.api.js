@@ -3,7 +3,7 @@ import axios from "axios";
 export const getAllLotes = async() =>{
     try {
         const response = await axios.get('http://localhost:4000/lote');
-        console.log("total de lotes",response);
+        // console.log("total de lotes",response);
         return response;
     } catch (error) {
         console.log("Error al obtener los lotes");
@@ -50,10 +50,11 @@ export const putLote = async (id, data) =>{
 
 export const deleteLote = async (id) =>{
     try {
-        await axios.delete(`${'http://localhost:4000/lote'}/${id}`);
-        //Borramos del local storage la tarea asociada a este id eliminarDeLocalStorge(id);
+        const result =await axios.delete(`http://localhost:4000/lote/${id}`);
+        console.log('resp del server',result);
+        return result;
         } catch (error) {
-            console.log("Error al borrar el lote: ", error.response.data.message);
+            console.log("Error al borrar el lote: ", error);
             throw error;
         }
 };

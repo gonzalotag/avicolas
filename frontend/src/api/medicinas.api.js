@@ -3,7 +3,7 @@ import axios from "axios";
 async function getAllMedicinas (){
     try {
         const response = await axios.get('http://localhost:4000/medicina');
-        console.log("toda la data de medicinas", response);
+        // console.log("toda la data de medicinas", response);
         return response.data;
         
     } catch (error) {
@@ -24,15 +24,20 @@ async function getMedicina(id) {
 async function postMedicina(formData) {
     try {
         const response = await axios.post('http://localhost:4000/medicina',formData);
-        if (response && response.status==200) {
-            console.log("medicina agregada correctamente");
-            navigate("/admin");
+        if (response.status === 200) {
+            if(response.data !==null){
+            console.log("medicina agregada correctamente",response.data);
+            }else{
+                console.log("la respuesta dle servidor es null");
+            }
+            return response.data;
         } else {
-            // console.log("error al agregar la medicina, verifique los datos");
+            return null;
+            console.log("error al agregar la medicina, verifique los datos");
         }
     } catch (error) {
         if (error.response) {
-            console.error("error de resouesta del servidor", error.response.data);
+            console.error("error de respuesta del servidor", error.response.data);
             console.error("codigo de estado", error.response.status);
             console.error("encabezado de respuesta", error.response.headers);
         } else if (error.request) {
@@ -60,10 +65,10 @@ async function patchMedicina(id,medData) {
 async function deleteMedicina(id) {
     try {
         const result=await axios.delete(`http://localhost:4000/medicina/${id}`)
+        console.log("respuesta del servidor",result);
         return result;
-        
     } catch (error) {
-        console.log("Eliminación fallida");
+        console.log("Eliminación fallida", error);
     }
 }
 

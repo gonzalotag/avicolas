@@ -9,6 +9,7 @@ import { useNavigate} from "react-router-dom";
 function AdminComponent(){
     const [perfiles, setPerfiles] = useState([]);
     const [roles, setRoles] = useState([]);
+    const [espacioDeTrabajo, setEspacioDeTrabajo] = useState (<ContenidoAdmin/>)
     const navigate= useNavigate();
 
     useEffect(()=>{
@@ -29,15 +30,15 @@ function AdminComponent(){
         setRoles(await getAllRoles())
         // console.log(roles)
     }
-    const [espacioDeTrabajo, setEspacioDeTrabajo] = useState(<ContenidoAdmin/>)
+    
     
     const renderEspacioDeTrabajo = (componente)=>{
         setEspacioDeTrabajo(componente);
     }
-    const handleNavigate =(componente, ruta) =>{
-        setEspacioDeTrabajo(componente);
-        navigate(`/admin/&{ruta}`)
-    }
+    // const handleNavigate =(componente, ruta) =>{
+    //     setEspacioDeTrabajo(componente);
+    //     navigate(`/admin/${ruta}`)
+    // }
     return (
     <div className="espacioAdmin">
         <div className="espacioMenuAdmin">

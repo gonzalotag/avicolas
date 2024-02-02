@@ -26,10 +26,10 @@ export const getGalpon = async (req,res)=>{
 };
 
 export const createGalpon =async(req,res)=>{
-    const {num_gallina, capacidad, disponible }= req.body
-    const query = 'INSERT INTO galpon (num_gallina,capacidad , disponible) VALUES (?,?,?)';
+    const {num_galpon, capacidad, disponible }= req.body
+    const query = 'INSERT INTO galpon (num_galpon,capacidad , disponible) VALUES (?,?,?)';
     try {
-        const [result] = await pool.execute(query, [num_gallina, capacidad, disponible]);
+        const [result] = await pool.execute(query, [num_galpon, capacidad, disponible]);
         res.status(201).json({
             status: 'succes',
             data:{...req.body, id: result.insertId},
@@ -61,18 +61,14 @@ export const updateGalpon = async (req,res)=>{
             };
 };
 export const deleteGalpon = async(req,res)=>{
-    const {id}=req.params;  
-    const filtroWhere=`WHERE id_galpon=${id}`;
-    const query = `DELETE FROM galpon ${filtroWhere}`;  
+     
     try {
-        const resultado =await pool.execute(query);
-        if (!resultado.affectedRows ) {
-            throw new Error("El Registro no existe");
-        }
-            res.status(200).json({
-            status:'succes',
-            message:'Registro Eliminado Correctamente'
-            })
+        const resultado =await pool.query('DELETE FROM galpon WHERE id=?',[req.params.id]); 
+        if (!resultado.length) {
+            return res.status(404).json({status:'fail',message:'No se ha eliminado el Galpon'})
+          }else{
+            res.status(200).json({status:'succes',message:'El Galpon fue Eliminado Correctamente'})
+          }
     } catch (error) {
     console.log(error);
     res.status(500).json({status:'fail',message: 'Error eliminando el Registro'})

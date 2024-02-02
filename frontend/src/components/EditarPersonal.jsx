@@ -74,7 +74,13 @@ function EditarPersonal ( ){
        evt.preventDefault();
     }
   };
-
+const handleTextChange = (e, fieldName)=>{
+  const regex =  /^[A-Za-z\s]*$/;
+  if (!regex.test(e.target.value)) {
+    return;
+  }
+  setPerfil({...perfil ,[fieldName]:e.target.value})
+}
     return(
     <div className="editarEspacio">
             <div className="botonRegresar">
@@ -83,16 +89,14 @@ function EditarPersonal ( ){
             <h1>Editar Perfil</h1>
             <div className="formularioEdit">
               <form action="formEditar">
-                <label htmlFor="nombre">
-                  nombre
-                </label>
+                <label htmlFor="nombre">nombre</label>
                 <br />
                 <input 
                 type="text"
                 id="nombre" 
                 name="nombre"
                 value={perfil.nombre || ''}
-                onChange={handleInputChange}
+                onChange={(e)=>handleTextChange(e,"nombre")}
                 />
                 <br />
                 <label htmlFor="apellido_apaterno">
@@ -103,7 +107,7 @@ function EditarPersonal ( ){
                 id="apellido_paterno" 
                 name="apellido_paterno"
                 value={perfil.apellido_paterno}
-                onChange={handleInputChange}/>
+                onChange={(e)=>handleTextChange(e,"apellido_paterno")}/>
                 <br />
                 <label htmlFor="apellido_materno">
                   apellido_materno
@@ -113,7 +117,7 @@ function EditarPersonal ( ){
                 id="apellido_materno" 
                 name="apellido_materno"
                 value={perfil.apellido_materno}
-                onChange={handleInputChange}/>
+                onChange={(e)=>handleTextChange(e,"apellido_materno")}/>
                 <br />
                 <label htmlFor="direccion">
                   direccion

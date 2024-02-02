@@ -6,55 +6,111 @@ import { useNavigate } from "react-router-dom"
 function Medicinas (){
     const navigate = useNavigate();
     
-    const handleSubmit= async (event)=>{
-        event.preventDefault();
+    const [formData,setFormData]= useState({
+        nombreMedicina:"",
+        tipoMedicina:"oral",
+        dosisMedicina:"",
+        precioMedicina:"",
+        cantidadMedicina:"",
+    });
+    // const [medicina, setMedicina]= useState([]);
+    // useEffect(()=>{
+    //     fetchData();
+    // },[])
 
-    const formData = {
-        nombreMedicina:event.target.nombreMedicina.value,
-        tipoMedicina:event.target.tipoMedicina.value,
-        dosisMedicina:event.target.dosisMedicina.value,
-        precioMedicina:parseFloat(event.target.precioMedicina.value),
-        cantidadMedicina:event.target.cantidadMedicina.value,
+    // const fetchData = async ()=>{
+    //     try {
+    //         const medicinasData = await getAllMedicinas();
+    //         setMedicina(medicinasData);
+    //     } catch (error) {
+    //         console.error("error al obtener medicina",error);
+    //     }
+    // }
+    const handleChange = (event)  =>{
+        const {name ,value} = event.target;
+        setFormData({...formData, [name]: value});
     }
+    const handleSubmit= async (event) =>{
+        event.preventDefault();
         try{
             const response = await postMedicina(formData);
-            if(response && response.status === 200){
-                navigate("/admin");
-                console.log("medicamento guardado correctamente",response)
-            }else{
-                alert("no se agrego la medicina ,verificar los datos")
-            }
-        }catch{
-        // console.error("error al agergar la medicina");
-        // alert("error al agregar la medicina , consultar la consola para mas detalles ");
+            console.log("se guardo la informacion",response);
+            // if (response && response.status === 200) {
+                
+            // }
+            alert("Se agrego correctamente");
+        }catch(error){
+        console.error("error al agergar la medicina",error);
+        alert("error al agregar la medicina , consultar la consola para mas detalles ");
         }
-
     }
+    const handlePrecioChange = (event) =>{
+        const inputValue = event.target.value;
+        const isValidInput= /^\d+(\.\d*)?$/.test(inputValue);
+        if (isValidInput || inputValue === ""){
+            setFormData({ ...formData, precioMedicina: inputValue });
+        }
+    }
+    const handleInputChange =(event,campo )=>{
+        const inputValue = event.target.value;
+        const isValidInput = /^\d+$/.test (inputValue);
+        if (isValidInput || inputValue ==="") {
+            setFormData({...formData, [campo]:inputValue})
+        }
+    }
+    
     return(
         <div className="medContainer">
-            <button onClick={()=>navigate('/admin')}>
+            <button onClick={()=>navigate(`/admin/`)}>
                 <h2>regresar a almacen</h2>
             </button>
             <h1 className="titulo">Medicinas</h1>
             <form onSubmit={handleSubmit}>
             <label htmlFor='nombreMedicina'>nombre:
-                <input type='text' name='nombreMedicina' id='nombreMedicina' required/>   
+                <input 
+                type='text' 
+                name='nombreMedicina' 
+                id='nombreMedicina' 
+                value={formData.nombreMedicina}
+                onChange={handleChange}
+                required/>   
                 </label><br/><br/>
             <label htmlFor='tipoMedicina'>tipo:</label>
-                <select name="tipoMedicina" id="tipoMedicina">
+                <select 
+                name="tipoMedicina" 
+                id="tipoMedicina"
+                value={formData.tipoMedicina}
+                onChange={handleChange}
+                >
                     <option value="oral">oral</option>
                     <option value="ocular">ocular</option>
                     <option value="intramuscular">intramuscular</option>
                 </select>
                 <br/><br/>
             <label htmlFor='dosisMedicina'>numero de dosis:
-                <input type='text' name='dosisMedicina' id='dosisMedicina' required/>   
+                <input type='text' 
+                name='dosisMedicina' 
+                id='dosisMedicina' 
+                value={formData.dosisMedicina}
+                onChange={(e)=>handleInputChange(e,'dosisMedicina')}
+                required/>   
                 </label><br/><br/>
             <label htmlFor='precioMedicina'>precio:
-                <input type='text' name='precioMedicina' id='precioMedicina' required/>   
+                <input type='text' 
+                name='precioMedicina' 
+                id='precioMedicina'
+                placeholder="data separado por punto"
+                value={formData.precioMedicina}
+                onChange={handlePrecioChange}
+                required/>   
                 </label><br/><br/>
             <label htmlFor='cantidadMedicina'>Cantidad:
-                <input type='text' name='cantidadMedicina' id='cantidadMedicina' required/>   
+                <input type='text' 
+                name='cantidadMedicina' 
+                id='cantidadMedicina' 
+                value={formData.cantidadMedicina}
+                onChange={(e)=>handleInputChange(e,'cantidadMedicina')}
+                required/>   
                 </label><br/><br/>
             <button type="submit">guardar</button>
             </form>

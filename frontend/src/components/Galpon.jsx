@@ -6,13 +6,16 @@ import { useState } from "react";
 function Galpon (){
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        num_gallina:"",
+        num_galpon:"",
         capacidad:"",
         disponible:"si",
     });
 
     const handleChange = (e) =>{
-        const value = e.target.name === "disponible" ? e.target.value :e.target.value;
+        let value = e.target.name === "disponible" ? e.target.value :e.target.value;
+        if(e.target.name === "num_galpon"||e.target.name === "capacidad" ){
+            value=value.replace(/[^0-9]/g,"");
+        }
         setFormData({
             ...formData,
             [e.target.name]: value,
@@ -23,6 +26,11 @@ function Galpon (){
         try {
             const result = await postGalpones(formData);
             console.log(result);
+            setFormData({
+                num_galpon: "",
+                capacidad: "",
+                disponible: "si",
+            })
         } catch (error) {
             console.error("error al enviar datos al servidor ", error );
         }
@@ -34,13 +42,14 @@ function Galpon (){
         </button>
         <h1>Galpon</h1>
         <form onSubmit={handleSubmit}>
-        <label htmlFor='num_gallina'>numero de gallinas:
+        <label htmlFor='num_galpon'>numero de galpon:
             <input 
             type='text' 
-            name='num_gallina' 
-            id='num_gallina' 
-            value={formData.num_gallina}
+            name='num_galpon' 
+            id='num_galpon' 
+            value={formData.num_galpon}
             onChange={handleChange}
+            pattern="[0-9]*"
             required/>   
         </label><br/><br/>
         <label htmlFor='capacidad'>capacidad:
@@ -50,6 +59,7 @@ function Galpon (){
             id='capacidad' 
             value={formData.capacidad}
             onChange={handleChange}
+            pattern="[0-9]*"
             required/>   
         </label><br/><br/>
         <label htmlFor='disponible'>disponible:
@@ -59,8 +69,9 @@ function Galpon (){
             value={formData.disponible}
             onChange={handleChange}
             >
-                <option value="si ">si </option>
-                <option value="no ">no </option>
+                <option value=""></option>
+                <option value="1">si </option>
+                <option value="0">no </option>
             </select>
         </label>
         <br/><br/>

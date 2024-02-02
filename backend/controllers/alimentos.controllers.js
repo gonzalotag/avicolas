@@ -26,13 +26,13 @@ export const getAlimento = async(req,res)=>{
 
 //controlador para insertar un nuevo alimento
 export const createAlimento =async(req,res)=>{
-    const {nombre,precio,stock}= req.body;
+    const {nombre,precio,cantidad}= req.body;
     //validacion de campos vacios
-    if (!nombre || !precio||!stock )
+    if (!nombre || !precio||!cantidad )
     return res.status(400).json({msg:"Faltan datos"})
     try{
-        const [result]=await pool.query("INSERT INTO `alimento` (`nombre`,`precio`,`stock`) VALUES(?,?,?)",
-        [nombre,precio,stock]);
+        const [result]=await pool.query("INSERT INTO `alimento` (`nombre`,`precio`,`cantidad`) VALUES(?,?,?)",
+        [nombre,precio,cantidad]);
         res.json({msg:`Se agrego correctamente el alimento con el id${result.insertId}`})
     }catch(e){
         console.error(error);
@@ -66,21 +66,13 @@ export const updateAlimento = async(req,res)=>{
 };
 
 export const deleteAlimento = async (req,res)=>{
-    const id=req.params.id;
     try{
-        await pool.query('DELETE FROM `alimento` WHERE `id`=?',[id]);
-        //si devuelve una fila afectada es que si hay receta
-        //con ese alimento y por lo tanto no se puede borrar
-        if(!(await pool.query('SELECT COUNT(*) FROM `ingredientes`WHERE `alimento id`=?', [id]))[0]['COUNT(*)']){
-            const filasAfectadas= await pool.query('DELETE FROM recetas WHERE alimento=?', [id]);
-            if(!filasAfectadas.affectedRows)
-            throw err;
-        const resultado= await pool.query('DELETE FROM alimento WHERE id=?RETURNING * ',[id])
-        res.status(200).json(resultado.rows[0]);
-        } 
+        const result = await pool.query('DELETE FROM `alimento` WHERE `id`=?',[req.params.id]);
+            if(result.affectedRows === 0)
+            throw error;
     }catch(err){
         console.log(err);
-        return res.status(500).json({ message:'Se ha producido un erroren el servidor: '+err})
+        return res.status(500).json({ message:'Se ha producido un erroren el servidor: ',err})
         }
 }
 

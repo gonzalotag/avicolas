@@ -11,12 +11,15 @@ async function getAlimentosById(id){
 }
 async function deleteAlimento(id){
     try{
-        await axios.delete(`http://localhost:4000/alimento/${id}`);
-        alert ('Se ha eliminado correctamente')
+
+        const res = await axios.delete(`http://localhost:4000/alimento/${id}`);
+        alert ('Se ha eliminado correctamente');
+        return res;
+        
         }catch(error){
             console.error(error);
             throw error;
-            }
+        }
 }
 async function postAlimentos(data){
     try {

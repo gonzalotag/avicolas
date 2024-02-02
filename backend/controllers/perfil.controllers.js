@@ -106,9 +106,7 @@ export const updatePerfil = async (req,res) =>{
 
  export const deletePerfil = async (req,res) =>{
     try {
-        const [result] = await pool.query("DELETE FROM perfil WHERE id = ?",[
-            req.params.id,
-        ]);
+        const [result] = await pool.query("DELETE FROM perfil WHERE id = ?",[req.params.id,]);
         if (result.affectedRows === 0) {
             return res.status(404).json ({ message : "tarea no encontrada" });
         } else {
@@ -122,13 +120,9 @@ export const updatePerfil = async (req,res) =>{
  export const getUserByParams = async (req,res) =>{
     try {
         const{nombre,contrasenia} = req.body;
-        const [result] = await pool.query("select * from perfil where nombre = ? and contrasenia = ? " ,
-        [
-            nombre,
-            contrasenia
-        ]);
-
-    // console.log(result);
+        const [result] = await pool.query(
+        "select * from perfil where nombre = ? and contrasenia = ? " ,
+        [nombre,contrasenia]);
     res.json({
         result
     })
@@ -140,10 +134,9 @@ export const updatePerfil = async (req,res) =>{
     try {
         const [rol]= req.params.id_rol
         // return res.status(404).json({rol});
-        const[result]= await pool.query("select * from perfil where id_rol = ? ",
-        [
-            rol,
-        ])
+        const[result]= await pool.query(
+            "select id, nombre, apellido_paterno, apellido_materno from perfil where id_rol = ? ",
+            [rol,]);
         if (result.length === 0) {
             return res.status(404).json({message:"perfil no found"});
         } else {

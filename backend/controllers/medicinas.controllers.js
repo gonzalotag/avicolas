@@ -88,12 +88,14 @@ export const createMedicinas = async (req,res)=>{
 export const deleteMedicina =async (req,res)=>{
     try {
         const result=await pool.query('DELETE FROM medicina WHERE id=?',[req.params.id]);
-        if(!result.affectedRows) {
-            throw new Error ('No se ha encontrado una medicina con ese ID')
+        if (result.affectedRows === 0) {
+            return res.status(404).json({message:"  No se encontró una medicina con ese ID"});
+        }else{
+            res.status(204).send();
         }
-            res.status(200).json({message:'Se ha eliminado la medicina'});
-        } catch (error) {
-            console.log(error);
-            res.status(500).json({message: 'Error Interno del Servidor', code: error.code});
-        }
+        
+    } catch (error) {
+        // console.log(error);
+        res.status(500).json({message: 'Error Interno del Servidor', code: error.code});
+    }
 }

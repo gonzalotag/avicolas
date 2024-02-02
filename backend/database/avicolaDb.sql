@@ -105,12 +105,13 @@ create table almacen(
 INSERT INTO almacen (galpones, alimentos, pollos_de_engorde, medicinas, id_perfil)
 VALUES (10, 'Granos', 100, 'Vitaminas', (SELECT id FROM perfil WHERE id_rol 
 = (SELECT id FROM rol WHERE tipo = 'empleado')));
+
+
 create table alimento(
     id int AUTO_INCREMENT PRIMARY KEY,
     nombre varchar(40),
     precio float,
-    stock int,
-    
+    reservas int,
 );
 create table galpon(
     id int AUTO_INCREMENT PRIMARY KEY,

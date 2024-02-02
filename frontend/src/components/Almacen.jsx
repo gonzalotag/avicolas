@@ -1,140 +1,235 @@
 import "../assets/css/almacen.css"
 import React, {useState , useEffect} from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllMedicinas } from "../api/medicinas.api";
-import { getAllGalpones } from "../api/galpones.api";
-import { getAllAlimentos } from "../api/alimentos.api";
-import { getAllLotes } from "../api/lotes.api";
-import { getPerfiles } from "../api/perfil.api";
-
+import { deleteMedicina, getAllMedicinas } from "../api/medicinas.api";
+import { deleteGalpon, getAllGalpones } from "../api/galpones.api";
+import { deleteAlimento, getAllAlimentos } from "../api/alimentos.api";
+import { deleteLote, getAllLotes } from "../api/lotes.api";
+import { getPerfilesByRol } from "../api/perfil.api";
+import Menu from "./Menu";
 
 function Almacen (){
 
     const navigate = useNavigate();
-    const [medicina,setmedicina] = useState([]);
+    const [medicina,setMedicina] = useState([]);
     const [galpones, setGalpones]= useState([]);
     const [alimentos,setAlimentos]= useState([]);
     const [lotes,setLotes] = useState([]);
+    const [empleado,setEmpleado] = useState([]);
+
+    
+
     useEffect(()=>{
-        const fetchMedicina = async () =>{
+        const fetchData= async ()=>{
+        
             try {
                 const medicinasData = await getAllMedicinas();
-                setmedicina(medicinasData);
-            } catch (error) {
-                console.log("error de obtencion de medicinas",error)
-            }
-        };
-        const fetchGalpones = async () =>{
-            try {
+                setMedicina(medicinasData);
+
                 const galponesData = await getAllGalpones();
-                console.log("datos de galpones",galponesData)
                 if (Array.isArray(galponesData.data)) {
                     setGalpones(galponesData.data);    
                 }else{
                     console.error("los datos de galpones no es un array ");
                 }
-            } catch (error) {
-                console.error("error de obtencion de galpones",error);
-            }
-        }
-        const fetchAlimentos = async () =>{
-            try {
+
                 const alimentosData = await getAllAlimentos();
-                console.log("datos de alimentos",alimentosData)
+                
                 setAlimentos(alimentosData)
-            } catch (error) {
-                console.error("error de obtencion de alimentos",error);
-            }
-        }
-        const fetchLote = async () =>{
-            try {
+            
                 const lotesData = await getAllLotes();
-                console.log('todo lotes de gallinas ',lotesData)
+                
                 setLotes(lotesData.data)
-            } catch (error) {
-                console.error("error de obtencion de lotes",error);
+            
+                const empleadosData = await getPerfilesByRol(4);
+                setEmpleado(empleadosData);
+                } catch (error) {
+                    console.log(error)
+                }
             }
+                fetchData();
+    }, []);
+    const deleteFunctions = {
+        medicina:deleteMedicina,
+        alimento:deleteAlimento,
+        galpones:deleteGalpon,
+        lotes:deleteLote,
+    }
+    const deleteItem = async (id,tipoEntidad) =>{
+        try{   
+            console.log('deleteitem',id,tipoEntidad);
+        const deleteFunction =deleteFunctions[tipoEntidad];
+        if(!deleteFunction){
+            console.error('tipo de entidad no valido');
+            return;
+        }   
+        await deleteFunction(id); 
+        alert("Se elimino con exito");
+        }catch(error){
+            console.log("Error al eliminar ",error);
+            alert("Ocurrio un error al eliminar");
         }
-        fetchMedicina();
-        fetchGalpones();
-        fetchAlimentos();
-        fetchLote();
-    },[])
+    }
+
     return (
     <div className="almacenContainer">
-        <div><h2>datos de lote</h2></div>
         <div className="almacenTabla">
+            <Menu/>
+            <h2>datos de lote</h2>
             <table className="tableAlmacen">
                 <thead>
                     <tr>
-                        <th>nombre de medicinas</th>
+                        <th>Nombre de medicinas</th>
                         <th>Galpones</th>
                         <th>Alimentos</th>
+                        <th>Cantidad de alimento</th>
+                        <th>Empleados</th>
                         <th>Lote</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>
-                            <ul>
-                                {medicina.map((medicina)=>(
-                                    <li key={medicina.id}>
-                                        {medicina.nombre}
-                                    </li>
-                                ))}
-                            </ul>
+                            {medicina.map((medicina)=>(
+                                <div key={medicina.id}>
+                                    {medicina.nombre}
+                                </div>
+                            ))}
                         </td>
                         <td>
-                            <ul>
-                                {galpones.map((galpon)=>(
-                                    <li key={galpon.id}>
-                                        {galpon.num_gallina } gallinas
-                                    </li>
-                                ))}
-                            </ul>
+                            {galpones.map((galpon)=>(
+                                <div key={galpon.id}>
+                                    galpon # {galpon.num_galpon }
+                                </div>
+                            ))}
                         </td>
                         <td>
-                            <ul>
-                                {alimentos.map((alimento)=>(
-                                    <li key={alimento.id}>
-                                        {alimento.nombre}
-                                    </li>
-                                ))}
-                            </ul>
+                            {alimentos.map((alimento)=>(
+                                <div key={alimento.id}>
+                                    {alimento.nombre} 
+                                </div>
+                            ))}
                         </td>
                         <td>
-                            <ul>
+                            {alimentos.map((alimento)=>(
+                            <div key={alimento.id}>
+                            {alimento.cantidad} kgs
+                            </div>
+                            ))}
+                        </td>
+                        <td>{empleado.map((perfil)=>(
+                            <div key={perfil.id}>
+                                {perfil.nombre} {perfil.apellido_paterno}
+                            </div>
+                        ))}</td>
+                        <td>
                             {lotes.map((lote)=>(
-                                    <li key={lote.id}>
-                                        {lote.raza}
-                                    </li>
+                                    <div key={lote.id}>
+                                        raza {lote.raza} 
+                                    </div>
                                 ))}
-                            </ul>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div><h2>medicinas</h2>
-        <button onClick={()=> navigate('/medicinas')}>
-            <h2>registrar ingreso de medicinas</h2></button>
-            
-        </div>    
-        <div><h2>galpon</h2>
-        <button onClick={()=> navigate('/galpon')}>
-            <h2>asignar galpones</h2></button>
-            
-        </div>
-        <div><h2>alimentos</h2>
-        <button onClick={()=> navigate('/alimentos')}>
-            <h2>registrar alimentos</h2></button>
-        
-        </div>
-        <div><h2>lotes</h2>
-        <button onClick={()=> navigate('/lote')}>
-            <h2>registrar lotes</h2></button>
-        
-        </div>
+        <table>
+            <caption><h2>medicina</h2></caption>
+            <thead>
+                <tr>
+                    <th>nombre</th>
+                    <th>tipo</th>
+                    <th>numero de dosis</th>
+                    <th>precio</th>
+                    <th>cantidad</th>
+                    <th>fecha de compra</th>
+                    <th>accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                {medicina.map((medicina)=>(
+                    <tr key={medicina.id}>
+                    <td>{medicina.nombre}</td>
+                    <td>{medicina.tipo}</td>
+                    <td>{medicina.num_dosis}</td>
+                    <td>{medicina.precio}</td>
+                    <td>{medicina.cantidad}</td>
+                    <td>{medicina.fecha_ingreso}</td>
+                    <td><button onClick={()=>deleteItem(medicina.id,'medicina')}>borrar</button></td>
+                    
+                </tr>
+                ))}
+            </tbody>
+        </table>
+        <table>
+            <caption><h2>galpon</h2></caption>
+            <thead>
+                <tr>
+                    <th># galpon</th>
+                    <th>capacidad</th>
+                    <th>disponible</th>
+                    <th>fecha de asignacion</th>
+                    <th>accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                {galpones.map((galpon)=>(
+                    <tr key={galpon.id}>
+                    <td>{galpon.num_galpon}</td>
+                    <td>{galpon.capacidad}</td>
+                    <td>{galpon.disponible}</td>
+                    <td>{galpon.fecha_asignacion}</td>
+                    <td><button onClick={()=>deleteItem(galpon.id,'galpones')}>borrar</button></td>
+                </tr>
+                ))}
+            </tbody>
+        </table>
+        <table>
+            <caption><h2>alimento</h2></caption>
+            <thead>
+                <tr>
+                    <th>nombre</th>
+                    <th>precio</th>
+                    <th>cantidad</th>
+                    <th>fecha de compra</th>
+                    <th>accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                {alimentos.map((alimento)=>(
+                    <tr key={alimento.id}>
+                    <td>{alimento.nombre}</td>
+                    <td>{alimento.precio}</td>
+                    <td>{alimento.cantidad}</td>
+                    <td>{alimento.fecha_compra}</td>
+                    <td><button onClick={()=>deleteItem(alimento.id,'alimento')}>borrar</button></td>
+                </tr>
+                ))}
+            </tbody>
+        </table>
+        <table>
+            <caption><h2>lote</h2></caption>
+            <thead>
+                <tr>
+                    <th>raza</th>
+                    <th>fecha de ingreso</th>
+                    <th>cantidad</th>
+                    <th>valor por unidad</th>
+                    <th>accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                {lotes.map((lote)=>(
+                    <tr key={lote.id}>
+                    <td>{lote.raza}</td>
+                    <td>{lote.fecha_ingreso}</td>
+                    <td>{lote.cantidad}</td>
+                    <td>{lote.valor_unidad}</td>
+                    <td><button onClick={()=>deleteItem(lote.id,'lotes')}>borrar</button></td>
+                </tr>
+                ))}
+            </tbody>
+        </table>
     </div>)
 }
 
