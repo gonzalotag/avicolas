@@ -1,8 +1,14 @@
 import axios from "axios";
 
 async function getAllAlimentos(){
-    const res = await axios.get("http://localhost:4000/alimento");
-    return res.data;
+    try {
+        const res = await axios.get("http://localhost:4000/alimento");
+        // console.log("datos alimentos", res.data);
+        return res.data;    
+    } catch (error) {
+        console.error("error al obtener alimentos" ,  error);
+    }
+    
 }
 
 async function getAlimentosById(id){
@@ -51,6 +57,4 @@ export{
     deleteAlimento,
     postAlimentos,
     patchAlimento,
-    
-    
 }

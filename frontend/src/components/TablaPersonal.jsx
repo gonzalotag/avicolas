@@ -54,7 +54,7 @@ function TablaPersonal(){
     };
     return <div className="contenedorTabla">
             <div className="contenedorPersonal">
-            Personal Registrado
+            <h2>Personal Registrado</h2>
             <div  className="nuevoPersonal" >
             <div className="buttonNuevoPersonal">
             {/* al hacer clic le dice cuando mostrar o no */}
@@ -65,7 +65,7 @@ function TablaPersonal(){
             {/* para recolectar solo un dato para cambiar entre roles  */}
             <div className="tablaSelectRol">
             <div className="selectRol">
-                Seleccione Rol:
+                <h2>Seleccione Rol:</h2>
             <select  id= "selectRoles" title="selecetRol" name="selectRoles" onChange={handleSelect}>
                 <option></option>
                 {tipoRol.map((data,index)=>{
@@ -88,7 +88,8 @@ function TablaPersonal(){
                 </tr>
                 </thead>
                 <tbody>
-                    {/*filter.map(()=>{"info aqui"}) con este metodo se puede llenar toda la tabla con informacion recogido de perfil */}
+                    {/*filter.map(()=>{"info aqui"}) con este metodo se puede 
+                    llenar toda la tabla con informacion recogido de perfil */}
                     {filterRol.map((data,index) =>{
                         return(<tr key={index}>
                         <td>{data.nombre}</td>

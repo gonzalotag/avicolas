@@ -53,7 +53,6 @@ async function getPerfilesByRol (id_rol){
     return result.data;
 }
 
-
 async function deletePersona(id){
     const result =  await axios.delete("http://localhost:4000/perfil/" + id);
     return result;

@@ -7,6 +7,7 @@ import { deleteAlimento, getAllAlimentos } from "../api/alimentos.api";
 import { deleteLote, getAllLotes } from "../api/lotes.api";
 import { getPerfilesByRol } from "../api/perfil.api";
 import Menu from "./Menu";
+import { FormatFecha } from "./FormatFecha";
 
 function Almacen (){
 
@@ -79,10 +80,9 @@ function Almacen (){
             <table className="tableAlmacen">
                 <thead>
                     <tr>
-                        <th>Nombre de medicinas</th>
+                        <th>medicinas</th>
                         <th>Galpones</th>
                         <th>Alimentos</th>
-                        <th>Cantidad de alimento</th>
                         <th>Empleados</th>
                         <th>Lote</th>
                     </tr>
@@ -108,13 +108,6 @@ function Almacen (){
                                 <div key={alimento.id}>
                                     {alimento.nombre} 
                                 </div>
-                            ))}
-                        </td>
-                        <td>
-                            {alimentos.map((alimento)=>(
-                            <div key={alimento.id}>
-                            {alimento.cantidad} kgs
-                            </div>
                             ))}
                         </td>
                         <td>{empleado.map((perfil)=>(
@@ -154,7 +147,7 @@ function Almacen (){
                     <td>{medicina.num_dosis}</td>
                     <td>{medicina.precio}</td>
                     <td>{medicina.cantidad}</td>
-                    <td>{medicina.fecha_ingreso}</td>
+                    <td>{FormatFecha(medicina.fecha_ingreso)}</td>
                     <td><button onClick={()=>deleteItem(medicina.id,'medicina')}>borrar</button></td>
                     
                 </tr>
@@ -162,7 +155,7 @@ function Almacen (){
             </tbody>
         </table>
         <table>
-            <caption><h2>galpon</h2></caption>
+            <caption><h2>galpones de crianza </h2></caption>
             <thead>
                 <tr>
                     <th># galpon</th>
@@ -178,7 +171,7 @@ function Almacen (){
                     <td>{galpon.num_galpon}</td>
                     <td>{galpon.capacidad}</td>
                     <td>{galpon.disponible}</td>
-                    <td>{galpon.fecha_asignacion}</td>
+                    <td>{FormatFecha(galpon.fecha_asignacion)}</td>
                     <td><button onClick={()=>deleteItem(galpon.id,'galpones')}>borrar</button></td>
                 </tr>
                 ))}
@@ -201,14 +194,14 @@ function Almacen (){
                     <td>{alimento.nombre}</td>
                     <td>{alimento.precio}</td>
                     <td>{alimento.cantidad}</td>
-                    <td>{alimento.fecha_compra}</td>
+                    <td>{FormatFecha(alimento.fecha_compra)}</td>
                     <td><button onClick={()=>deleteItem(alimento.id,'alimento')}>borrar</button></td>
                 </tr>
                 ))}
             </tbody>
         </table>
         <table>
-            <caption><h2>lote</h2></caption>
+            <caption><h2>lote de gallinas </h2></caption>
             <thead>
                 <tr>
                     <th>raza</th>
@@ -222,7 +215,7 @@ function Almacen (){
                 {lotes.map((lote)=>(
                     <tr key={lote.id}>
                     <td>{lote.raza}</td>
-                    <td>{lote.fecha_ingreso}</td>
+                    <td>{FormatFecha(lote.fecha_ingreso)}</td>
                     <td>{lote.cantidad}</td>
                     <td>{lote.valor_unidad}</td>
                     <td><button onClick={()=>deleteItem(lote.id,'lotes')}>borrar</button></td>

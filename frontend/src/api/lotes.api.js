@@ -37,7 +37,7 @@ export const postLote = async (data) =>{
         
     }
 }
-export const putLote = async (id, data) =>{
+export const patchLote = async (id, data) =>{
     try {
         console.log("URL , ")
         const respuesta=await axios.put(`${'http://localhost:4000/lote'}/${id}`,data);

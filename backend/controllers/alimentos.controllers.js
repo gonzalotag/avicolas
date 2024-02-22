@@ -26,13 +26,13 @@ export const getAlimento = async(req,res)=>{
 
 //controlador para insertar un nuevo alimento
 export const createAlimento =async(req,res)=>{
-    const {nombre,precio,cantidad}= req.body;
+    const {nombre,precio,cantidad,tipo,cantidadSacos}= req.body;
     //validacion de campos vacios
-    if (!nombre || !precio||!cantidad )
+    if (!nombre || !precio||!cantidad||!tipo||!cantidadSacos )
     return res.status(400).json({msg:"Faltan datos"})
     try{
-        const [result]=await pool.query("INSERT INTO `alimento` (`nombre`,`precio`,`cantidad`) VALUES(?,?,?)",
-        [nombre,precio,cantidad]);
+        const [result]=await pool.query("INSERT INTO `alimento` (`nombre`,`precio`,`cantidad`,`tipo`,`cantidadSacos`) VALUES(?,?,?,?,?)",
+        [nombre,precio,cantidad,tipo,cantidadSacos]);
         res.json({msg:`Se agrego correctamente el alimento con el id${result.insertId}`})
     }catch(e){
         console.error(error);

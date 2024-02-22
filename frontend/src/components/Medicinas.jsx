@@ -13,19 +13,7 @@ function Medicinas (){
         precioMedicina:"",
         cantidadMedicina:"",
     });
-    // const [medicina, setMedicina]= useState([]);
-    // useEffect(()=>{
-    //     fetchData();
-    // },[])
-
-    // const fetchData = async ()=>{
-    //     try {
-    //         const medicinasData = await getAllMedicinas();
-    //         setMedicina(medicinasData);
-    //     } catch (error) {
-    //         console.error("error al obtener medicina",error);
-    //     }
-    // }
+   
     const handleChange = (event)  =>{
         const {name ,value} = event.target;
         setFormData({...formData, [name]: value});
@@ -35,9 +23,7 @@ function Medicinas (){
         try{
             const response = await postMedicina(formData);
             console.log("se guardo la informacion",response);
-            // if (response && response.status === 200) {
-                
-            // }
+            
             alert("Se agrego correctamente");
         }catch(error){
         console.error("error al agergar la medicina",error);

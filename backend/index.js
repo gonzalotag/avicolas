@@ -8,7 +8,10 @@ import medicinasRoutes from "./routes/medicinas.routes.js"
 import galponRoutes from "./routes/galpones.routes.js"
 import alimentosRoutes from "./routes/alimentos.routes.js"
 import almacenRoutes from "./routes/almacen.routes.js"
-import lotesRoutes from "./routes/lotes.routes.js"
+import lotesRoutes from "./routes/lotes.routes.js"  
+import mortalidadRoutes from "./routes/mortalidad.routes.js"
+import gastosRoutes from "./routes/gastos.routes.js"
+import pesoRoutes from "./routes/peso.routes.js"
 // para manejar el cache-control 'stale-while-revalidate=604800'
 const corsOptions ={
     origin:"http://localhost:5173",
@@ -29,6 +32,10 @@ app.use(galponRoutes);
 app.use(alimentosRoutes);
 app.use(lotesRoutes);
 app.use(almacenRoutes);
+app.use(mortalidadRoutes);
+app.use(gastosRoutes);
+app.use(pesoRoutes);
+
 app.listen(PORT);
 app.use ((err, req, res,next)=>{
     console.error(err.stack);

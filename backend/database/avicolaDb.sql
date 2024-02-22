@@ -85,7 +85,7 @@ UPDATE perfil
 SET contrasenia = 'amosis'
 WHERE id = 1;
 
-create table almacen(
+create table produccion(
     id int AUTO_INCREMENT primary key,
     galpones int,
     alimentos varchar(20),
@@ -96,22 +96,25 @@ create table almacen(
     id_medicina int,
     id_lote int,
     id_perfil int,
+    id_peso int,
+    id_gastos int,
     foreign key (id_alimento) references alimento (id),
     foreign key (id_galpon) references galpon (id),
     foreign key (id_medicina) references medicina (id),
     foreign key (id_lote) references lote(id),
-    foreign key (id_empleado) references empleado(id)
-);
-INSERT INTO almacen (galpones, alimentos, pollos_de_engorde, medicinas, id_perfil)
-VALUES (10, 'Granos', 100, 'Vitaminas', (SELECT id FROM perfil WHERE id_rol 
-= (SELECT id FROM rol WHERE tipo = 'empleado')));
+    foreign key (id_perfil) references perfil (id),
+    foreign key (id_empleado) references empleado(id),
+    foreign key (id_mortalidad) references mortalidad(id),
+    foreign key (id_peso) references peso(id),
+    foreign key (id_gastos) references gastos(id),
 
+);
 
 create table alimento(
     id int AUTO_INCREMENT PRIMARY KEY,
     nombre varchar(40),
     precio float,
-    reservas int,
+    cantidad int,
 );
 create table galpon(
     id int AUTO_INCREMENT PRIMARY KEY,
@@ -127,7 +130,6 @@ create table medicina(
     num_dosis int,
     precio float,
     cantidad int,
-    
 );
 
 create table lote(
@@ -136,4 +138,24 @@ create table lote(
     fecha_ingreso timestamp default current_timestamp,
     cantidad int,
     valor_unidad decimal(10,2)
+);
+
+create table mortalidad(
+    id int AUTO_INCREMENT PRIMARY KEY,
+    cantidad     int,
+    causa           varchar(50),    
+    descripcion      varchar(80),
+    fecha_registro_muerte timestamp default current_timestamp,
+);
+create table gastos( 
+id int AUTO_INCREMENT PRIMARY KEY,
+detalle VARCHAR(80),
+fecha_gasto  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+importe DECIMAL(10,2)   
+);
+
+create table peso(
+id int auto_increment primary key,
+peso_promedio decimal (10,2),
+fecha_medicion timestamp default current_timestamp
 );
