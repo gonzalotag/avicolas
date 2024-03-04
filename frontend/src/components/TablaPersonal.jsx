@@ -84,7 +84,7 @@ function TablaPersonal(){
                     <th>Telefono</th>
                     <th>Email</th>
                     <th>Rol </th>
-                    <th>accion</th>
+                    <th>Accion</th>
                 </tr>
                 </thead>
                 <tbody>

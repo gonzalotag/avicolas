@@ -2,7 +2,7 @@ import {pool} from "../db.js"
 
 export const getAllGastos =  async (req,res) =>{
     try{
-        const result = await pool.query('SELECT * FROM gastos')
+        const [result] = await pool.query('SELECT * FROM gastos')
         res.json(result);
     }catch(error){
         console.log(error); 

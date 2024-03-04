@@ -126,7 +126,7 @@ create table galpon(
 create table medicina(
     id int AUTO_INCREMENT PRIMARY KEY,
     nombre varchar(60),
-    tipo varchar(20),
+    via varchar(20),
     num_dosis int,
     precio float,
     cantidad int,

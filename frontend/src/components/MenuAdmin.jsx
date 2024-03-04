@@ -23,7 +23,7 @@ function MenuAdmin (props){
             <div className="iconoAdmin"><FontAwesomeIcon icon={faCircleUser} className="iconoUser"/> 
             </div>
             <div className="nombreAdmin">
-                nombre
+                Administrador
             </div>
         </div>
         <div className="buttonBox">

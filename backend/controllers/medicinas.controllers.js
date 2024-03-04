@@ -38,14 +38,14 @@ export const updateMedicinas =async (req,res)=>{
         if(!medicaExists)
         return res.status(400).json({message:'No se encontró la Medicina con ese ID'});
         //validar el cuerpo de la solicitud contiene los datos necesarios
-        const {nombre,tipo,num_dosis,precio,cantidad}= req.body;
-        if (!nombre|| !tipo|| !num_dosis|| !precio|| !cantidad) {
+        const {nombre,via,num_dosis,precio,cantidad}= req.body;
+        if (!nombre|| !via|| !num_dosis|| !precio|| !cantidad) {
             return res.status(400).json({message:'todos los campos son obligatorios'});
         }
         //si existe actualizar los campos que llegan por params
         const medicinaUpdate={
             nombre:(nombre)?nombre:medicaExists.nombre,
-            tipo:(tipo)?tipo:medicaExists.tipo,
+            via:(via)?via:medicaExists.via,
             num_dosis:(num_dosis>0)?num_dosis:medica.num_dosis,
             precio:parseFloat(precio),
             cantidad:parseInt(cantidad),
@@ -60,15 +60,15 @@ export const updateMedicinas =async (req,res)=>{
 export const createMedicinas = async (req,res)=>{
     try {
         //verificar si tiene todos los parametros
-        const{nombreMedicina,tipoMedicina,dosisMedicina,precioMedicina,cantidadMedicina}=req.body;
-        console.log("valores delos parametros",{nombreMedicina,tipoMedicina,dosisMedicina,precioMedicina,cantidadMedicina})
-        if (!nombreMedicina ||!tipoMedicina  || !dosisMedicina || !precioMedicina|| !cantidadMedicina ) {
+        const{nombreMedicina,viaMedicina,dosisMedicina,precioMedicina,cantidadMedicina}=req.body;
+        console.log("valores delos parametros",{nombreMedicina,viaMedicina,dosisMedicina,precioMedicina,cantidadMedicina})
+        if (!nombreMedicina ||!viaMedicina  || !dosisMedicina || !precioMedicina|| !cantidadMedicina ) {
             console.log("campos faltantes, retornando 400 Bad Request")
             return res.status(400).json({message:"Todos los campos sonrequeridos"})}
             
             const medicaNueva={
                 nombre:nombreMedicina,
-                tipo:tipoMedicina,
+                via:viaMedicina,
                 num_dosis:dosisMedicina,
                 precio:precioMedicina,
                 cantidad:cantidadMedicina

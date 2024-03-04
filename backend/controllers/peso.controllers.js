@@ -2,8 +2,8 @@ import {pool }from "../db.js";
 
 export const getAllPeso = async (req,res) =>{
     try {
-        const result =await pool.query("SELECT * FROM peso");
-        res.status(200).json({pesos:result});
+        const [result] =await pool.query("SELECT * FROM peso");
+        res.status(200).json(result);
     } catch (error) {
         console.log(error);
         res.status(500).send('Server error');

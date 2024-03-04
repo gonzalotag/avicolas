@@ -8,12 +8,12 @@
 .loginContainer{
     height: 50%;
     width: 30% ;
-    background: rgba(122, 122, 122, 0.17);
+    background: rgba(245, 242, 242, 0.17);
     border-radius: 5px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.973);
     /* backdrop-filter: blur(4.8px);
     -webkit-backdrop-filter: blur(4.8px); */
-    border: 1px solid rgba(255, 255, 255, 0.24);
+    /* border: 1px solid rgba(236, 227, 227, 0.24); */
 }
 .loginTitle{
     display: flex;
@@ -65,7 +65,7 @@
 }
 .loginButton button:hover{
     background-color: #ff79ffeb;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.973);
+    /* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.973); */
 }
 @media only screen and (max-width:768px){
     .loginContainer{

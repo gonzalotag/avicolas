@@ -38,11 +38,11 @@ function Galpon (){
     return(
     <div className="galponContainer">
         <button onClick={()=>navigate('/admin')}>
-            <h2>regresar a almacen</h2>
+            <h2>Regresar a Almacen</h2>
         </button>
         <h1>Galpon</h1>
-        <form onSubmit={handleSubmit}>
-        <label htmlFor='num_galpon'>numero de galpon:
+        <form className="galponForm" onSubmit={handleSubmit}>
+        <label htmlFor='num_galpon'>Numero de Galpon:
             <input 
             type='text' 
             name='num_galpon' 
@@ -52,7 +52,7 @@ function Galpon (){
             pattern="[0-9]*"
             required/>   
         </label><br/><br/>
-        <label htmlFor='capacidad'>capacidad:
+        <label htmlFor='capacidad'>Capacidad:
             <input 
             type='text' 
             name='capacidad' 
@@ -62,7 +62,7 @@ function Galpon (){
             pattern="[0-9]*"
             required/>   
         </label><br/><br/>
-        <label htmlFor='disponible'>disponible:
+        <label htmlFor='disponible'>Disponible:
             <select 
             name="disponible" 
             id="disponible"
@@ -70,12 +70,12 @@ function Galpon (){
             onChange={handleChange}
             >
                 <option value=""></option>
-                <option value="1">si </option>
-                <option value="0">no </option>
+                <option value="1">Si </option>
+                <option value="0">No </option>
             </select>
         </label>
         <br/><br/>
-        <button type="submit"> guardar</button>
+        <button type="submit"> Guardar</button>
         </form>
     </div>
     )

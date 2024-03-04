@@ -25,18 +25,22 @@ export const getAlimento = async(req,res)=>{
 };
 
 //controlador para insertar un nuevo alimento
+
 export const createAlimento =async(req,res)=>{
-    const {nombre,precio,cantidad,tipo,cantidadSacos}= req.body;
-    //validacion de campos vacios
-    if (!nombre || !precio||!cantidad||!tipo||!cantidadSacos )
-    return res.status(400).json({msg:"Faltan datos"})
+    const {nombre,precio,cantidad,tipo,cantidadsacos}= req.body;
+    console.log("datos recibidos",req.body);
+    if (!nombre || !precio|| !cantidad|| !tipo|| !cantidadsacos )
+    // return res.status(400).json({msg:"Faltan datos"})
     try{
-        const [result]=await pool.query("INSERT INTO `alimento` (`nombre`,`precio`,`cantidad`,`tipo`,`cantidadSacos`) VALUES(?,?,?,?,?)",
-        [nombre,precio,cantidad,tipo,cantidadSacos]);
+        const query ="INSERT INTO alimento (nombre,precio,cantidad,tipo,cantidadsacos) VALUES (?, ?, ?, ?, ?)";
+        const value = [nombre,precio,cantidad,tipo,cantidadsacos]
+        console.log("consulsa sql", query);
+        console.log("valores", value);
+        const [result]=await pool.query(query, value);
         res.json({msg:`Se agrego correctamente el alimento con el id${result.insertId}`})
-    }catch(e){
+    }catch(error){
         console.error(error);
-        return res.status(500).json({msg: "Hubo un error enel servidor"})
+        // return res.status(500).json({msg: "Hubo un error en el servidor"})
     }
 };
 

@@ -87,9 +87,10 @@ const handleTextChange = (e, fieldName)=>{
               <button onClick={()=>navigate('/admin')}><h2>Regresar a Personal</h2></button>
             </div>
             <h1>Editar Perfil</h1>
-            <div className="formularioEdit">
-              <form action="formEditar">
-                <label htmlFor="nombre">nombre</label>
+            <div className="formularioVistaPrevia">
+              <div className="formularioEdit">
+                <form action="formEditar">
+                <label htmlFor="nombre">Nombre</label>
                 <br />
                 <input 
                 type="text"
@@ -100,7 +101,7 @@ const handleTextChange = (e, fieldName)=>{
                 />
                 <br />
                 <label htmlFor="apellido_apaterno">
-                  apellido_paterno
+                  Apellido Paterno
                 </label>
                 <br />
                 <input type="text" 
@@ -110,7 +111,7 @@ const handleTextChange = (e, fieldName)=>{
                 onChange={(e)=>handleTextChange(e,"apellido_paterno")}/>
                 <br />
                 <label htmlFor="apellido_materno">
-                  apellido_materno
+                  Apellido Materno
                 </label>
                 <br />
                 <input type="text" 
@@ -120,7 +121,7 @@ const handleTextChange = (e, fieldName)=>{
                 onChange={(e)=>handleTextChange(e,"apellido_materno")}/>
                 <br />
                 <label htmlFor="direccion">
-                  direccion
+                  Direccion
                 </label>
                 <br />
                 <input type="text" 
@@ -130,7 +131,7 @@ const handleTextChange = (e, fieldName)=>{
                 onChange={handleInputChange}/>
                 <br />
                 <label htmlFor="telefono">
-                  telefono
+                  Telefono
                 </label>
                 <br />
                 <input type="text"
@@ -145,7 +146,7 @@ const handleTextChange = (e, fieldName)=>{
                 />
                 <br />
                 <label htmlFor="email">
-                  email
+                  Email
                 </label>
                 <br />
                 <input type="text"
@@ -158,6 +159,7 @@ const handleTextChange = (e, fieldName)=>{
                 <button type="button" onClick={handleCancelar}>Cancelar</button>
                 <button type="button" onClick={handleVistaPrevia}>Vista Previa</button>
               </form >
+              </div>         
               {mostrarVistaPrevia &&(
                 <div className="objetoDatos">
                   <h2 className="titleList">Datos Modificados</h2>
@@ -170,8 +172,8 @@ const handleTextChange = (e, fieldName)=>{
                   <li>Email: {perfil.email}</li>
                   </ul>
                 </div>
-                )}
-            </div>            
+                )}   
+            </div>
           </div>
     );
 }

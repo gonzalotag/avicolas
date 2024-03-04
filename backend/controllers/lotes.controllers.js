@@ -64,7 +64,7 @@ export const updateLote = async(req,res)=>{
     const {raza,cantidad,valor_unidad}=req.body;
         try{
             const result = await pool.query(
-                "UPDATE LOTE SET raza=$2, cantidad=$3, valor_undad=$4 WHERE id=$1 RETURNING *",
+                "UPDATE LOTE SET raza=$2, cantidad=$3, valor_undad=$4 WHERE id=${id} RETURNING *",
                 [id,raza,cantidad,valor_unidad,id]);
                 if(result.rowCount<=0){
                     return res.status(404).json({

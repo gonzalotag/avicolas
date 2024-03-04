@@ -8,7 +8,7 @@ function Medicinas (){
     
     const [formData,setFormData]= useState({
         nombreMedicina:"",
-        tipoMedicina:"oral",
+        viaMedicina:"oral",
         dosisMedicina:"",
         precioMedicina:"",
         cantidadMedicina:"",
@@ -48,11 +48,11 @@ function Medicinas (){
     return(
         <div className="medContainer">
             <button onClick={()=>navigate(`/admin/`)}>
-                <h2>regresar a almacen</h2>
+                <h2>Regresar a Almacen</h2>
             </button>
             <h1 className="titulo">Medicinas</h1>
-            <form onSubmit={handleSubmit}>
-            <label htmlFor='nombreMedicina'>nombre:
+            <form className="medicForm" onSubmit={handleSubmit}>
+            <label htmlFor='nombreMedicina'>Nombre: </label><br />
                 <input 
                 type='text' 
                 name='nombreMedicina' 
@@ -60,45 +60,44 @@ function Medicinas (){
                 value={formData.nombreMedicina}
                 onChange={handleChange}
                 required/>   
-                </label><br/><br/>
-            <label htmlFor='tipoMedicina'>tipo:</label>
+                <br/><br/>
+            <label htmlFor='viaMedicina'>via:</label><br />
                 <select 
-                name="tipoMedicina" 
-                id="tipoMedicina"
-                value={formData.tipoMedicina}
-                onChange={handleChange}
-                >
+                name="viaMedicina" 
+                id="viaMedicina"
+                value={formData.viaMedicina}
+                onChange={handleChange}>
                     <option value="oral">oral</option>
                     <option value="ocular">ocular</option>
                     <option value="intramuscular">intramuscular</option>
                 </select>
                 <br/><br/>
-            <label htmlFor='dosisMedicina'>numero de dosis:
+            <label htmlFor='dosisMedicina'>Numero de Dosis:</label><br />
                 <input type='text' 
                 name='dosisMedicina' 
                 id='dosisMedicina' 
                 value={formData.dosisMedicina}
                 onChange={(e)=>handleInputChange(e,'dosisMedicina')}
                 required/>   
-                </label><br/><br/>
-            <label htmlFor='precioMedicina'>precio:
+                <br/><br/>
+            <label htmlFor='precioMedicina'>Precio:</label><br />
                 <input type='text' 
                 name='precioMedicina' 
                 id='precioMedicina'
-                placeholder="data separado por punto"
+                placeholder="separar usando punto (.)"
                 value={formData.precioMedicina}
                 onChange={handlePrecioChange}
                 required/>   
-                </label><br/><br/>
-            <label htmlFor='cantidadMedicina'>Cantidad:
+                <br/><br/>
+            <label htmlFor='cantidadMedicina'>Cantidad:</label><br />
                 <input type='text' 
                 name='cantidadMedicina' 
                 id='cantidadMedicina' 
                 value={formData.cantidadMedicina}
                 onChange={(e)=>handleInputChange(e,'cantidadMedicina')}
                 required/>   
-                </label><br/><br/>
-            <button type="submit">guardar</button>
+                <br/><br/>
+            <button type="submit">Guardar</button>
             </form>
            
         </div>

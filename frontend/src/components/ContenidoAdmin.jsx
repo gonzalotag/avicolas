@@ -3,7 +3,7 @@ import"../assets/css/contenidoAdmin.css"
 function ContenidoAdmin (){
     
     return<div className="contenidoAdmin">
-            condenido de admin
+            Condenido de Admin
     </div>
 }
 export default ContenidoAdmin;

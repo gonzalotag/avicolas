@@ -76,11 +76,11 @@ function Almacen (){
     <div className="almacenContainer">
         <div className="almacenTabla">
             <Menu/>
-            <h2>datos de lote</h2>
             <table className="tableAlmacen">
+            <caption><h2>Datos de Lote</h2></caption>
                 <thead>
                     <tr>
-                        <th>medicinas</th>
+                        <th>Medicinas</th>
                         <th>Galpones</th>
                         <th>Alimentos</th>
                         <th>Empleados</th>
@@ -99,7 +99,7 @@ function Almacen (){
                         <td>
                             {galpones.map((galpon)=>(
                                 <div key={galpon.id}>
-                                    galpon # {galpon.num_galpon }
+                                    Galpon # {galpon.num_galpon }
                                 </div>
                             ))}
                         </td>
@@ -118,7 +118,7 @@ function Almacen (){
                         <td>
                             {lotes.map((lote)=>(
                                     <div key={lote.id}>
-                                        raza {lote.raza} 
+                                        Raza {lote.raza} 
                                     </div>
                                 ))}
                         </td>
@@ -127,42 +127,42 @@ function Almacen (){
             </table>
         </div>
         <table>
-            <caption><h2>medicina</h2></caption>
+            <caption><h2>Medicina</h2></caption>
             <thead>
                 <tr>
-                    <th>nombre</th>
-                    <th>tipo</th>
-                    <th>numero de dosis</th>
-                    <th>precio</th>
-                    <th>cantidad</th>
-                    <th>fecha de compra</th>
-                    <th>accion</th>
+                    <th>Nombre</th>
+                    <th>Via</th>
+                    <th>Numero de <br />dosis</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Fecha de <br />compra</th>
+                    <th>Accion</th>
                 </tr>
             </thead>
             <tbody>
                 {medicina.map((medicina)=>(
                     <tr key={medicina.id}>
                     <td>{medicina.nombre}</td>
-                    <td>{medicina.tipo}</td>
+                    <td>{medicina.via}</td>
                     <td>{medicina.num_dosis}</td>
                     <td>{medicina.precio}</td>
                     <td>{medicina.cantidad}</td>
                     <td>{FormatFecha(medicina.fecha_ingreso)}</td>
-                    <td><button onClick={()=>deleteItem(medicina.id,'medicina')}>borrar</button></td>
+                    <td><button onClick={()=>deleteItem(medicina.id,'medicina')}>Borrar</button></td>
                     
                 </tr>
                 ))}
             </tbody>
         </table>
         <table>
-            <caption><h2>galpones de crianza </h2></caption>
+            <caption><h2>Galpones de Crianza </h2></caption>
             <thead>
                 <tr>
-                    <th># galpon</th>
-                    <th>capacidad</th>
-                    <th>disponible</th>
-                    <th>fecha de asignacion</th>
-                    <th>accion</th>
+                    <th># Galpon</th>
+                    <th>Capacidad</th>
+                    <th>Disponible</th>
+                    <th>Fecha de <br />Asignacion</th>
+                    <th>Accion</th>
                 </tr>
             </thead>
             <tbody>
@@ -170,22 +170,24 @@ function Almacen (){
                     <tr key={galpon.id}>
                     <td>{galpon.num_galpon}</td>
                     <td>{galpon.capacidad}</td>
-                    <td>{galpon.disponible}</td>
+                    <td>{galpon.disponible ? "si" :"no"}</td>
                     <td>{FormatFecha(galpon.fecha_asignacion)}</td>
-                    <td><button onClick={()=>deleteItem(galpon.id,'galpones')}>borrar</button></td>
+                    <td><button onClick={()=>deleteItem(galpon.id,'galpones')}>Borrar</button></td>
                 </tr>
                 ))}
             </tbody>
         </table>
         <table>
-            <caption><h2>alimento</h2></caption>
+            <caption><h2>Alimento</h2></caption>
             <thead>
                 <tr>
-                    <th>nombre</th>
-                    <th>precio</th>
-                    <th>cantidad</th>
-                    <th>fecha de compra</th>
-                    <th>accion</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Fecha de compra</th>
+                    <th>Cantidad de Sacos</th>
+                    <th>Tipo</th>
+                    <th>Accion</th>
                 </tr>
             </thead>
             <tbody>
@@ -195,20 +197,23 @@ function Almacen (){
                     <td>{alimento.precio}</td>
                     <td>{alimento.cantidad}</td>
                     <td>{FormatFecha(alimento.fecha_compra)}</td>
-                    <td><button onClick={()=>deleteItem(alimento.id,'alimento')}>borrar</button></td>
+                    <td>{alimento.cantidadsacos}</td>
+                    <td>{alimento.tipo}</td>
+                    
+                    <td><button onClick={()=>deleteItem(alimento.id,'alimento')}>Borrar</button></td>
                 </tr>
                 ))}
             </tbody>
         </table>
         <table>
-            <caption><h2>lote de gallinas </h2></caption>
+            <caption><h2>Lote de Gallinas </h2></caption>
             <thead>
                 <tr>
-                    <th>raza</th>
-                    <th>fecha de ingreso</th>
-                    <th>cantidad</th>
-                    <th>valor por unidad</th>
-                    <th>accion</th>
+                    <th>Raza</th>
+                    <th>Fecha de <br />ingreso</th>
+                    <th>Cantidad</th>
+                    <th>Valor por <br />unidad</th>
+                    <th>Accion</th>
                 </tr>
             </thead>
             <tbody>
@@ -218,7 +223,7 @@ function Almacen (){
                     <td>{FormatFecha(lote.fecha_ingreso)}</td>
                     <td>{lote.cantidad}</td>
                     <td>{lote.valor_unidad}</td>
-                    <td><button onClick={()=>deleteItem(lote.id,'lotes')}>borrar</button></td>
+                    <td><button onClick={()=>deleteItem(lote.id,'lotes')}>Borrar</button></td>
                 </tr>
                 ))}
             </tbody>

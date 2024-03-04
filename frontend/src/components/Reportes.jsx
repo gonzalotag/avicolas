@@ -3,7 +3,7 @@ import"../assets/css/reportes.css"
 function Reportes (){
     
     return<div className="reportes">
-            <h2>reportes de personal</h2>
+            <h2>Reportes de Personal</h2>
             <table>
                 <thead>
                     <tr>
@@ -18,13 +18,13 @@ function Reportes (){
                 </tbody>
             </table>
             <div>
-            <h2>reportes de almacen</h2>
+            <h2>Reportes de Almacen</h2>
             <table>
                 <thead>
                 <tr>
-                    <th>Alimentos consumidos</th>
-                    <th>Medicamentos suministrados</th>
-                    <th>Galpones usados</th>
+                    <th>Alimentos Consumidos</th>
+                    <th>Medicamentos Suministrados</th>
+                    <th>Galpones Usados</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -33,7 +33,7 @@ function Reportes (){
             </table>
             </div>
             <div>
-            <h2>reportes de produccion</h2>
+            <h2>Reportes de Produccion</h2>
             <table>
                 <thead>
                 <tr>

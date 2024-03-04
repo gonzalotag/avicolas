@@ -2,7 +2,6 @@ import axios from "axios";
 
 async function getAllGalpones() {
     const response = await axios.get("http://localhost:4000/galpones");
-    // console.log("toda la data de galpones", response)
     return response;    
 }
 

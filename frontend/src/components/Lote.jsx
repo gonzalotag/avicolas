@@ -45,26 +45,24 @@ function Lote(){
     return(
         <div className="loteContainer">
             <button onClick={()=>navigate('/admin')}>
-                <h2>regresar a almacen</h2>
+                <h2>Regresar a almacen</h2>
             </button>
-            <h2>lote a registrar</h2>
-            <form onSubmit={handleSubmit}>
-            <label htmlFor='raza'>raza:
+            <h2>Lote a Registrar</h2>
+            <form className="lotesForm" onSubmit={handleSubmit}>
+                <label htmlFor='raza'>Raza:</label> <br />
                 <select 
                 name='raza'
                 id='raza' 
                 value={formData.raza}
                 onChange={handelInputChange}>
-                <option value="">selecciona una raza</option>
+                <option value="">Selecciona una raza</option>
                 <option value="plymouth rock">plymouth rock</option>
                 <option value="cornish">cornish</option>
                 <option value="sussex clara">sussex clara</option>
                 <option value="new hampshire">new hampshire</option>
-
                 </select>
-                </label><br/><br/>
-                
-                <label htmlFor='cantidad'>cantidad:
+                <br/><br/>
+                <label htmlFor='cantidad'>Cantidad:</label> <br />
                 <input 
                 type='text' 
                 name='cantidad'
@@ -72,8 +70,8 @@ function Lote(){
                 value={formData.cantidad}
                 onChange={handleCantidadChange}
                 required/>   
-                </label><br/><br/>
-                <label htmlFor='valor_unidad'>valor unidad:
+                <br /><br />
+                <label htmlFor='valor_unidad'>Valor Unidad:</label><br />
                 <input 
                 type='text' 
                 name='valor_unidad' 
@@ -81,9 +79,9 @@ function Lote(){
                 value={formData.valor_unidad}
                 onChange={handleUnidadChange}
                 required/>   
-                </label><br/><br/>
-                <button type="submit">guardar</button>
-                </form>
+                <br/><br/>
+                <button type="submit">Guardar</button>
+            </form>
         </div>
     )
 }

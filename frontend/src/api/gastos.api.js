@@ -2,6 +2,7 @@ import axios from "axios";
 
 async function getAllGastos(){
     const response = await axios.get("http://localhost:4000/gastos");
+    const gastoResgistro = response.data;
     return response;
 }   
 

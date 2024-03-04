@@ -42,7 +42,7 @@ function LoginPerfil (props){
         <div className="loginContainer">
         <div className="loginTitle">
         <h1>
-            login
+            Login
         </h1>
        
         </div>
@@ -67,7 +67,7 @@ function LoginPerfil (props){
         </div>
         <div className="loginButton">
         <button onClick={onLogin}>
-            login
+            Login
         </button>
         </div>
         </div>

@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { createAlimento,
+import { getAlimentos,
     getAlimento , 
+    createAlimento,
+    updateAlimento,
     deleteAlimento, 
-    getAlimentos, 
-    updateAlimento } from "../controllers/alimentos.controllers.js";
+    } from "../controllers/alimentos.controllers.js";
 
 const router = Router();
 

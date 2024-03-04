@@ -24,9 +24,10 @@ function Alimentos (){
 
     const handleSubmit = async (e) =>{
         e.preventDefault();
+        console.log("datos en el formulario antes de enviar" , formData);
         try {
             const result = await postAlimentos(formData);
-            console.log(result);
+            console.log("resultado",result);
         } catch (error) {
             console.error('error al enviar datos al servidor', error.message);
         }
@@ -63,11 +64,11 @@ function Alimentos (){
     return(
         <div className="alimentosContainer">
             <button onClick={()=>navigate('/admin')}>
-                <h2>regresar a almacen</h2>
+                <h2>Regresar a Almacen</h2>
             </button>
-            <h2>registrar alimentos</h2>
-            <form onSubmit= {handleSubmit}>
-                <label htmlFor='nombre'>nombre de alimentos:
+            <h2>Registrar Alimentos</h2>
+            <form className="alimentosForm" onSubmit= {handleSubmit}>
+                <label htmlFor='nombre'>Nombre de Alimentos:
                 <input 
                 type='text' 
                 name='nombre' 
@@ -76,7 +77,7 @@ function Alimentos (){
                 onChange={handleChange}
                 required/>   
                 </label><br/><br/>
-                <label htmlFor='precio'>precio de compra:
+                <label htmlFor='precio'>Precio de Compra:
                 <input 
                 type='text' 
                 name='precio' 
@@ -86,7 +87,7 @@ function Alimentos (){
                 onChange={handlePrecioChange}
                 required/>   
                 </label><br/><br/>
-                <label htmlFor='cantidad'>cantidad adquirida:
+                <label htmlFor='cantidad'>Cantidad Adquirida:
                 <input 
                 type='text' 
                 name='cantidad' 
@@ -95,23 +96,24 @@ function Alimentos (){
                 onChange={handleCantidadChange}
                 required/>   
                 </label><br/><br/>
-                <label htmlFor="tipo">tipo de alimento:
+                <label htmlFor="tipo">Tipo de Alimento:
                     <select  
                     name="tipo"  
                     id="tipo"
                     value ={formData.tipo}
                     onChange={handleTipoChange} >
+                        <option value="">Seleccionar un Tipo</option>
                         <option value='inicial'>inicial</option>
                         <option value='crecimineto'>crecimiento</option>
                         <option value='final'>final</option>
                     </select>
                 </label><br /><br />
-                <label htmlFor="cantidadSacos">
-                    sacos disponibles: 
+                <label htmlFor="cantidadsacos">
+                    Sacos Disponibles: 
                     <input 
                     type="text" 
-                    name="cantidadSacos"
-                    id="cantidadSacos"
+                    name="cantidadsacos"
+                    id="cantidadsacos"
                     value={formData.cantidadSacos}
                     onChange={handleCantidadSacos}
                     />

@@ -1,40 +1,33 @@
 import "../assets/css/produccion.css"
 import React,{useState, useEffect} from "react"
 import { getAllGalpones,getGalpon } from "../api/galpones.api"
-import { postMortalidad } from "../api/mortalidad.api"
+import { getAllMortalidad, postMortalidad } from "../api/mortalidad.api"
 import { getAllAlimentos } from "../api/alimentos.api"
 import { getAllMedicinas } from "../api/medicinas.api"
-import { postGasto } from "../api/gastos.api"
+import { getAllGastos, postGasto } from "../api/gastos.api"
 import { FormatFecha } from "./FormatFecha"
-import { getPerfiles, getPerfilesByRol } from "../api/perfil.api"
+import { getPerfilesByRol } from "../api/perfil.api"
 import { getAllPeso, postPeso } from "../api/peso.api"
-import { getAllRoles } from "../api/rol.api"
-import { getLote } from "../api/lotes.api"
-
+import { postProduction } from "../api/produccion.api"
 
 function Produccion (){
     const [selectGalpon,setSelectGalpon]=useState('');
     const [galponProduccion, setGalponProduccion]=useState([]);
     const [actividadControl,setActividadControl]=useState('');
     const [mostrarMortalidad, setMostrarMortalidad]=useState(false);
-    const [mortalidadData, setMortalidadData]=useState({
-        cantidad:'',
-        causa:'',
-        descripcion:'',
-    });
+    const [mortalidadData, setMortalidadData]=useState({cantidad:'',causa:'',descripcion:''});
     const [detallesGalpon,setDetallesGalpon]= useState(null);
     const [dataAlimento,setDataAlimento]=useState([]);
     const [dataMed,setDataMed]= useState([]);
     const [asignEmpleado,setAsignEmpleado]=useState([]);
-    const [infoGastos, setInfoGastos]=useState({
-        detalle:'',
-        importe:'',
-    });
-    const [infoPeso,setInfoPeso]=useState({
-        peso:'',
-    });
+    const [infoGastos, setInfoGastos]=useState({detalle:'',importe:''});
+    const [dataGasto,setDataGasto] = useState([]);
+    const [infoPeso,setInfoPeso]=useState({peso:''});
+    const [dataPeso,setDataPeso]=useState([]);
     const [dataSelect , setDataSelect]= useState([]);
-
+    const [isLoading,setIsloading]=useState(false);
+    const [datosGuardadosProd,setDatosGuardadosProd]=useState([])
+    
 
     useEffect(()=>{
         obtenerGalpon();
@@ -42,47 +35,42 @@ function Produccion (){
     },[]);
 
     const handleControlButton = async (control)=>{
+        setIsloading(true);
         setActividadControl(control);
-        if (control === "Mortalidad") {
-            setMostrarMortalidad(true);
-        } else {
-            setMostrarMortalidad(false);
-        }
-
-        if(control === "Alimentacion"){
-            try {
-                const infoAlimento= await getAllAlimentos();
-                setDataAlimento(infoAlimento);
-            } catch (error) {
-                console.error("no data alimentos", error);
+        try {
+            switch (control) {
+                case "Mortalidad":
+                    const mortalData = await getAllMortalidad();
+                    setMostrarMortalidad(mortalData);
+                break;
+                case "Alimentacion":
+                    const infoAlimento = await getAllAlimentos();
+                    setDataAlimento(infoAlimento);
+                break;
+                case "Medicaciones":
+                    const medicas = await getAllMedicinas();
+                    setDataMed(medicas);
+                break;
+                case "Empleado":
+                    await obtenerEmpleadoRol();
+                break;
+                case "Peso":
+                    const peso = await getAllPeso();
+                    setDataPeso(peso);
+                break;
+                case "Gastos":
+                    const gastoRegistro = await getAllGastos();
+                    const gastosArray = Array.isArray(gastoRegistro)
+                    ? gastoRegistro: gastoRegistro.data;
+                    setDataGasto(gastosArray);
+                break;
+                default:
+                break;
             }
-        }else{
-
-        }
-        if (control === "Medicaciones") {
-            try {
-                const medicas = await getAllMedicinas();
-                setDataMed(medicas);
-            } catch (error) {
-                console.error("no data medicinas", error);
-            }
-        } else {
-            setDataMed(null);
-        }
-        if (control === "Empleado") {
-            await obtenerEmpleadoRol();
-        } else {
-            setAsignEmpleado(null);
-        }
-        if (control === "Peso") {
-            try {
-                const  peso = await getAllPeso() 
-                setInfoPeso(peso);
-            } catch (error) {
-                console.error('no hay data de peso',error )
-            }
-        } else {
-            
+        }catch (error){
+            console.error("Error en obtener datos", error);
+        }finally{
+            setIsloading(false);
         }
     }
 
@@ -115,6 +103,7 @@ function Produccion (){
             [name]:(value)
         }));
     }
+
     const guardarMortalidad = async (e) =>{
         e.preventDefault();
         try {
@@ -126,7 +115,7 @@ function Produccion (){
             });
             console.log(result);
         } catch (error) {
-            console.log ('error al crear mortalidad',error);
+            console.log ('Error al crear mortalidad',error);
         }
     }
     const guardarGastos = async (e) =>{
@@ -139,13 +128,13 @@ function Produccion (){
             });
             console.log(result);
         } catch (error) {
-            
+            console.error("Error al guardar gastos", error);
         }
     }
 
     async function obtenerGalpon(){
         const result = await getAllGalpones();
-        setGalponProduccion(result.data||[]);
+        setGalponProduccion(result.data || []);
     }
 
     const handleMapGalpon = async (e) => {
@@ -155,7 +144,7 @@ function Produccion (){
             const galponDetalle = await getGalpon(selectGalponId);
             setDetallesGalpon(galponDetalle.data);
         }catch{
-            console.error("error al obtener detalles de galpon", error);
+            console.error("Error al obtener detalles de galpon", error);
         }
     }
 
@@ -182,29 +171,61 @@ function Produccion (){
         }
     };
 
-    const handleSeleccion = (elemento) =>{
-        setDataSelect((prevData)=>[...prevData, elemento]);
+    const handleSeleccion = (fila, seccion) =>{
+        setDataSelect((prevData)=>[...prevData, {fila, seccion}]);
     }
     
-    const handleSelectTabla = (elemento) =>{
-        setDataSelect((prevData)=>[...prevData, elemento]);
-    }
-
     const handleEliminarSeleccion = (index) =>{
         const nuevaData =[...dataSelect];
         nuevaData.splice(index,1);
         setDataSelect(nuevaData);
     }
 
+    const [columnaSelect,setColumnaSelect] = useState({
+        nombre: true,
+        tipo: true,
+        num_dosis: true,
+        cantidad: true,
+        disponible: true,
+    });
+
+    const guardarProd =async()=>{
+        try {
+            const dataGuardada=dataSelect.map(({fila,seccion })=> {
+                const datosFiltrados = {};
+                Object.keys(columnaSelect).forEach((columna)=>{
+                    if (columnaSelect[columna]) {
+                        datosFiltrados[columna] = fila[columna];
+                    }
+                });
+                return {fila: datosFiltrados,seccion};
+            });
+
+            await postProduction(dataSelect);
+            console.log("Datos guardados produccion");
+            setDataSelect([]);
+        } catch (error) {
+            console.log("Error al guardar los datos", error);
+        }
+    }
+
+    const handleSeleccionColumna =(columna) =>{
+        setColumnaSelect((prevColumnas) => ({
+            ...prevColumnas,
+            [columna]: !prevColumnas[columna],
+        }));
+    }
+    
+
     return (
     <div className="areaProduccion">
         <div className="galponSelector">
-            <label ><h2>seleccionar galpon</h2></label>
+            <label ><h2>Seleccionar Galpon</h2></label>
                 <select
                 value={selectGalpon}
                 onChange={handleMapGalpon}
                 >
-                <option value="">seleccionar galpon</option>
+                <option value="">Seleccionar Galpon</option>
                 {galponProduccion.map((data,index)=>(
                     <option key={index} value={data.id} >
                         {data.num_galpon}
@@ -215,19 +236,31 @@ function Produccion (){
         <table>
             <thead>
                     <tr>
-                        <th colSpan="4">
-                        <h3>detalle de galpon seleccionado</h3>
+                        <th colSpan={5}>
+                        <h3>Detalle de Galpon Seleccionado</h3>
                         </th>
-                    </tr>
+                        </tr>
+                        <tr>
+                            <th>N° Galpón</th>
+                            <th>Capacidad</th>
+                            <th>Disponibilidad</th>
+                            <th>Fecha</th>
+                            <th>Seleccion</th>
+                        </tr>
             </thead>
             <tbody>
                 
                 {detallesGalpon && detallesGalpon.map((Galpon,index) => 
                 <tr key={index}>
-                    <td>numero: {Galpon.num_galpon}</td>
-                    <td>capacidad: {Galpon.capacidad}</td>
-                    <td>disponibilidad: {Galpon.disponible? "si" :"no"}</td>
-                    <td>fecha: {FormatFecha(Galpon.fecha_asignacion)}</td>
+                    <td> {Galpon.num_galpon}</td>
+                    <td> {Galpon.capacidad}</td>
+                    <td> {Galpon.disponible? "si" :"no"}</td>
+                    <td> {FormatFecha(Galpon.fecha_asignacion)}</td>
+                    <td>
+                    <button onClick={()=>handleSeleccion(Galpon , "GalponSelector")}>
+                        Seleccionar
+                    </button>
+                    </td>
                     </tr>
                 )}
             </tbody>
@@ -236,27 +269,25 @@ function Produccion (){
             <table className="tablaProduccion">
                 <thead>
                     <tr>
-                        <th>
-                        <button className={actividadControl==="Alimentacion" ? "active" :""}
+                        <th><button className={actividadControl==="Alimentacion" ? "active" :""}
                 onClick={()=>handleControlButton("Alimentacion")}>
-                    Alimentacion
-                </button>
-                        </th>
+                    <h4>Alimentacion</h4>
+                </button></th>
                         <th><button className={actividadControl==="Medicaciones" ? "active" :""}
                 onClick={()=>handleControlButton("Medicaciones")}>
-                    Medicaciones
+                    <h4>Medicaciones</h4>
                 </button></th>
                         <th><button className={actividadControl==="Mortalidad" ? "active" :""}
                 onClick={()=>handleControlButton("Mortalidad")}>
-                    Mortalidad
+                    <h4>Mortalidad</h4>
                 </button></th>
                         <th><button className={actividadControl==="Peso" ? "active" :""}
                 onClick={()=>handleControlButton("Peso")}>
-                    Peso
+                    <h4>Peso</h4>
                 </button></th>
                         <th><button className={actividadControl==="Gastos" ? "active" :""}
                 onClick={()=>handleControlButton("Gastos")}>
-                    Gastos
+                    <h4>Gastos</h4>
                 </button></th>
                     </tr>
                 </thead>
@@ -265,7 +296,7 @@ function Produccion (){
                         <td colSpan="5">
                             {actividadControl === "Mortalidad" &&(
                             <form className="formularioMortalidad">
-                            <label>cantidad</label>
+                            <label>Cantidad</label>
                             <input 
                             type="text"
                             value={mortalidadData.cantidad}
@@ -274,22 +305,22 @@ function Produccion (){
                             required
                             />
                             <br />
-                            <label>causa</label>
+                            <label>Causa</label>
                             <select name="causa"
                             value={mortalidadData.causa}
                             onChange={(e) => handleMortalidadChange(e)} 
                             required
                             >   
                                 <option value=""></option>
-                                <option value="natural">natural</option>
-                                <option value="enfermedad">enfermedad</option>
-                                <option value="accidente">accidente</option>
-                                <option value="accidente">parasitos</option>
-                                <option value="accidente">mala alimentacion</option>
-                                <option value="accidente">ataques de depredadores</option>
+                                <option value="natural">Natural</option>
+                                <option value="enfermedad">Enfermedad</option>
+                                <option value="accidente">Accidente</option>
+                                <option value="parasitos">Parasitos</option>
+                                <option value="mala alimentacion">Mala alimentacion</option>
+                                <option value="ataques de depredadores">Ataques de depredadores</option>
                             </select>
                             <br />
-                            <label>descripcion</label>
+                            <label>Descripcion</label>
                             <textarea 
                             name="descripcion"
                             value={mortalidadData.descripcion}
@@ -301,24 +332,52 @@ function Produccion (){
                             <button  
                             type="button"
                             onClick ={(e)=>guardarMortalidad(e)}
-                            >guardar </button>  
+                            >Guardar </button>  <br />  <br />
                             <div>
-                                <h3>mortalidad</h3>
-                                
+                                <h3>Mortalidad</h3>
                             </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Cantidad</th>
+                                        <th>Causa</th>
+                                        <th>Descripcion</th>
+                                        <th>Registro de mortalidad</th>
+                                        <th>Accion</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {mostrarMortalidad && mostrarMortalidad.map((decesos,index)=>(
+                                        <tr key={index}>
+                                            <td> {decesos.cantidad} </td>
+                                            <td> {decesos.causa} </td>
+                                            <td> {decesos.descripcion} </td>
+                                            <td> {FormatFecha(decesos.fecha_muerte)} </td>
+                                            <td>
+                                            <button onClick={ ()=> handleSeleccion
+                                                    (decesos,
+                                                    "Mortalidad")}>
+                                                    Seleccionar
+                                            </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
                             </form>
                             )}
                             {actividadControl ==="Alimentacion" &&(
                                 <div>
-                                    <h3>informacion Alimentos</h3>
+                                    <h3>Informacion Alimentos</h3>
                                     <table>
                                         <thead>
                                             <tr>
-                                                <th>nombre</th>
-                                                <th>precio</th>
-                                                <th>cantidad</th>
-                                                <th>tipo</th>
-                                                <th>sacos disponibles</th>
+                                                <th>Nombre</th>
+                                                <th>Precio</th>
+                                                <th>Cantidad</th>
+                                                <th>Tipo</th>
+                                                <th>Sacos disponibles</th>
+                                                <th>Seleccion</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -329,39 +388,47 @@ function Produccion (){
                                         <td>{alimento.cantidad}</td>
                                         <td>{alimento.tipo}</td>
                                         <td>{alimento.cantidadsacos}</td>
+                                        <td>
+                                        <button onClick={()=>handleSeleccion(alimento , "Alimentacion")}>
+                                            Seleccionar
+                                        </button>
+                                        </td>
                                         </tr>
                                         ))}
                                         </tbody>
                                     </table>
-                                    
                                 </div>
                             )}
-                            
                             {actividadControl === "Medicaciones"&&(
                                 <div>
                                     <h3>Medicamento</h3>
                                     <table>
                                         <thead>
                                             <tr>
-                                                <th>nombre</th>
-                                                <th>tipo</th>
-                                                <th>dosis / dia</th>
-                                                <th>precio</th>
-                                                <th>cantidad en almacen</th>
-                                                <th>fecha compra</th>
+                                                <th>Nombre</th>
+                                                <th>Via de administracion</th>
+                                                <th>Dosis / dia</th>
+                                                <th>Precio</th>
+                                                <th>Cantidad en almacen</th>
+                                                <th>Fecha compra</th>
+                                                <th>Seleccion</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         {dataMed && dataMed.map((medicinas,index)=>(
                                             <tr key={index}>
                                                 <td>{medicinas.nombre}</td>
-                                                <td>{medicinas.tipo}</td>
+                                                <td>{medicinas.via}</td>
                                                 <td>{medicinas.num_dosis}</td>
                                                 <td>{medicinas.precio}</td>
                                                 <td>{medicinas.cantidad}</td>
                                                 <td>{FormatFecha(medicinas.fecha_ingreso)}</td>
                                                 <td>
-                                                <button onClick={()=>handleSeleccion({tipo: 'A', nombre: 'elemento A' })}>seleccionar elemento a</button>
+                                                <button onClick={ ()=> handleSeleccion
+                                                    (medicinas,
+                                                    "Medicaciones")}>
+                                                    Seleccionar
+                                                </button>
                                                 </td>
                                             </tr>
                                         ))}
@@ -371,17 +438,16 @@ function Produccion (){
                             )}
                             {actividadControl === "Gastos" && (
                                 <form className="gastosForm">
-                                    <label htmlFor="">detalles:</label>
+                                    <label htmlFor="">Detalles:</label>
                                     <textarea
                                     name="detalle"
                                     type="text"
                                     value={infoGastos.detalle}
                                     onChange={(e)=>handleGastosChange(e)}
-                                    style={{ width: '200px', height:'30px'}}
                                     required>
                                     </textarea> 
                                     <br />
-                                    <label htmlFor="">importe:</label>
+                                    <label htmlFor="">Importe:</label>
                                     <input 
                                     type="text" 
                                     value={infoGastos.importe}
@@ -394,9 +460,41 @@ function Produccion (){
                                     type="button"
                                     onClick={(e) => guardarGastos(e)}
                                     >
-                                        guardar
+                                        Guardar
                                     </button>
+                                    <div>
+                                <h3>Registro de gastos</h3>
+                                </div>
+                                <table className="tablaGastos">
+                                <thead>
+                                    <tr>
+                                        <th>Gastos</th>
+                                        <th>Importe</th>
+                                        <th>Fecha de importe</th>
+                                        <th>Seleccion</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {dataGasto && Array.isArray(dataGasto) && dataGasto.map((importes,index)=>(
+                                        <tr key ={index}>
+                                            <td> {importes.detalle} </td>
+                                            <td> {importes.importe} </td>
+                                            <td> {FormatFecha(importes.fecha_gasto)} </td>  
+                                            <td>
+                                            <button onClick={ ()=> handleSeleccion
+                                                (importes,
+                                                "Gastos")}>
+                                                Seleccionar
+                                            </button>
+                                            </td>  
+                                            
+                                        </tr>
+                                    ))}
+                                </tbody>
+                                </table>
                                 </form>
+                                
+                                
                             )}
                             {actividadControl === "Peso"&&(
                                 <form className="pesoForm">
@@ -409,8 +507,34 @@ function Produccion (){
                                     required/> 
                                     <br />
                                     <button 
-                                    type='submit' 
-                                    onClick={(e)=>agregarRegistro(e)}>Agregar Registro</button>
+                                    type="button" 
+                                    onClick={(e)=>agregarRegistro(e)}>Agregar Registro
+                                    </button>
+                                    <div>
+                                        <h3>Registro peso</h3>
+                                    </div>
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th>Peso promedio</th>
+                                        <th>Fecha de medicion</th>
+                                        <th>Seleccion</th>
+                                    </tr>
+                                    </thead>
+                                <tbody>
+                                    {dataPeso && dataPeso.map((pesoMedio,index)=>(
+                                        <tr key={index}>
+                                            <td>{pesoMedio.peso_promedio} </td>
+                                            <td>{FormatFecha(pesoMedio.fecha_medicion)} </td>
+                                            <td>
+                                            <button onClick={()=>handleSeleccion(pesoMedio , "Peso")}>
+                                            Seleccionar
+                                            </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
                                 </form>
                             )}
                         </td>
@@ -422,13 +546,10 @@ function Produccion (){
                 <thead>
                     <tr>
                         <th>
-                            
-                            <button className=
-                            {actividadControl==="Empleado" ? "active" :""}
+                            <button className={actividadControl==="Empleado" ? "active" :""}
                             onClick={()=>handleControlButton("Empleado")}>
-                                Empleados
+                                <h4>Empleados</h4>
                             </button>
-                            
                         </th>
                     </tr>
                 </thead>
@@ -436,35 +557,72 @@ function Produccion (){
                     {actividadControl==="Empleado"&& asignEmpleado && asignEmpleado.map((empleado,index)=>(
                         <tr key={index}>
                             <td>
-                                    <p>nombre: {empleado.nombre}</p>
-                                    
+                                <p>Nombre: {empleado.nombre}</p>
+                                {/* <p>Rol: {empleado.rol}</p> */}
+                                <button onClick={()=>handleSeleccion(empleado , "Empleado")}>
+                                    Seleccionar Empleado
+                                </button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+            
         <table className="produccionProses">
             <thead>
                 <tr>
-                    <th>elemento seleccionado </th>
-                    <th>acciones </th>
+                    <th colSpan={6}>Detalle Fila Seleccionada </th>
                 </tr>
+                <tr>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Dosis</th>
+                <th>Cantidad</th>
+                <th>Disponible</th>
+                <th>Acciones</th>
+                </tr>
+                {/* <tr>
+                <th colSpan={5}>
+                <div>
+                <h3>Seleccionar Columnas a Guardar</h3>
+                    <ul>
+                        {Object.keys(columnaSelect).map((columna)=>(
+                            <li key={columna}>
+                                <label >
+                                    {columna}
+                                    <input 
+                                    type="checkbox" 
+                                    checked={columnaSelect[columna]}
+                                    onChange={()=> handleSeleccionColumna(columna) }
+                                    />
+                                </label>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                </th>
+                </tr> */}
             </thead>
             <tbody>
-                {dataSelect.map((elemento,index)=>(
+                {dataSelect.map((item,index)=>(
                     <tr key={index}>
-                        <td>
-                            <button onClick={()=>handleEliminarSeleccion(index)}>eliminar</button>
-                        </td>
+                        <td>{item && item.fila && item.fila.nombre}</td>
+                        <td>{item && item.fila && item.fila.tipo}</td>
+                        <td>{item && item.fila && item.fila.num_dosis}</td>
+                        <td>{item && item.fila && item.fila.cantidad}</td>
+                        <td>{item && item.fila && item.fila.disponible ?"si":"no"}</td>
+                        <td><button onClick={()=>handleEliminarSeleccion(index)}>eliminar
+                        </button></td>
                     </tr>
                 ))}
+                <tr>
+                    <td>
+                        <button onClick={guardarProd}>Guardar</button>
+                    </td>
+                </tr>
             </tbody>
         </table>
-        <div>
-            <h3>seleccion elementos</h3>
-            <button onClick={()=>handleSeleccion({tipo: 'A', nombre: 'elemento A' })}>seleccionar elemento a</button>
-            <button onClick={()=>handleSeleccion({tipo: 'b', nombre: 'elemento b' })}>seleccionar elemento b</button>
-        </div>
+        
     </div>
     );
 }
