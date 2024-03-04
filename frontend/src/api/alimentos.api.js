@@ -15,29 +15,12 @@ async function getAlimentosById(id){
     const res = await axios.get(`http://localhost:4000/alimento/${id}`);
     console.log(res.data)
 }
-// async function para hacer solicitud post a tabla alimento
-// const postAlimentos= async (nombre, precio, cantidad, tipo, cantidadSacos )=>{
-//     let alimento={
-//         nombre,
-//         precio,
-//         cantidad,
-//         tipo,
-//         cantidadSacos
-//     };
-//     try{
-//        const resp=await axios.post('http://localhost:4000/alimento',alimento );
-//        console.log("agregado con exito",resp.data);
-//        return resp.data;
-        
-//     }catch(err){
-//         console.log(err);
-//     }  
-// };
+
 async function postAlimentos(formData){
     try {
         console.log("enviando datos al servidor", formData);
         const resp=await axios.post('http://localhost:4000/alimento', formData);    
-        console.log("datos del formulario ", formData);
+        // console.log("datos del formulario ", formData);
         return resp.data;    
     } catch (error) {
         console.error("error la enviar datos al servidor ",error)

@@ -12,7 +12,7 @@ function Alimentos (){
         precio:'',
         cantidad:'',
         tipo:'',
-        cantidadSacos:'',
+        cantidad_sacos:'',
     });
 
     const handleChange =(e)=>{
@@ -44,8 +44,8 @@ function Alimentos (){
     const handleCantidadChange =(event)=>{
         const inputValue = event.target.value;
         const isValidInput = /^\d+$/.test (inputValue);
-        if (isValidInput || inputValue ==="") {
-            setFormData({...formData, cantidad:inputValue})
+        if (isValidInput || inputValue ===" ") {
+            setFormData({...formData, cantidad :inputValue})
         }
     }
 
@@ -55,9 +55,10 @@ function Alimentos (){
 
     const handleCantidadSacos =(e)=>{
         const inputValue = e.target.value;
+        // console.log("valor saco ", inputValue );
         const isValidInput = /^\d+$/.test(inputValue);
-        if (isValidInput|| inputValue ===''){
-            setFormData({...formData,cantidadSacos:inputValue});
+        if (isValidInput|| inputValue === ''){
+            setFormData({...formData, cantidad_sacos :inputValue });
         }    
     }
 
@@ -114,7 +115,7 @@ function Alimentos (){
                     type="text" 
                     name="cantidadsacos"
                     id="cantidadsacos"
-                    value={formData.cantidadSacos}
+                    value={formData.cantidad_sacos}
                     onChange={handleCantidadSacos}
                     />
                 </label><br /><br />

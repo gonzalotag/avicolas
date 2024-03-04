@@ -56,6 +56,7 @@ function Almacen (){
         galpones:deleteGalpon,
         lotes:deleteLote,
     }
+
     const deleteItem = async (id,tipoEntidad) =>{
         try{   
             console.log('deleteitem',id,tipoEntidad);
@@ -63,9 +64,10 @@ function Almacen (){
         if(!deleteFunction){
             console.error('tipo de entidad no valido');
             return;
-        }   
+        }
+        window.location.reload();
         await deleteFunction(id); 
-        alert("Se elimino con exito");
+        
         }catch(error){
             console.log("Error al eliminar ",error);
             alert("Ocurrio un error al eliminar");
@@ -199,7 +201,6 @@ function Almacen (){
                     <td>{FormatFecha(alimento.fecha_compra)}</td>
                     <td>{alimento.cantidadsacos}</td>
                     <td>{alimento.tipo}</td>
-                    
                     <td><button onClick={()=>deleteItem(alimento.id,'alimento')}>Borrar</button></td>
                 </tr>
                 ))}
@@ -223,7 +224,10 @@ function Almacen (){
                     <td>{FormatFecha(lote.fecha_ingreso)}</td>
                     <td>{lote.cantidad}</td>
                     <td>{lote.valor_unidad}</td>
-                    <td><button onClick={()=>deleteItem(lote.id,'lotes')}>Borrar</button></td>
+                    <td><button onClick={()=>deleteItem(lote.id,'lotes')}>Borrar</button>
+                    
+                    </td>
+
                 </tr>
                 ))}
             </tbody>
