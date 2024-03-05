@@ -15,7 +15,7 @@ async function getPerfil(){
         alert("No hay un usuario logueado");
         }else{
             const result = await axios.get(`http://localhost:4000/perfil/${perfil}`);
-            console.log(result.data[0]);
+            // console.log(result.data[0]);
             return result.data[0];
             };
 }
@@ -38,7 +38,7 @@ export const getPerfilesById = async (id)=>{
     return perfilData;
  }catch(error){
  console.error('error al obtener el perfil por id' , error,message);
- console.log(error.response);
+//  console.log(error.response);
  if (error.response) {
     console.log('response data',error.response.data);
     console.log('response status ',error.response.status);

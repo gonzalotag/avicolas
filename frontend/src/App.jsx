@@ -37,19 +37,45 @@ function App() {
   }
   return (
   <>
-
     <NavBar onLogout={onLogout} isAuth={isAuth}/>
     <div className='mainPage'>
     <Routes>
-      <Route path='/' element = {<LoginPerfil setIsAuth= {setIsAuth}/>}/>
-      <Route path='/login' element = {<LoginPerfil setIsAuth= {setIsAuth} onLogout={onLogout}/>}/>
-      <Route path='/admin/*' element ={<GuardiaComponent isAuth={isAuth} setIsAuth={setIsAuth} Component={<AdminComponent/>}/>}/>
-      <Route path='/registros' element={<RegistroPersonal isAuth={isAuth}/>}/>
-      <Route path='/editar/:id' element={<EditarPersonal/>}/>
-      <Route path='/lote' element={<Lote isAuth={isAuth} Component={<AdminComponent/>}/>}/>
-      <Route path='/medicinas' element={<Medicinas isAuth={isAuth} Component={<AdminComponent/>}/>}/>
-      <Route path='/galpon' element={<Galpon isAuth={isAuth} Component={<AdminComponent/>}/>}/>
-      <Route path='/alimentos' element={<Alimentos isAuth={isAuth} Component={<AdminComponent/>}/>}/>
+      <Route 
+      path='/' 
+      element = {<LoginPerfil setIsAuth= {setIsAuth}/>}
+      />
+      <Route 
+      path='/login' 
+      element = {<LoginPerfil setIsAuth= {setIsAuth} onLogout={onLogout}/>}
+      />
+      <Route 
+      path='/admin/*' 
+      element ={<GuardiaComponent isAuth={isAuth} setIsAuth={setIsAuth} Component={<AdminComponent/>}/>}
+      />
+      <Route 
+      path='/registros' 
+      element={<RegistroPersonal isAuth={isAuth}/>}
+      />
+      <Route 
+      path='/editar/:id' 
+      element={<EditarPersonal/>}
+      />
+      <Route 
+      path='/lote' 
+      element={<Lote isAuth={isAuth} Component={<AdminComponent/>}/>}
+      />
+      <Route 
+      path='/medicinas' 
+      element={<Medicinas isAuth={isAuth} Component={<AdminComponent/>}/>}
+      />
+      <Route 
+      path='/galpon' 
+      element={<Galpon isAuth={isAuth} Component={<AdminComponent/>}/>}
+      />
+      <Route 
+      path='/alimentos' 
+      element={<Alimentos isAuth={isAuth} Component={<AdminComponent/>}/>}
+      />
     </Routes>
     </div>
     <Footer/>

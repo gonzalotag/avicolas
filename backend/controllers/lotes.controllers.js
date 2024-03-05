@@ -78,7 +78,7 @@ export const updateLote = async(req,res)=>{
                     data:rowUpdated.rows[0]
                     })
                 } catch(e){
-                console.log(e);
+                // console.log(e);
                 res.status(500).json({
                 status:'error',
                 message:'Server Error'

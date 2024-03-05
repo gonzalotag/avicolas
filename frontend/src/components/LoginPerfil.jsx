@@ -20,8 +20,8 @@ function LoginPerfil (props){
         return await getRolRequest(id_rol);
     }
     const onLogin = async() => {
-        console.log(nombre);
-        console.log(contrasenia);
+        // console.log(nombre);
+        // console.log(contrasenia);
         const userInfo = (await login(nombre,contrasenia)).data.result[0];
         if (userInfo) {
             setIsAuth(true);

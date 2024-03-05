@@ -199,7 +199,7 @@ function Almacen (){
                     <td>{alimento.precio}</td>
                     <td>{alimento.cantidad}</td>
                     <td>{FormatFecha(alimento.fecha_compra)}</td>
-                    <td>{alimento.cantidadsacos}</td>
+                    <td>{alimento.cantidad_sacos}</td>
                     <td>{alimento.tipo}</td>
                     <td><button onClick={()=>deleteItem(alimento.id,'alimento')}>Borrar</button></td>
                 </tr>

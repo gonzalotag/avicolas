@@ -6,8 +6,9 @@ function GuardiaComponent (props){
     const [permitido, setPermitido] = useState(<LoginPerfil setIsAuth ={setIsAuth}/> );
     
     useEffect (()=>{
-        if(isAuth === true) setPermitido(Component)
-    }),[]
+        if(isAuth === true) 
+        setPermitido(Component)
+    },[isAuth,Component])
     return (permitido);
 }
 export default GuardiaComponent

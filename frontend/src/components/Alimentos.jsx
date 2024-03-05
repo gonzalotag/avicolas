@@ -6,6 +6,7 @@ import {  postAlimentos } from "../api/alimentos.api";
 
 function Alimentos (){
     const navigate = useNavigate();
+    // console.log("objeto navigate",navigate);
     
     const [formData , setFormData] = useState({
         nombre:'',
@@ -62,9 +63,17 @@ function Alimentos (){
         }    
     }
 
+    const handleClick =()=>{
+        
+        const currentPath =  window.location.pathname ;
+        console.log('ruta actual antes de navegar', currentPath);
+        navigate('/admin', { replace: true });    
+    
+    }
+
     return(
         <div className="alimentosContainer">
-            <button onClick={()=>navigate('/admin')}>
+            <button onClick={handleClick}>
                 <h2>Regresar a Almacen</h2>
             </button>
             <h2>Registrar Alimentos</h2>

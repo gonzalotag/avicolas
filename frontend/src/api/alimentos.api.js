@@ -18,7 +18,7 @@ async function getAlimentosById(id){
 
 async function postAlimentos(formData){
     try {
-        console.log("enviando datos al servidor", formData);
+        // console.log("enviando datos al servidor", formData);
         const resp=await axios.post('http://localhost:4000/alimento', formData);    
         // console.log("datos del formulario ", formData);
         return resp.data;    

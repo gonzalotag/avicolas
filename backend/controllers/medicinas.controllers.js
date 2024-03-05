@@ -4,7 +4,7 @@ export const getAllMedicinas =async (req,res)=>{
     try {
         const [result] = await pool.query("SELECT * FROM medicina");
         res.json(result);
-        console.log(result);
+        // console.log(result);
     } catch (error) {
         return res.status(500).json({message: error.message})
     }
@@ -63,7 +63,7 @@ export const createMedicinas = async (req,res)=>{
         const{nombreMedicina,viaMedicina,dosisMedicina,precioMedicina,cantidadMedicina}=req.body;
         console.log("valores delos parametros",{nombreMedicina,viaMedicina,dosisMedicina,precioMedicina,cantidadMedicina})
         if (!nombreMedicina ||!viaMedicina  || !dosisMedicina || !precioMedicina|| !cantidadMedicina ) {
-            console.log("campos faltantes, retornando 400 Bad Request")
+            // console.log("campos faltantes, retornando 400 Bad Request")
             return res.status(400).json({message:"Todos los campos sonrequeridos"})}
             
             const medicaNueva={
@@ -73,9 +73,9 @@ export const createMedicinas = async (req,res)=>{
                 precio:precioMedicina,
                 cantidad:cantidadMedicina
             };
-            console.log("objeto medicaNueva",medicaNueva)
+            // console.log("objeto medicaNueva",medicaNueva)
             const result= await pool.query("INSERT INTO medicina set ?", [medicaNueva]);
-            console.log("resultado de insercion en la base de datos ", result);
+            // console.log("resultado de insercion en la base de datos ", result);
 
             res.status(201).json({message:"La medicina fue agregada correctamente", data:result.insertId});
             // console.log(req,body);
