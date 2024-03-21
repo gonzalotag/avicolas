@@ -5,9 +5,13 @@ import { deleteMedicina, getAllMedicinas } from "../api/medicinas.api";
 import { deleteGalpon, getAllGalpones } from "../api/galpones.api";
 import { deleteAlimento, getAllAlimentos } from "../api/alimentos.api";
 import { deleteLote, getAllLotes } from "../api/lotes.api";
+import { deleteMortalidad, getAllMortalidad } from "../api/mortalidad.api";
+import { deletePeso, getAllPeso } from "../api/peso.api";
+import { deleteGasto, getAllGastos } from "../api/gastos.api";
 import { getPerfilesByRol } from "../api/perfil.api";
 import Menu from "./Menu";
 import { FormatFecha } from "./FormatFecha";
+
 
 function Almacen (){
 
@@ -17,12 +21,12 @@ function Almacen (){
     const [alimentos,setAlimentos]= useState([]);
     const [lotes,setLotes] = useState([]);
     const [empleado,setEmpleado] = useState([]);
-
-    
+    const [mortalidades, setMortalidades] = useState([]);
+    const [pesos,setPesos] = useState([]);
+    const [gastos,setGastos] = useState([]);
 
     useEffect(()=>{
         const fetchData= async ()=>{
-        
             try {
                 const medicinasData = await getAllMedicinas();
                 setMedicina(medicinasData);
@@ -35,11 +39,9 @@ function Almacen (){
                 }
 
                 const alimentosData = await getAllAlimentos();
-                
                 setAlimentos(alimentosData)
             
                 const lotesData = await getAllLotes();
-                
                 setLotes(lotesData.data)
             
                 const empleadosData = await getPerfilesByRol(4);
@@ -47,27 +49,45 @@ function Almacen (){
                 } catch (error) {
                     console.log(error)
                 }
-            }
-                fetchData();
+                const mortalidadData = await getAllMortalidad();
+                setMortalidades(mortalidadData);
+
+                try {
+                    const pesosData = await getAllPeso();
+                    setPesos(pesosData);    
+                    console.log('datos de peso', pesosData);
+                } catch (error) {
+                    console.error('error al obtener datos', error);
+                }
+                
+                const gastoData = await getAllGastos();
+                setGastos(gastoData);
+        }
+            fetchData();
     }, []);
+
     const deleteFunctions = {
         medicina:deleteMedicina,
         alimento:deleteAlimento,
         galpones:deleteGalpon,
         lotes:deleteLote,
+        mortalidad:deleteMortalidad,
+        peso:deletePeso,
+        gasto:deleteGasto
     }
 
-    const deleteItem = async (id,tipoEntidad) =>{
+    const deleteItem = async (id, tipoEntidad) => {
         try{   
             console.log('deleteitem',id,tipoEntidad);
-        const deleteFunction =deleteFunctions[tipoEntidad];
-        if(!deleteFunction){
-            console.error('tipo de entidad no valido');
-            return;
-        }
-        window.location.reload();
-        await deleteFunction(id); 
-        
+            console.log('eliminar', tipoEntidad,'con id',id );
+            if(!deleteFunctions.hasOwnProperty(tipoEntidad)){
+                console.error('tipo de entidad no valido',tipoEntidad);
+                return;
+            }
+            const deleteFunction = deleteFunctions[tipoEntidad];
+            await deleteFunction(id); 
+            window.location.reload();
+            console.log(`${tipoEntidad} eliminado con exito`);
         }catch(error){
             console.log("Error al eliminar ",error);
             alert("Ocurrio un error al eliminar");
@@ -225,10 +245,75 @@ function Almacen (){
                     <td>{lote.cantidad}</td>
                     <td>{lote.valor_unidad}</td>
                     <td><button onClick={()=>deleteItem(lote.id,'lotes')}>Borrar</button>
-                    
                     </td>
 
                 </tr>
+                ))}
+            </tbody>
+        </table>
+        <table className="">
+            <caption><h2>Mortalidad</h2></caption>
+            <thead>
+                <tr>
+                    <th>Cantidad</th>
+                    <th>Causa</th>
+                    <th>Descripcion</th>
+                    <th>Fecha de Registro</th>
+                    <th>Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                {mortalidades.map((mortalidad)=>(
+                <tr key={mortalidad.id}>
+                    <td>{mortalidad.cantidad}</td>
+                    <td>{mortalidad.causa}</td>
+                    <td>{mortalidad.descripcion}</td>
+                    <td>{FormatFecha(mortalidad.fecha_muerte)}</td>
+                    <td><button onClick={()=>deleteItem(mortalidad.id,'mortalidad')}>Borrar</button>
+                    </td>
+                </tr>
+                ))}
+            </tbody>
+        </table>
+        <table className="">
+            <caption><h2>Peso</h2></caption>
+            <thead>
+                <tr>
+                    <th>Peso Promedio</th>
+                    <th>Fecha Medicion</th>
+                    <th>Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                {pesos.map((peso)=>(
+                <tr key={peso.id}>
+                    <td>{peso.peso_promedio}</td>
+                    <td>{FormatFecha(peso.fecha_medicion)}</td>
+                    <td><button onClick={()=>deleteItem(peso.id,'peso')}>Borrar</button>
+                    </td>
+                </tr>
+                ))}
+            </tbody>
+        </table>
+        <table className="">
+            <caption><h2>Gastos</h2></caption>
+            <thead>
+                <tr>
+                    <th>Detalle</th>
+                    <th>Fecha compra</th>
+                    <th>Importe</th>
+                    <th>Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                {gastos.map((gasto)=>(
+                    <tr key={gasto.id}>
+                        <td>{gasto.detalle}</td>
+                        <td>{FormatFecha(gasto.fecha_gasto)}</td>
+                        <td>{gasto.importe}</td>
+                        <td><button onClick={()=>deleteItem(gasto.id,'gasto')}>Borrar</button>
+                        </td>
+                    </tr>
                 ))}
             </tbody>
         </table>

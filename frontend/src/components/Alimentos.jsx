@@ -66,7 +66,7 @@ function Alimentos (){
     const handleClick =()=>{
         
         const currentPath =  window.location.pathname ;
-        console.log('ruta actual antes de navegar', currentPath);
+        // console.log('ruta actual antes de navegar', currentPath);
         navigate('/admin', { replace: true });    
     
     }

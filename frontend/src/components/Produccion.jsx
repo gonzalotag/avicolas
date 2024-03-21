@@ -26,12 +26,11 @@ function Produccion (){
     const [dataPeso,setDataPeso]=useState([]);
     const [dataSelect , setDataSelect]= useState([]);
     const [isLoading,setIsloading]=useState(false);
-    const [datosGuardadosProd,setDatosGuardadosProd]=useState([])
-    
+    const [lineasSeleccionadas,setLineasSeleccionadas]=useState([]);
 
     useEffect(()=>{
         obtenerGalpon();
-        obtenerEmpleadoRol();
+        obtenerDatosEmpleados();
     },[]);
 
     const handleControlButton = async (control)=>{
@@ -52,7 +51,7 @@ function Produccion (){
                     setDataMed(medicas);
                 break;
                 case "Empleado":
-                    await obtenerEmpleadoRol();
+                    await obtenerDatosEmpleados();
                 break;
                 case "Peso":
                     const peso = await getAllPeso();
@@ -118,6 +117,7 @@ function Produccion (){
             console.log ('Error al crear mortalidad',error);
         }
     }
+
     const guardarGastos = async (e) =>{
         e.preventDefault();
         try {
@@ -160,25 +160,26 @@ function Produccion (){
             console.error('error al agregar el registro', error);
         }
     }
-    
-    const obtenerEmpleadoRol = async () => {
+
+    const obtenerDatosEmpleados = async () =>{
         try {
             const idRolEmp = 4;
             const empleados = await getPerfilesByRol(idRolEmp);
             setAsignEmpleado(empleados);
         } catch (error) {
-            console.log('error al obtener empleados por rol', error);
+            console.log("error al obtener datos empleados", error);
+            setAsignEmpleado([]);
         }
-    };
+    }
 
     const handleSeleccion = (fila, seccion) =>{
-        setDataSelect((prevData)=>[...prevData, {fila, seccion}]);
+        setLineasSeleccionadas([...lineasSeleccionadas, {fila, seccion}]);
     }
     
     const handleEliminarSeleccion = (index) =>{
-        const nuevaData =[...dataSelect];
-        nuevaData.splice(index,1);
-        setDataSelect(nuevaData);
+        const nuevaLinea =[...lineasSeleccionadas];
+        nuevaLinea.splice(index,1);
+        setLineasSeleccionadas(nuevaLinea);
     }
 
     const [columnaSelect,setColumnaSelect] = useState({
@@ -186,7 +187,7 @@ function Produccion (){
         tipo: true,
         num_dosis: true,
         cantidad: true,
-        disponible: true,
+        disponible: true ,
     });
 
     const guardarProd =async()=>{
@@ -208,7 +209,7 @@ function Produccion (){
             console.log("Error al guardar los datos", error);
         }
     }
-
+    
     const handleSeleccionColumna =(columna) =>{
         setColumnaSelect((prevColumnas) => ({
             ...prevColumnas,
@@ -216,7 +217,6 @@ function Produccion (){
         }));
     }
     
-
     return (
     <div className="areaProduccion">
         <div className="galponSelector">
@@ -316,7 +316,7 @@ function Produccion (){
                                 <option value="enfermedad">Enfermedad</option>
                                 <option value="accidente">Accidente</option>
                                 <option value="parasitos">Parasitos</option>
-                                <option value="mala alimentacion">Mala alimentacion</option>
+                                <option value="mala_alimentacion">Mala alimentacion</option>
                                 <option value="ataques de depredadores">Ataques de depredadores</option>
                             </select>
                             <br />
@@ -387,7 +387,7 @@ function Produccion (){
                                         <td>{alimento.precio}</td>
                                         <td>{alimento.cantidad}</td>
                                         <td>{alimento.tipo}</td>
-                                        <td>{alimento.cantidadsacos}</td>
+                                        <td>{alimento.cantidad_sacos}</td>
                                         <td>
                                         <button onClick={()=>handleSeleccion(alimento , "Alimentacion")}>
                                             Seleccionar
@@ -541,7 +541,7 @@ function Produccion (){
                     </tr>
                 </tbody>
             </table>
-            
+        
             <table className="empleadosTabla">
                 <thead>
                     <tr>
@@ -554,11 +554,14 @@ function Produccion (){
                     </tr>
                 </thead>
                 <tbody>
-                    {actividadControl==="Empleado"&& asignEmpleado && asignEmpleado.map((empleado,index)=>(
+                    {actividadControl==="Empleado"&& 
+                        asignEmpleado && 
+                        asignEmpleado.map((empleado,index)=>(
                         <tr key={index}>
                             <td>
                                 <p>Nombre: {empleado.nombre}</p>
-                                {/* <p>Rol: {empleado.rol}</p> */}
+                                <p>Apellido Paterno: {empleado.apellido_paterno}</p>  
+                                <p>Apellido Materno: {empleado.apellido_materno}</p>
                                 <button onClick={()=>handleSeleccion(empleado , "Empleado")}>
                                     Seleccionar Empleado
                                 </button>
@@ -568,58 +571,73 @@ function Produccion (){
                 </tbody>
             </table>
             
-        <table className="produccionProses">
+        <table className="produccionProces">
             <thead>
                 <tr>
-                    <th colSpan={6}>Detalle Fila Seleccionada </th>
+                <th>Alimentos</th>
+                <th>Medicamentos</th>
+                <th>Mortalidad</th>
+                <th>Peso</th>
+                <th>Gasto</th>
+                <th>Empleado</th>
+                <th>Accion</th>
                 </tr>
-                <tr>
-                <th>Nombre</th>
-                <th>Tipo</th>
-                <th>Dosis</th>
-                <th>Cantidad</th>
-                <th>Disponible</th>
-                <th>Acciones</th>
-                </tr>
-                {/* <tr>
-                <th colSpan={5}>
-                <div>
-                <h3>Seleccionar Columnas a Guardar</h3>
-                    <ul>
-                        {Object.keys(columnaSelect).map((columna)=>(
-                            <li key={columna}>
-                                <label >
-                                    {columna}
-                                    <input 
-                                    type="checkbox" 
-                                    checked={columnaSelect[columna]}
-                                    onChange={()=> handleSeleccionColumna(columna) }
-                                    />
-                                </label>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-                </th>
-                </tr> */}
             </thead>
             <tbody>
-                {dataSelect.map((item,index)=>(
+                {lineasSeleccionadas.map((linea,index)=>(
                     <tr key={index}>
-                        <td>{item && item.fila && item.fila.nombre}</td>
-                        <td>{item && item.fila && item.fila.tipo}</td>
-                        <td>{item && item.fila && item.fila.num_dosis}</td>
-                        <td>{item && item.fila && item.fila.cantidad}</td>
-                        <td>{item && item.fila && item.fila.disponible ?"si":"no"}</td>
-                        <td><button onClick={()=>handleEliminarSeleccion(index)}>eliminar
-                        </button></td>
+                        <td>
+                            <div>
+                                <strong>Nombre:</strong>{linea.fila.nombre}
+                            </div>
+                            <div>
+                                <strong>Precio:</strong>{linea.fila.precio}
+                            </div>
+                            <div>
+                                <strong>Cantidad:</strong>{linea.fila.cantidad}
+                            </div>
+                            <div>
+                                <strong>Tipo:</strong>{linea.fila.tipo}
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                            <strong>Nombre:</strong>{linea.fila.nombre}
+                            <br />
+                            <strong>Via de Administracion:</strong>{linea.fila.via}
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                            <strong>Cantidad:</strong>{linea.fila.cantidad}
+                            <br />
+                            <strong>Causa:</strong>{linea.fila.causa}
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                            <strong>Precio Promedio:</strong>{linea.fila.precio_promedio}
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                            <strong>Detalle:</strong>{linea.fila.detalle}
+                            <br />
+                            <strong>Importe:</strong>{linea.fila.importe}
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                            <strong>nombre:</strong>{linea.fila.nombre}
+                            </div>
+                        </td>
+                        <td>
+                            <button onClick={()=>handleEliminarSeleccion(index)}>
+                                Eliminar
+                            </button>
+                        </td>
                     </tr>
                 ))}
-                <tr>
-                    <td>
-                        <button onClick={guardarProd}>Guardar</button>
-                    </td>
-                </tr>
             </tbody>
         </table>
         

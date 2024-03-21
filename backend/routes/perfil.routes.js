@@ -18,6 +18,7 @@ router.post("/perfil",createPerfil);
 router.patch("/perfil/:id",updatePerfil);
 router.delete("/perfil/:id",deletePerfil);
 router.get("/perfil/getEmpleadoByRol/:id_rol", getPerfilesByRol);
+router.get("/perfil/get")
 
 router.post("/login", getUserByParams)
 

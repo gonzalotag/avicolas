@@ -17,28 +17,18 @@ function AdminComponent(){
         getRolesByName()
     },[])
 
-
-//las funciones asincronas siempre van de la mano con un await esperando
-//respuesta desde la parte externa que este afuera del frontend puede ser una BD
-//o hasta el mismo backend todo lo que es un sistema externo
     async function getPerfilesTotal(){
         setPerfiles(await getPerfiles())
-        // console.log( await getPerfiles());
     }
 
     async function getRolesByName (){
         setRoles(await getAllRoles())
-        // console.log(roles)
     }
-    
     
     const renderEspacioDeTrabajo = (componente)=>{
         setEspacioDeTrabajo(componente);
     }
-    // const handleNavigate =(componente, ruta) =>{
-    //     setEspacioDeTrabajo(componente);
-    //     navigate(`/admin/${ruta}`)
-    // }
+    
     return (
     <div className="espacioAdmin">
         <div className="espacioMenuAdmin">

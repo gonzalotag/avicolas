@@ -37,13 +37,19 @@ async function patchPeso(id, objPeso){
    }
 }
 
-async function deletePeso(){
-    try{
-        await axios.delete(`http://localhost:4000/peso/${id}`);
-        alert('Se ha eliminado correctamente')
-    }catch(error){
-        console.log('No se ha podido eliminar el registro');
-        console.log(error);
+async function deletePeso(id){
+    try {
+        // const pesoExiste = await axios.get(`http://localhost:4000/peso/${id}`);
+        // if (pesoExiste.status != 200) {
+        //     console.error('el peso con el ID' + id + 'no existe');
+        //     return;
+        // }
+           const respuesta = await axios.delete(`http://localhost:4000/peso/${id}`);
+           console.log(respuesta);
+           window.location.reload();
+           return true;
+    } catch (error) {
+        console.error("error al borrar peso",error);
     }
 }
 export {

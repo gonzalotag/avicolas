@@ -130,10 +130,10 @@ export const updatePerfil = async (req,res) =>{
         return res.status(500).json({message: error.message});
     }
  }
+
  export const getPerfilesByRol = async (req,res) =>{
     try {
         const [rol]= req.params.id_rol
-        // return res.status(404).json({rol});
         const[result]= await pool.query(
             "select id, nombre, apellido_paterno, apellido_materno from perfil where id_rol = ? ",
             [rol,]);
@@ -146,3 +146,4 @@ export const updatePerfil = async (req,res) =>{
         return res.status(500).json({message: error.message});
     }
  }
+

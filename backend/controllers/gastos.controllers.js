@@ -44,11 +44,17 @@ export const updateGasto = async (req,res) =>{
 }
 
 export const  deleteGasto = async (req,res) =>{    
-    const {id} = req.params;               
+    const {id} = req.params;
     try {            
-        const result = await pool.query('DELETE FROM gastos WHERE id=?', [id]);    
-        if (!result.affectedRows ) return res.status(404).send("No se ha eliminado el gasto");    
-        res.status(200).send("Se elimino correctamente");
+        const existeGasto = await pool.query('SELECT * FROM gastos WHERE id=?', [id]);
+        if (existeGasto.length === 0) {
+            return res.status(404).send("No existe el gasto con ese ID");
+        }
+        const result =  await  pool.query('DELETE FROM gastos WHERE id=?', [id]);
+        if (result.affectedRows ===0 ) {
+            return res.status(404).send("no se ha eliminado el gasssto");
+        }
+        return res.status(200).send("se elimino ") 
     } catch (error) {                          
         console.log(error);               
         res.status(500).send("Error interno del servidor");

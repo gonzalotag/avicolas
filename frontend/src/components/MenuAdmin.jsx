@@ -28,7 +28,7 @@ function MenuAdmin (props){
 
     const renderEspacioDeTrabajo = (componente,ruta ) =>{
        setEspacioDeTrabajo(componente); 
-       navigate(`/admin/${ruta}`)
+       navigate(`/admin/${ruta}`);
     }
 
     return <div className="menuAdminContainer">
@@ -37,6 +37,7 @@ function MenuAdmin (props){
             </div>
             <div className="nombreAdmin">
                 Administrador
+
             </div>
         </div>
         <div className="buttonBox">

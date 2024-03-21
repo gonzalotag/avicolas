@@ -7,21 +7,27 @@ const Menu =()=>{
     return(
         <div className="menu">
             <div onClick={()=>navigate('/medicinas')}>
-                {/* <h2>Medicinas</h2> */}
                 <button><h4>Registrar Medicinas</h4></button>
             </div>
-            <div onClick={()=>navigate('/galpon')}>
-                {/* <h2>Galpon</h2> */}
+            <div onClick={()=>navigate('/galpon')}>            
                 <button><h4>Asignar Galpon</h4></button>
             </div>
             <div onClick={()=>navigate('/alimentos')}>
-                {/* <h2>Alimentos</h2> */}
                 <button><h4>Registrar Alimentos</h4></button>
             </div>
             <div onClick={()=>navigate('/lote')}>
-                {/* <h2>Lote</h2> */}
                 <button><h4>Registrar Lote</h4></button>
             </div>
+            <div onClick={()=>navigate('/mortalidad')}>
+                <button><h4>Registrar Mortalidad</h4></button>
+            </div>
+            <div onClick={()=>navigate('/peso')}>
+                <button><h4>Registrar Peso</h4></button>
+            </div>
+            <div onClick={()=>navigate('/gastos')}>
+                <button><h4>Registrar Gasto</h4></button>
+            </div>
+
         </div>
         
     )

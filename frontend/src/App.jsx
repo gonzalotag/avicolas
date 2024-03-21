@@ -18,6 +18,9 @@ import Lote from './components/Lote';
 import Medicinas from './components/Medicinas';
 import Galpon from './components/Galpon';
 import Alimentos from './components/Alimentos';
+import Mortalidad from './components/Mortalidad';
+import Peso from './components/Peso';
+import Gastos from './components/Gastos';
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
@@ -39,6 +42,7 @@ function App() {
   <>
     <NavBar onLogout={onLogout} isAuth={isAuth}/>
     <div className='mainPage'>
+      {/* <MenuAdmin/> */}
     <Routes>
       <Route 
       path='/' 
@@ -52,6 +56,10 @@ function App() {
       path='/admin/*' 
       element ={<GuardiaComponent isAuth={isAuth} setIsAuth={setIsAuth} Component={<AdminComponent/>}/>}
       />
+      {/* <Route 
+      path='/personal'
+      element={<TablaPersonal isAuth={isAuth}/>}
+      /> */}
       <Route 
       path='/registros' 
       element={<RegistroPersonal isAuth={isAuth}/>}
@@ -75,6 +83,18 @@ function App() {
       <Route 
       path='/alimentos' 
       element={<Alimentos isAuth={isAuth} Component={<AdminComponent/>}/>}
+      />
+      <Route 
+      path='/mortalidad' 
+      element={<Mortalidad isAuth={isAuth} Component={<AdminComponent/>}/>}
+      />
+      <Route 
+      path='/peso' 
+      element={<Peso isAuth={isAuth} Component={<AdminComponent/>}/>}
+      />
+      <Route 
+      path='/gastos' 
+      element={<Gastos isAuth={isAuth} Component={<AdminComponent/>}/>}
       />
     </Routes>
     </div>

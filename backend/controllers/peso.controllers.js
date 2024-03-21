@@ -54,16 +54,20 @@ export const updatePeso  = async (req,res) =>{
 
 export const deletePeso = async(req,res) =>{
     const {id} = req.params;
-  
     try {
-      const result = await pool.query('delete from peso where id=?',[id]);
-      if(result.affectedRows > 0 ) {
-          res.status(200).json({msg:"El registro fue eliminado"})
-      }else{
-          res.status(404).json({msg:"No se encontró el registro"})
-      }
-    }catch(e){
-        console.log(e);
-        res.status(500).json({msg:"Error interno del servidor"});
+        console.log('solicitud de eliminacion' , id);
+        const pesoExist = await pool.query('SELECT * FROM  peso WHERE id= ?',[id]);
+        if (pesoExist.length === 0 ) {
+            return res.status(404).send('El peso no existe');
+        }
+        console.log('ID del peso a eliminar', id);
+        console.log('peso eliminado');
+        const resultado = await pool.query('DELETE FROM peso WHERE id= ?',[id]);
+        if(resultado.affectedRows > 0 ) {
+            res.status(200).json({msg:"Se eliminó correctamente"});
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("error en el servidor");
     }
 }

@@ -52,10 +52,10 @@ function TablaPersonal(){
                 console.error(error);
             }
     };
-    return <div className="contenedorTabla">
+    return  <div className="contenedorTabla">
             <div className="contenedorPersonal">
             <h2>Personal Registrado</h2>
-            <div  className="nuevoPersonal" >
+            <div className="nuevoPersonal" >
             <div className="buttonNuevoPersonal">
             {/* al hacer clic le dice cuando mostrar o no */}
             <button onClick={()=> navigate('/registros')}> <h2>Nuevo Registro</h2>

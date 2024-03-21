@@ -2,8 +2,7 @@ import axios from "axios";
 
 async function getAllGastos(){
     const response = await axios.get("http://localhost:4000/gastos");
-    const gastoResgistro = response.data;
-    return response;
+    return response.data;
 }   
 
 async function getGasto(){
@@ -32,15 +31,18 @@ async function patchGasto(id,gastosData){
     }
 }
 
-async function deleteGasto(){
-    const id = document.querySelector("#idDelete").value;
-    try{
-        await axios.delete(`http://localhost:4000/gastos/${id}`);
-        alert("El gasto se ha eliminado correctamente");
-        window.location="index.html"
-    } catch(error){
-        console.log(error);
-        alert("Error al eliminar el gasto");
+async function deleteGasto(id){
+    try {
+        const gastoExistente = await axios.get(`http://localhost:4000/gastos/${id}`);
+        if (!gastoExistente.data) {
+            console.error('el gasto con id ${id} no existe');
+            return;
+        }
+        const response =await axios.delete(`http://localhost:4000/gastos/${id}`);
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        console.error("error al eliminar el gasto ", error);
     }
 }
 export{
