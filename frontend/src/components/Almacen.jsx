@@ -5,13 +5,12 @@ import { deleteMedicina, getAllMedicinas } from "../api/medicinas.api";
 import { deleteGalpon, getAllGalpones } from "../api/galpones.api";
 import { deleteAlimento, getAllAlimentos } from "../api/alimentos.api";
 import { deleteLote, getAllLotes } from "../api/lotes.api";
-import { deleteMortalidad, getAllMortalidad } from "../api/mortalidad.api";
+import { eliminarMortalidad,getAllMortalidad } from "../api/mortalidad.api";
 import { deletePeso, getAllPeso } from "../api/peso.api";
 import { deleteGasto, getAllGastos } from "../api/gastos.api";
 import { getPerfilesByRol } from "../api/perfil.api";
 import Menu from "./Menu";
 import { FormatFecha } from "./FormatFecha";
-
 
 function Almacen (){
 
@@ -55,7 +54,6 @@ function Almacen (){
                 try {
                     const pesosData = await getAllPeso();
                     setPesos(pesosData);    
-                    console.log('datos de peso', pesosData);
                 } catch (error) {
                     console.error('error al obtener datos', error);
                 }
@@ -71,26 +69,25 @@ function Almacen (){
         alimento:deleteAlimento,
         galpones:deleteGalpon,
         lotes:deleteLote,
-        mortalidad:deleteMortalidad,
+        mortalidad:eliminarMortalidad,
         peso:deletePeso,
-        gasto:deleteGasto
+        gasto:deleteGasto,
     }
 
     const deleteItem = async (id, tipoEntidad) => {
-        try{   
-            console.log('deleteitem',id,tipoEntidad);
-            console.log('eliminar', tipoEntidad,'con id',id );
-            if(!deleteFunctions.hasOwnProperty(tipoEntidad)){
-                console.error('tipo de entidad no valido',tipoEntidad);
+        try{
+            console.log("deleteItem", id, tipoEntidad);
+            const deleteFunction= deleteFunctions[tipoEntidad];
+            if (!deleteFunction) {
+                console.error("tipo de entidad no valido");
                 return;
             }
-            const deleteFunction = deleteFunctions[tipoEntidad];
-            await deleteFunction(id); 
-            window.location.reload();
-            console.log(`${tipoEntidad} eliminado con exito`);
+            await  deleteFunction(id);
+            alert ("se elimino con exito");
+            window.location.reload() ;
         }catch(error){
-            console.log("Error al eliminar ",error);
-            alert("Ocurrio un error al eliminar");
+            console.log("error al eliminar",error);
+            alert("ocurrion un error al eliminar");
         }
     }
 
@@ -121,7 +118,7 @@ function Almacen (){
                         <td>
                             {galpones.map((galpon)=>(
                                 <div key={galpon.id}>
-                                    Galpon # {galpon.num_galpon }
+                                    # {galpon.num_galpon }
                                 </div>
                             ))}
                         </td>
@@ -166,9 +163,9 @@ function Almacen (){
                     <tr key={medicina.id}>
                     <td>{medicina.nombre}</td>
                     <td>{medicina.via}</td>
-                    <td>{medicina.num_dosis}</td>
+                    <td>{medicina.num_dosis} /dia</td>
                     <td>{medicina.precio}</td>
-                    <td>{medicina.cantidad}</td>
+                    <td>{medicina.cantidad} und. </td>
                     <td>{FormatFecha(medicina.fecha_ingreso)}</td>
                     <td><button onClick={()=>deleteItem(medicina.id,'medicina')}>Borrar</button></td>
                     
@@ -190,8 +187,8 @@ function Almacen (){
             <tbody>
                 {galpones.map((galpon)=>(
                     <tr key={galpon.id}>
-                    <td>{galpon.num_galpon}</td>
-                    <td>{galpon.capacidad}</td>
+                    <td># {galpon.num_galpon} </td>
+                    <td>{galpon.capacidad} und.</td>
                     <td>{galpon.disponible ? "si" :"no"}</td>
                     <td>{FormatFecha(galpon.fecha_asignacion)}</td>
                     <td><button onClick={()=>deleteItem(galpon.id,'galpones')}>Borrar</button></td>
@@ -216,10 +213,10 @@ function Almacen (){
                 {alimentos.map((alimento)=>(
                     <tr key={alimento.id}>
                     <td>{alimento.nombre}</td>
-                    <td>{alimento.precio}</td>
-                    <td>{alimento.cantidad}</td>
+                    <td>{alimento.precio} $ </td>
+                    <td>{alimento.cantidad} und. </td>
                     <td>{FormatFecha(alimento.fecha_compra)}</td>
-                    <td>{alimento.cantidad_sacos}</td>
+                    <td>{alimento.cantidad_sacos} und. </td>
                     <td>{alimento.tipo}</td>
                     <td><button onClick={()=>deleteItem(alimento.id,'alimento')}>Borrar</button></td>
                 </tr>
@@ -242,8 +239,8 @@ function Almacen (){
                     <tr key={lote.id}>
                     <td>{lote.raza}</td>
                     <td>{FormatFecha(lote.fecha_ingreso)}</td>
-                    <td>{lote.cantidad}</td>
-                    <td>{lote.valor_unidad}</td>
+                    <td>{lote.cantidad} und.</td>
+                    <td>{lote.valor_unidad} $ </td>
                     <td><button onClick={()=>deleteItem(lote.id,'lotes')}>Borrar</button>
                     </td>
 
@@ -265,7 +262,7 @@ function Almacen (){
             <tbody>
                 {mortalidades.map((mortalidad)=>(
                 <tr key={mortalidad.id}>
-                    <td>{mortalidad.cantidad}</td>
+                    <td>{mortalidad.cantidad} und.</td>
                     <td>{mortalidad.causa}</td>
                     <td>{mortalidad.descripcion}</td>
                     <td>{FormatFecha(mortalidad.fecha_muerte)}</td>
@@ -287,7 +284,7 @@ function Almacen (){
             <tbody>
                 {pesos.map((peso)=>(
                 <tr key={peso.id}>
-                    <td>{peso.peso_promedio}</td>
+                    <td>{peso.peso_promedio} kgs.</td>
                     <td>{FormatFecha(peso.fecha_medicion)}</td>
                     <td><button onClick={()=>deleteItem(peso.id,'peso')}>Borrar</button>
                     </td>
@@ -310,7 +307,7 @@ function Almacen (){
                     <tr key={gasto.id}>
                         <td>{gasto.detalle}</td>
                         <td>{FormatFecha(gasto.fecha_gasto)}</td>
-                        <td>{gasto.importe}</td>
+                        <td>{gasto.importe} $</td>
                         <td><button onClick={()=>deleteItem(gasto.id,'gasto')}>Borrar</button>
                         </td>
                     </tr>

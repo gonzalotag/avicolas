@@ -295,47 +295,11 @@ function Produccion (){
                     <tr>
                         <td colSpan="5">
                             {actividadControl === "Mortalidad" &&(
-                            <form className="formularioMortalidad">
-                            <label>Cantidad</label>
-                            <input 
-                            type="text"
-                            value={mortalidadData.cantidad}
-                            onChange={(e)=>handleMortalidadChange(e)}
-                            name="cantidad"
-                            required
-                            />
-                            <br />
-                            <label>Causa</label>
-                            <select name="causa"
-                            value={mortalidadData.causa}
-                            onChange={(e) => handleMortalidadChange(e)} 
-                            required
-                            >   
-                                <option value=""></option>
-                                <option value="natural">Natural</option>
-                                <option value="enfermedad">Enfermedad</option>
-                                <option value="accidente">Accidente</option>
-                                <option value="parasitos">Parasitos</option>
-                                <option value="mala_alimentacion">Mala alimentacion</option>
-                                <option value="ataques de depredadores">Ataques de depredadores</option>
-                            </select>
-                            <br />
-                            <label>Descripcion</label>
-                            <textarea 
-                            name="descripcion"
-                            value={mortalidadData.descripcion}
-                            onChange={(e) => handleMortalidadChange(e)}
-                            style={{ width: '200px', height:'30px'}}
-                            required
-                            ></textarea>
-                            <br />
-                            <button  
-                            type="button"
-                            onClick ={(e)=>guardarMortalidad(e)}
-                            >Guardar </button>  <br />  <br />
+                            
+                            
                             <div>
                                 <h3>Mortalidad</h3>
-                            </div>
+                            
                             <table>
                                 <thead>
                                     <tr>
@@ -364,7 +328,7 @@ function Produccion (){
                                     ))}
                                 </tbody>
                             </table>
-                            </form>
+                            </div>
                             )}
                             {actividadControl ==="Alimentacion" &&(
                                 <div>
@@ -437,34 +401,8 @@ function Produccion (){
                                 </div>
                             )}
                             {actividadControl === "Gastos" && (
-                                <form className="gastosForm">
-                                    <label htmlFor="">Detalles:</label>
-                                    <textarea
-                                    name="detalle"
-                                    type="text"
-                                    value={infoGastos.detalle}
-                                    onChange={(e)=>handleGastosChange(e)}
-                                    required>
-                                    </textarea> 
-                                    <br />
-                                    <label htmlFor="">Importe:</label>
-                                    <input 
-                                    type="text" 
-                                    value={infoGastos.importe}
-                                    onChange={(e)=>handleGastosChange(e)}
-                                    name="importe"
-                                    required
-                                    />
-                                    <br />
-                                    <button
-                                    type="button"
-                                    onClick={(e) => guardarGastos(e)}
-                                    >
-                                        Guardar
-                                    </button>
-                                    <div>
+                                <div>
                                 <h3>Registro de gastos</h3>
-                                </div>
                                 <table className="tablaGastos">
                                 <thead>
                                     <tr>
@@ -486,33 +424,16 @@ function Produccion (){
                                                 "Gastos")}>
                                                 Seleccionar
                                             </button>
-                                            </td>  
-                                            
+                                            </td>
                                         </tr>
                                     ))}
                                 </tbody>
                                 </table>
-                                </form>
-                                
-                                
+                                </div>
                             )}
                             {actividadControl === "Peso"&&(
-                                <form className="pesoForm">
-                                    <label htmlFor="">Peso:</label>
-                                    <input  
-                                    type='text'
-                                    name='peso'
-                                    value={infoPeso.peso === undefined ? '' : infoPeso.peso}
-                                    onChange={(e)=>handlePesoChange(e)}
-                                    required/> 
-                                    <br />
-                                    <button 
-                                    type="button" 
-                                    onClick={(e)=>agregarRegistro(e)}>Agregar Registro
-                                    </button>
-                                    <div>
-                                        <h3>Registro peso</h3>
-                                    </div>
+                            <div>
+                                <h3>Registro peso</h3>
                                 <table>
                                     <thead>
                                     <tr>
@@ -534,8 +455,8 @@ function Produccion (){
                                         </tr>
                                     ))}
                                 </tbody>
-                            </table>
-                                </form>
+                                </table>
+                            </div>
                             )}
                         </td>
                     </tr>

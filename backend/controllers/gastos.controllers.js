@@ -13,8 +13,9 @@ export const getAllGastos =  async (req,res) =>{
 export const getGasto = async (req,res) =>{
     try {   
         const {id} = req.params;            
-        const result = await pool.query('SELECT * FROM gastos WHERE id=?',[id]);                
-        if(!result.length) return res.status(404).send("No existe el gasto con ese ID")                
+        const [result] = await pool.query('SELECT * FROM gastos WHERE id=?',[id]);                
+        if(!result.length) 
+        return res.status(404).send("No existe el gasto con ese ID")                
         res.json(result[0]);
     } catch (error) {   
         console.log(error);                
@@ -50,9 +51,9 @@ export const  deleteGasto = async (req,res) =>{
         if (existeGasto.length === 0) {
             return res.status(404).send("No existe el gasto con ese ID");
         }
-        const result =  await  pool.query('DELETE FROM gastos WHERE id=?', [id]);
+        const result = await pool.query('DELETE FROM gastos WHERE id=?', [id]);
         if (result.affectedRows ===0 ) {
-            return res.status(404).send("no se ha eliminado el gasssto");
+            return res.status(404).send("no se ha eliminado el gasto");
         }
         return res.status(200).send("se elimino ") 
     } catch (error) {                          

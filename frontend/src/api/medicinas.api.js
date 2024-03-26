@@ -3,9 +3,7 @@ import axios from "axios";
 async function getAllMedicinas (){
     try {
         const response = await axios.get('http://localhost:4000/medicina');
-        // console.log("toda la data de medicinas", response);
         return response.data;
-        
     } catch (error) {
         console.log("error al obtener medicinas",error)
         throw error;
@@ -28,12 +26,12 @@ async function postMedicina(formData) {
             if(response.data !==null){
             console.log("medicina agregada correctamente",response.data);
             }else{
-                console.log("la respuesta dle servidor es null");
+                console.log("la respuesta del servidor es null");
             }
             return response.data;
         } else {
             return null;
-            console.log("error al agregar la medicina, verifique los datos");
+            // console.log("error al agregar la medicina, verifique los datos");
         }
     } catch (error) {
         if (error.response) {
@@ -55,7 +53,6 @@ async function patchMedicina(id,medData) {
     try {
         const result = await axios.patch(`http://localhost:4000/medicina/${id}`, medData)
         return result;
-    
     } catch (error) {
         console.error("No se pudo actualizar, verificar los datos o el id")
         

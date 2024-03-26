@@ -27,7 +27,7 @@ async function patchGasto(id,gastosData){
         const response = await axios.patchGasto(`http://localhost:4000/gastos/${id}`,gastosData);
         console.log(response.gastosData);
     } catch (error) {
-        console.error   ("Error en la petición Patch /gastos/" + error);
+        console.error("Error en la petición Patch /gastos/" + error);
     }
 }
 
@@ -36,7 +36,7 @@ async function deleteGasto(id){
         const gastoExistente = await axios.get(`http://localhost:4000/gastos/${id}`);
         if (!gastoExistente.data) {
             console.error('el gasto con id ${id} no existe');
-            return;
+            return false;
         }
         const response =await axios.delete(`http://localhost:4000/gastos/${id}`);
         console.log(response);

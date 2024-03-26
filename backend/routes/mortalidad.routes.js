@@ -8,9 +8,9 @@ import {
 const router = Router();
 
 router.get("/mortalidad", getAllMortalidad);
-router.post("/mortalidad",createMortalidad )
-router.put("/mortalidad/",updateMortalidad)
-router.delete("/mortalidad/:id", deleteMortalidad)
+router.post("/mortalidad",createMortalidad );
+router.put("/mortalidad/",updateMortalidad);
+router.delete("/mortalidad/:id", deleteMortalidad);
 
 export default router;
 

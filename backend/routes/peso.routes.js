@@ -4,8 +4,10 @@ import {
     getPeso,
     createPeso,
     updatePeso,
-    deletePeso
-} from "../controllers/peso.controllers.js"
+    deletePeso,
+    
+} from '../controllers/peso.controllers.js'
+
 const router = Router();
 
 router.get("/peso", getAllPeso);

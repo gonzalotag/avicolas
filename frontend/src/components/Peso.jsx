@@ -5,7 +5,7 @@ import {postPeso} from "../api/peso.api.js";
 
 function Peso() {
     const [infoPeso,setInfoPeso]=useState({peso:''});
-    const [dataPeso,setDataPeso]=useState([]);
+    // const [dataPeso,setDataPeso]=useState([]);
 
     const navigate = useNavigate();
 
@@ -24,7 +24,7 @@ function Peso() {
             setInfoPeso({
                 peso:''
             });
-            console.log(result);
+            // console.log(result);
         } catch (error) {
             console.error('error al agregar el registro', error);
         }

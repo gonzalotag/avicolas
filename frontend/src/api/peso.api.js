@@ -21,7 +21,16 @@ async function getPesoById(){
 async function postPeso(objPeso){
     try{
         const resultado = await axios.post(`http://localhost:4000/peso`, objPeso);
-        return resultado.data;
+        if (resultado.status ===201) {
+            if (resultado.data !==null) {
+                console.log("registro de peso agregado", resultado.data);
+            }else{
+                console.log("respuesta en el servidor esnull",  resultado.data); 
+            }
+            return resultado.data;
+        }else{
+            return null;
+        }
     }catch(error){
         console.log(error);
     }
@@ -39,23 +48,22 @@ async function patchPeso(id, objPeso){
 
 async function deletePeso(id){
     try {
-        // const pesoExiste = await axios.get(`http://localhost:4000/peso/${id}`);
-        // if (pesoExiste.status != 200) {
-        //     console.error('el peso con el ID' + id + 'no existe');
-        //     return;
-        // }
-           const respuesta = await axios.delete(`http://localhost:4000/peso/${id}`);
-           console.log(respuesta);
-           window.location.reload();
-           return true;
+        const existePeso = await axios.get(`http://localhost:4000/peso/${id}`);
+        if(!existePeso.data){
+            console.error('el peso con ese id no existe');
+            return false;
+        }
+        const respuesta = await axios.delete(`http://localhost:4000/peso/${id}`);
+        return respuesta.data;
     } catch (error) {
-        console.error("error al borrar peso",error);
+        console.error("error al eliminar el peso", error);
     }
 }
+
 export {
     getAllPeso,
     getPesoById,
     postPeso,
     patchPeso,
-    deletePeso
+    deletePeso,
 }

@@ -5,8 +5,12 @@ import { postMortalidad } from "../api/mortalidad.api";
 
 
 function Mortalidad(){
-    const [mostrarMortalidad, setMostrarMortalidad]=useState(false);
-    const [mortalidadData, setMortalidadData]=useState({cantidad:'',causa:'',descripcion:''});
+    // const [mostrarMortalidad, setMostrarMortalidad]=useState(false);
+    const [mortalidadData, setMortalidadData]=useState({
+        cantidad:'',
+        causa:'',
+        descripcion:'',
+    });
     const navigate=useNavigate();
 
     const handleMortalidadChange = (e) =>{
@@ -29,7 +33,7 @@ function Mortalidad(){
                 causa:"natural",
                 descripcion:'',
             });
-            console.log(result);
+            // console.log(result);
         } catch (error) {
             console.log ('Error al crear mortalidad',error);
         }
