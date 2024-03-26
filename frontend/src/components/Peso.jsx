@@ -4,7 +4,7 @@ import {useNavigate} from  "react-router-dom";
 import {postPeso} from "../api/peso.api.js";
 
 function Peso() {
-    const [infoPeso,setInfoPeso]=useState({peso:''});
+    const [infoPeso,setInfoPeso]=useState({peso_promedio:''});
     // const [dataPeso,setDataPeso]=useState([]);
 
     const navigate = useNavigate();
@@ -19,10 +19,14 @@ function Peso() {
 
     const agregarRegistro = async (e)=>{
         e.preventDefault();
+        if (!infoPeso.peso_promedio || isNaN(parseFloat(infoPeso.peso_promedio))) {
+            console.error("el peso promedio no es valido")
+            return;
+        }
         try {
             const result = await postPeso(infoPeso);
             setInfoPeso({
-                peso:''
+                peso_promedio:''
             });
             // console.log(result);
         } catch (error) {
@@ -40,8 +44,8 @@ return(
             <h2>Registrar Peso</h2>
                 <input  
                     type='text'
-                    name='peso'
-                    value={infoPeso.peso === undefined ? '' : infoPeso.peso}
+                    name='peso_promedio'
+                    value={infoPeso.peso_promedio === undefined ? '' : infoPeso.peso_promedio}
                     onChange={(e)=>handlePesoChange(e)}
                     required/> 
                     <br /><br />

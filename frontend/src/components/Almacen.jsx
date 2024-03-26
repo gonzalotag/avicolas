@@ -82,6 +82,9 @@ function Almacen (){
                 console.error("tipo de entidad no valido");
                 return;
             }
+            localStorage.setItem("currentPage", window.location.href);
+            console.log("url actual guardada", window.location.href);
+            // console.log("url actual ",localStorage.getItem("currentPage"));
             await  deleteFunction(id);
             alert ("se elimino con exito");
             window.location.reload() ;

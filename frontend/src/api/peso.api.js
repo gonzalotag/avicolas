@@ -21,7 +21,7 @@ async function getPesoById(){
 async function postPeso(objPeso){
     try{
         const resultado = await axios.post(`http://localhost:4000/peso`, objPeso);
-        if (resultado.status ===201) {
+        if (resultado.status ===200) {
             if (resultado.data !==null) {
                 console.log("registro de peso agregado", resultado.data);
             }else{
@@ -32,7 +32,8 @@ async function postPeso(objPeso){
             return null;
         }
     }catch(error){
-        console.log(error);
+        console.error("error al enviar solicitud post a peso" ,error);
+
     }
 }
 

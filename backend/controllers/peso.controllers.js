@@ -28,7 +28,7 @@ export const createPeso =async (req,res) =>{
     try {
         const {peso_promedio}= req.body;
         const result = await pool.query("insert into peso (peso_promedio) VALUES (?);", [peso_promedio]);
-        res.status(201).json(result);
+        res.status(200).json({message:"registro creado"});
     } catch (error) {
         console.log(error);
         res.status(500).json({msg:'Error en el servidor'});
