@@ -1,5 +1,6 @@
 import "../assets/css/almacen.css"
-import React, {useState , useEffect} from "react";
+
+import { useState , useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteMedicina, getAllMedicinas } from "../api/medicinas.api";
 import { deleteGalpon, getAllGalpones } from "../api/galpones.api";
@@ -12,6 +13,7 @@ import { getPerfilesByRol } from "../api/perfil.api";
 import Menu from "./Menu";
 import { FormatFecha } from "./FormatFecha";
 
+
 function Almacen (){
 
     const navigate = useNavigate();
@@ -23,6 +25,7 @@ function Almacen (){
     const [mortalidades, setMortalidades] = useState([]);
     const [pesos,setPesos] = useState([]);
     const [gastos,setGastos] = useState([]);
+    const [currentPage, setCurrentPage] = useState(null);
 
     useEffect(()=>{
         const fetchData= async ()=>{
@@ -57,12 +60,20 @@ function Almacen (){
                 } catch (error) {
                     console.error('error al obtener datos', error);
                 }
-                
                 const gastoData = await getAllGastos();
                 setGastos(gastoData);
         }
             fetchData();
     }, []);
+
+    useEffect(()=>{
+        const savedPage = localStorage.getItem("currentPage");
+        // console.log(savedPage);
+        if (savedPage) {
+            setCurrentPage(savedPage);
+            localStorage.removeItem("currentPage");
+        }
+    },[]);
 
     const deleteFunctions = {
         medicina:deleteMedicina,
@@ -76,21 +87,16 @@ function Almacen (){
 
     const deleteItem = async (id, tipoEntidad) => {
         try{
+            
             console.log("deleteItem", id, tipoEntidad);
             const deleteFunction= deleteFunctions[tipoEntidad];
-            if (!deleteFunction) {
-                console.error("tipo de entidad no valido");
-                return;
-            }
-            localStorage.setItem("currentPage", window.location.href);
-            console.log("url actual guardada", window.location.href);
-            // console.log("url actual ",localStorage.getItem("currentPage"));
-            await  deleteFunction(id);
+            localStorage.setItem("currentPage", window.location.pathname);
+            console.log(window.location.pathname);
+            await deleteFunction(id);
             alert ("se elimino con exito");
-            window.location.reload() ;
+            window.location.reload();
         }catch(error){
             console.log("error al eliminar",error);
-            alert("ocurrion un error al eliminar");
         }
     }
 

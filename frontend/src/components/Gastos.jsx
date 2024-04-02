@@ -6,7 +6,7 @@ import { postGasto } from "../api/gastos.api"
 function Gastos(){
 
     const [infoGastos, setInfoGastos]=useState({detalle:'',importe:''});
-    const [dataGasto,setDataGasto] = useState([]);
+    // const [dataGasto,setDataGasto] = useState([]);
     const navigate=useNavigate();
 
     const handleGastosChange=(e)=>{

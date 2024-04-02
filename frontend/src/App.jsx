@@ -10,7 +10,7 @@ import MenuAdmin from './components/MenuAdmin';
 import RegistroPersonal from './components/RegistroPersonal';
 import TablaPersonal from './components/TablaPersonal';
 import Almacen from './components/Almacen';
-import ContenidoAdmin from './components/ContenidoAdmin';
+// import ContenidoAdmin from './components/ContenidoAdmin';
 import EditarPersonal from './components/EditarPersonal';
 import Produccion from './components/Produccion';
 import Reportes from './components/Reportes';
@@ -34,7 +34,6 @@ function App() {
   },[])
   const onLogout=()=>{
     localStorage.removeItem('userInfo');
-    // window.location.reload()
     setIsAuth(false); 
     navigate('/login');
   }
@@ -42,7 +41,7 @@ function App() {
   <>
     <NavBar onLogout={onLogout} isAuth={isAuth}/>
     <div className='mainPage'>
-      {/* <MenuAdmin/> */}
+      
     <Routes>
       <Route 
       path='/' 
@@ -56,10 +55,6 @@ function App() {
       path='/admin/*' 
       element ={<GuardiaComponent isAuth={isAuth} setIsAuth={setIsAuth} Component={<AdminComponent/>}/>}
       />
-      {/* <Route 
-      path='/personal'
-      element={<TablaPersonal isAuth={isAuth}/>}
-      /> */}
       <Route 
       path='/registros' 
       element={<RegistroPersonal isAuth={isAuth}/>}

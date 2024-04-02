@@ -25,7 +25,7 @@ async function postPeso(objPeso){
             if (resultado.data !==null) {
                 console.log("registro de peso agregado", resultado.data);
             }else{
-                console.log("respuesta en el servidor esnull",  resultado.data); 
+                console.log ("respuesta en el servidor es null",  resultado.data); 
             }
             return resultado.data;
         }else{

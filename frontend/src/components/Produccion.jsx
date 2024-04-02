@@ -245,7 +245,7 @@ function Produccion (){
                             <th>Capacidad</th>
                             <th>Disponibilidad</th>
                             <th>Fecha</th>
-                            <th>Seleccion</th>
+                            <th>Selección</th>
                         </tr>
             </thead>
             <tbody>

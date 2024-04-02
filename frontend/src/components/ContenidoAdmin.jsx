@@ -1,9 +1,12 @@
 import"../assets/css/contenidoAdmin.css"
 
-function ContenidoAdmin (){
+function ContenidoAdmin (props){
     
-    return<div className="contenidoAdmin">
-            Condenido de Admin
+    const {selectedButton}= props;
+    return(
+    <div className="contenidoAdmin">
+            contenido Admin
     </div>
+    )
 }
 export default ContenidoAdmin;

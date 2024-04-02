@@ -47,7 +47,7 @@ function Medicinas (){
     
     return(
         <div className="medContainer">
-            <button onClick={()=>navigate(`/admin/`)}>
+            <button onClick={()=>navigate(`/admin`)}>
                 <h2>Regresar a Almacen</h2>
             </button>
             <h1 className="titulo">Medicinas</h1>

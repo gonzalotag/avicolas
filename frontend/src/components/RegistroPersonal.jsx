@@ -192,7 +192,7 @@ function RegistroPersonal(){
                         name="rol" 
                         value={formData.rol}
                         onChange={handleChange}>    
-                        <option value="">seleccion rol</option>
+                        <option value="">Seleccionar Rol</option>
                         <option value="administrador">Administrador</option>
                         <option value="proveedor" >Proveedor</option>
                         <option value="cliente" >Cliente</option>
