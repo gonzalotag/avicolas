@@ -3,7 +3,6 @@ import axios from "axios";
 async function getAllAlimentos(){
     try {
         const res = await axios.get("http://localhost:4000/alimento");
-        // console.log("datos alimentos", res.data);
         return res.data;    
     } catch (error) {
         console.error("error al obtener alimentos" ,  error);

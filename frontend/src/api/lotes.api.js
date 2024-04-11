@@ -3,8 +3,7 @@ import axios from "axios";
 export const getAllLotes = async() =>{
     try {
         const response = await axios.get('http://localhost:4000/lote');
-        // console.log("total de lotes",response);
-        return response;
+        return response.data;
     } catch (error) {
         console.log("Error al obtener los lotes");
         throw error;

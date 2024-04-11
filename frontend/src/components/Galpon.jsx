@@ -37,7 +37,7 @@ function Galpon (){
     }
     return(
     <div className="galponContainer">
-        <button onClick={()=>navigate('/admin')}>
+        <button onClick={()=>navigate('/admin/almacen')}>
             <h2>Regresar a Almacen</h2>
         </button>
         <h1>Galpon</h1>

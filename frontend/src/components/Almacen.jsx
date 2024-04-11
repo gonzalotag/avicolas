@@ -105,7 +105,7 @@ function Almacen (){
         <div className="almacenTabla">
             <Menu/>
             <table className="tableAlmacen">
-            <caption><h2>Datos de Lote</h2></caption>
+            <caption><h2>Datos de Almacen</h2></caption>
                 <thead>
                     <tr>
                         <th>Medicinas</th>
@@ -144,7 +144,7 @@ function Almacen (){
                             </div>
                         ))}</td>
                         <td>
-                            {lotes.map((lote)=>(
+                            {lotes && lotes.map((lote)=>(
                                     <div key={lote.id}>
                                         Raza {lote.raza} 
                                     </div>
@@ -244,7 +244,7 @@ function Almacen (){
                 </tr>
             </thead>
             <tbody>
-                {lotes.map((lote)=>(
+                {lotes && lotes.map((lote)=>(
                     <tr key={lote.id}>
                     <td>{lote.raza}</td>
                     <td>{FormatFecha(lote.fecha_ingreso)}</td>

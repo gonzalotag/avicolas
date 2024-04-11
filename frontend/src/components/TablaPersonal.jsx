@@ -53,65 +53,62 @@ function TablaPersonal(){
             }
     };
     return  <div className="contenedorTabla">
-            <div className="contenedorPersonal">
-            <h2>Personal Registrado</h2>
-            <div className="nuevoPersonal" >
-            <div className="buttonNuevoPersonal">
-            {/* al hacer clic le dice cuando mostrar o no */}
-            <button onClick={()=> navigate('/registros')}> <h2>Nuevo Registro</h2>
-            </button>
-            </div>
-            </div>
-            {/* para recolectar solo un dato para cambiar entre roles  */}
-            <div className="tablaSelectRol">
-            <div className="selectRol">
-                <h2>Seleccione Rol:</h2>
-            <select  id= "selectRoles" title="selecetRol" name="selectRoles" onChange={handleSelect}>
-                <option></option>
-                {tipoRol.map((data,index)=>{
-                    return( 
-                    <option value={data.id} key={index}>{data.tipo}</option>
-                )})}
-                </select>
-            </div>
-            <div className="tabla">
-            <table className="listaPersonal">
-                <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Direccion</th>
-                    <th>Telefono</th>
-                    <th>Email</th>
-                    <th>Rol </th>
-                    <th>Accion</th>
-                </tr>
-                </thead>
-                <tbody>
+                <div className="contenedorPersonal">
+                    <h2>Personal Registrado</h2>
+                    <div className="nuevoPersonal" >
+                        <div className="buttonNuevoPersonal">
+                            <button onClick={()=> navigate('/registros')}> <h2>Nuevo Registro</h2></button>
+                        </div>
+                    </div>
+                {/* para recolectar solo un dato para cambiar entre roles  */}
+                <div className="tablaSelectRol">
+                    <div className="selectRol">
+                        <h2>Seleccione Rol:</h2>
+                            <select  id= "selectRoles" title="selecetRol" name="selectRoles" onChange={handleSelect}>
+                                <option></option>
+                                {tipoRol.map((data,index)=>{
+                                return( 
+                                    <option value={data.id} key={index}>{data.tipo}</option>
+                                )})}
+                            </select>
+                    </div>
+                <div className="tabla">
+                    <table className="listaPersonal">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Direccion</th>
+                                <th>Telefono</th>
+                                <th>Email</th>
+                                <th>Rol </th>
+                                <th>Accion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                     {/*filter.map(()=>{"info aqui"}) con este metodo se puede 
                     llenar toda la tabla con informacion recogido de perfil */}
-                    {filterRol.map((data,index) =>{
-                        return(<tr key={index}>
-                        <td>{data.nombre}</td>
-                        <td>{data.apellido_paterno}</td>
-                        <td>{data.direccion}</td>
-                        <td>{data.telefono}</td>
-                        <td>{data.email}</td>
-                        <td>{tipoRol.find((rol)=>rol.id === data.id_rol)?.tipo || "No definido "}</td>
-                        <td>
-                        {/* boton q nos lleva de la pagina de '/personal' a '/editar' */}
-                        <button onClick={()=> navigate(`/editar/${data.id}`)}>Editar </button>
-                        {/* elimina una fila de la tabla de personal (buscar por q elimina solo al seleccionar rol y no sin seleccionar) */}
-                        <button onClick={() => deleteRow(data.id)}>Eliminar</button>
-                        
-                        </td>
-                    </tr>)
-                    })}
-                </tbody>
-            </table>
-            </div>
-            </div>
+                            {filterRol.map((data,index) =>{
+                            return(<tr key={index}>
+                                <td>{data.nombre}</td>
+                                <td>{data.apellido_paterno}</td>
+                                <td>{data.direccion}</td>
+                                <td>{data.telefono}</td>
+                                <td>{data.email}</td>
+                                <td>{tipoRol.find((rol)=>rol.id === data.id_rol)?.tipo || "No definido "}</td>
+                                <td>
+                            {/* boton q nos lleva de la pagina de '/personal' a '/editar' */}
+                                    <button onClick={()=> navigate(`/editar/${data.id}`)}>Editar </button>
+                            {/* elimina una fila de la tabla de personal (buscar por q elimina solo al seleccionar rol y no sin seleccionar) */}
+                                    <button onClick={() => deleteRow(data.id)}>Eliminar</button>
+                                </td>
+                            </tr>)
+                            })}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
+    </div>
 }
 export default TablaPersonal;

@@ -100,7 +100,7 @@ function RegistroPersonal(){
           <div className="regPersonal">
             <div className="contenedorButtonAndTitle">
             <div className="buttonRegresar">
-                <button onClick={()=>navigate('/admin')}> 
+                <button onClick={()=>navigate('/admin/personal')}> 
                   <h2>Regresar a Personal</h2>
                 </button>
             </div>    

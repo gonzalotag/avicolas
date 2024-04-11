@@ -44,7 +44,7 @@ function Lote(){
     }
     return(
         <div className="loteContainer">
-            <button onClick={()=>navigate('/admin')}>
+            <button onClick={()=>navigate('/admin/almacen')}>
                 <h2>Regresar a almacen</h2>
             </button>
             <h2>Lote a Registrar</h2>

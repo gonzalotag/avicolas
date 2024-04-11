@@ -84,7 +84,7 @@ const handleTextChange = (e, fieldName)=>{
     return(
     <div className="editarEspacio">
             <div className="botonRegresar">
-              <button onClick={()=>navigate('/admin')}><h2>Regresar a Personal</h2></button>
+              <button onClick={()=>navigate('/admin/personal')}><h2>Regresar a Personal</h2></button>
             </div>
             <h1>Editar Perfil</h1>
             <div className="formularioVistaPrevia">

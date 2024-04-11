@@ -33,7 +33,6 @@ function Mortalidad(){
                 causa:"natural",
                 descripcion:'',
             });
-            // console.log(result);
         } catch (error) {
             console.log ('Error al crear mortalidad',error);
         }
@@ -41,7 +40,7 @@ function Mortalidad(){
 
     return(
         <div className="mortalidadContainer">
-            <button onClick={()=>navigate('/admin')}>
+            <button onClick={()=>navigate('/admin/almacen')}>
                 <h2>Regresar a Almacen</h2>
             </button>
             <h2>Casos de Mortalidad a Registrar</h2>

@@ -2,7 +2,7 @@ import axios from "axios";
 
 async function getAlmacenes(){
     const res = await axios.get('http://localhost:4000/almacen');
-
+    return res.data;
 }
 
 async function getAlmacen(id){

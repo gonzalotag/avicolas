@@ -36,7 +36,7 @@ function Gastos(){
 
     return(
         <div className="containerGastos">
-            <button onClick={()=>navigate('/admin')}>
+            <button onClick={()=>navigate('/admin/almacen')}>
                 <h2>Regresar a Almacen</h2>
             </button>
             <h2>Registrar Gastos</h2>

@@ -27,9 +27,8 @@ const Menu =()=>{
             <div onClick={()=>navigate('/gastos')}>
                 <button><h4>Registrar Gasto</h4></button>
             </div>
-
         </div>
         
-    )
+    )                                      
 }
 export default Menu;
