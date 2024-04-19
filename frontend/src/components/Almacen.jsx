@@ -34,17 +34,17 @@ function Almacen (){
                 setMedicina(medicinasData);
 
                 const galponesData = await getAllGalpones();
-                if (Array.isArray(galponesData.data)) {
-                    setGalpones(galponesData.data);    
+                if (Array.isArray(galponesData)) {
+                    setGalpones(galponesData);
                 }else{
-                    console.error("los datos de galpones no es un array ");
+                    console.error("los datos de galpon no es un array");
                 }
 
                 const alimentosData = await getAllAlimentos();
                 setAlimentos(alimentosData)
             
                 const lotesData = await getAllLotes();
-                setLotes(lotesData.data)
+                setLotes(lotesData);
             
                 const empleadosData = await getPerfilesByRol(4);
                 setEmpleado(empleadosData);
@@ -127,7 +127,7 @@ function Almacen (){
                         <td>
                             {galpones.map((galpon)=>(
                                 <div key={galpon.id}>
-                                    # {galpon.num_galpon }
+                                    #{galpon.num_galpon }
                                 </div>
                             ))}
                         </td>
@@ -169,7 +169,7 @@ function Almacen (){
             </thead>
             <tbody>
                 {medicina.map((medicina)=>(
-                    <tr key={medicina.id}>
+                <tr key={medicina.id}>
                     <td>{medicina.nombre}</td>
                     <td>{medicina.via}</td>
                     <td>{medicina.num_dosis} /dia</td>
@@ -194,8 +194,8 @@ function Almacen (){
                 </tr>
             </thead>
             <tbody>
-                {galpones.map((galpon)=>(
-                    <tr key={galpon.id}>
+                {Array.isArray(galpones) && galpones.map((galpon)=>(
+                <tr key={galpon.id}>
                     <td># {galpon.num_galpon} </td>
                     <td>{galpon.capacidad} und.</td>
                     <td>{galpon.disponible ? "si" :"no"}</td>

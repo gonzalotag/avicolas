@@ -8,21 +8,21 @@ export const getAllGalpones =async (req,res)=>{
         console.log(error);
         res.status(500).json({status:'fail',message:"Error interno del servidor"});
     }
-}
+};
 
-export const getGalpon = async (req,res)=>{
-    const id= req.params.id;
-    if(!isNaN(parseInt(id))){
+export const getGalpon = async (req,res) =>{
+    const id = req.paramas.id;
+    if (!isNaN(parseInt(id))) {
         const filtroId = parseInt(id);
-        const [galpon] = await pool.query(`SELECT * FROM galpon WHERE id = ?`,[filtroId]);
+        const [galpon] = await pool.query(`SELECT * FROM galpon WHERE  id=?`,[filtroId]);
         if (!galpon.length) {
-            return res.status(404).json({ status: 'fail', message: 'Galpón no encontrado' });
-            } else {
-                res.status(200).json({status:'success',data: galpon});
-            }
-        }else{
-            res.status(400).json({status:'fail',message:'ID incorrecto'})
-            }
+            return res.status(404).json({status:'fail', message:'galpon no encontrado'});
+        } else {
+            res.status(200).json({status:'success',data: galpon [0]});
+        }
+    } else {
+        res.status(400).json({ status: 'fail', message: 'El id debe ser un numero' });
+    }
 };
 
 export const createGalpon =async(req,res)=>{

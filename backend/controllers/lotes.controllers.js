@@ -13,7 +13,7 @@ export const getAllLotes = async(req,res) =>{
 export const getLote = async(req,res)=>{
     try {
         const {id}= req.params;
-        const result=await pool.query("SELECT * FROM LOTE WHERE ID=$1",[parseInt(id)]);
+        const result=await pool.query('SELECT * FROM lote WHERE id=?',[id]);
         if (result.rowCount>0){
             res.status(200).json({
                 status:'succes',

@@ -1,8 +1,17 @@
 import axios from "axios";
 
 async function getAllGalpones() {
-    const response = await axios.get("http://localhost:4000/galpones");
-    return response;    
+    try {
+        const response = await axios.get("http://localhost:4000/galpones");
+        // console.log('respuesta del api', response.data);
+    if (Array.isArray(response.data)) {
+        return response.data;
+    }else{
+        return [];
+    }    
+    } catch (error) {
+        throw error;   
+    }
 }
 
 async function getGalpon(id) {
@@ -14,7 +23,6 @@ async function postGalpones(formData){
         const result = await axios.post("http://localhost:4000/galpones", formData);
         return result.data;            
     } catch (error) {
-        // console.error("error al guardar el nuevo galpon",error);
         // throw error;
     }
 }
@@ -30,9 +38,8 @@ async function patchGalpon(id,galponData) {
 }
 async function deleteGalpon(id) {
     try {
-        
         const res =await axios.delete(`http://localhost:4000/galpones/${id}`);
-        console.log('resu del server',res.data);
+        console.log('resp del server',res.data);
         return res;
     } catch (error) {
         return  error.response.data.message;

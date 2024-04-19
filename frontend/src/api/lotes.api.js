@@ -10,17 +10,10 @@ export const getAllLotes = async() =>{
     }
 }
 
-export const getLote = async() =>{
+export const getLote = async(id) =>{
     try {
-        let lote = JSON.parse(localStorage.getItem('selectedLote'));
-        if(!lote){
-            alert("No hay un lote seleccionado")
-            return null;
-            }else{
-            const respuesta = await axios.get(`${'http://localhost:4000/lote'}/${lote.id}`);
-            localStorage.setItem('selectedLote',JSON.stringify(respuesta.data));
-            return respuesta.data;
-        }
+        const respuesta = await axios.get(`http://localhost:4000/lote/${id}`);
+        return respuesta.data;
     } catch (error) {
         console.log("Error al obtener el lote");
         throw error;

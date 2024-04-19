@@ -35,21 +35,6 @@ function AdminComponent(){
         navigate(buttonName, {replace:true});
     }
     
-    // const renderContenido =() =>{
-    //     console.log('boton seleccionado', selectedButton);
-    //     switch(selectedButton){
-    //         case '/admin/almacen':
-    //             return <Almacen/>
-    //         case '/admin/personal':
-    //             return <TablaPersonal perfiles={perfiles} getPerfilesByRol={getPerfilesByRol} getRolesByName={getRolesByName}/>
-    //         case '/admin/produccion':
-    //             return <Produccion/>
-    //         case '/admin/reportes':
-    //             return <Reportes/>
-    //         default:
-    //             return null;
-    //     }
-    // }
 
     return (
     <div className="espacioAdmin">

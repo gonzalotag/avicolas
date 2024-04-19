@@ -28,14 +28,12 @@ export const getAlimento = async(req,res)=>{
 
 export const createAlimento =async(req,res)=>{
     const {nombre,precio,cantidad,tipo,cantidad_sacos}= req.body;
-    // console.log("datos recibidos",req.body);
+    
     if (!nombre || !precio|| !cantidad|| !tipo|| !cantidad_sacos )
     return res.status(400).json({msg:"Faltan datos"})
     try{
         const query ="INSERT INTO alimento (nombre,precio,cantidad,tipo,cantidad_sacos) VALUES (?, ?, ?, ?, ?)";
         const value = [nombre,precio,cantidad,tipo,cantidad_sacos]
-        // console.log("consulsa sql", query);
-        // console.log("valores", value);
         const [result]=await pool.query(query, value);
         res.json({msg:`Se agrego correctamente el alimento con el id${result.insertId}`})
     }catch(error){

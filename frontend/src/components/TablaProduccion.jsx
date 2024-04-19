@@ -1,12 +1,30 @@
-import React from "react";
+import "../assets/css/tablaProduccion.css"
+import React, { useState } from "react";
 import { FormatFecha } from "./FormatFecha";
 
-function TablaProduccion({handleControlButton, actividadControl, mostrarMortalidad, dataAlimento, dataMed, dataGasto, dataPeso, dataLote, asingEmpleado, handleSeleccion}){
+function TablaProduccion({
+    handleControlButton, 
+    actividadControl, 
+    mostrarMortalidad, 
+    dataAlimento, 
+    dataMed, 
+    dataGasto, 
+    dataPeso, 
+    dataLote, 
+    asingEmpleado, 
+    handleSeleccion,
+    dataGalpon,
+    
+}){
+
     return(
+        <div>
         <table className="tablaProduccion">
+            
             <thead>
                 <tr>
                 <th><button className={actividadControl==="Alimentacion" ? "active" :""}
+                        
                             onClick={()=>handleControlButton("Alimentacion")}>
                         <h4>Alimentacion</h4>
                         </button></th>
@@ -34,11 +52,15 @@ function TablaProduccion({handleControlButton, actividadControl, mostrarMortalid
                             onClick={()=>handleControlButton("Empleado")}>
                         <h4>Empleado</h4>
                         </button></th>
+                        <th><button className={actividadControl==="Galpon" ? "active" :""}
+                            onClick={()=>handleControlButton("Galpon")}>
+                        <h4>Galpon</h4>
+                        </button></th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td colSpan="7">
+                <tr >
+                    <td colSpan="8">
                         {actividadControl === "Mortalidad" &&(
                             <div>
                                 <h3>Mortalidad</h3>    
@@ -54,7 +76,7 @@ function TablaProduccion({handleControlButton, actividadControl, mostrarMortalid
                                 </thead>
                                 <tbody>
                                     {mostrarMortalidad && mostrarMortalidad.map((decesos,index)=>(
-                                        <tr key={index}> 
+                                        <tr key={index} > 
                                             <td> {decesos.cantidad} </td>
                                             <td> {decesos.causa} </td>
                                             <td> {decesos.descripcion} </td>
@@ -254,10 +276,38 @@ function TablaProduccion({handleControlButton, actividadControl, mostrarMortalid
                                     </table>
                                 </div>
                             )}
+                            {actividadControl === "Galpon" &&(
+                                <div>
+                                    <h3>Galpon</h3>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Numero de Galpón:</th>
+                                                <th>Capacidad</th>
+                                                <th>Disponibilidad</th>
+                                                <th>Seleccion</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {dataGalpon && dataGalpon.map((galpon,index)=>(
+                                            <tr key={index}>
+                                                <td>{galpon.num_galpon}</td>
+                                                <td>{galpon.capacidad}</td>
+                                                <td>{galpon.disponible? "si" : "no"}</td>
+                                                <td>
+                                                    <button onClick={()=>handleSeleccion(galpon, "Galpon")}>Seleccion</button>
+                                                </td>
+                                            </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )}
                         </td>
                     </tr>
             </tbody>
         </table>
-    )
+    </div>
+    );
 }
 export default TablaProduccion;
