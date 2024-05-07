@@ -12,19 +12,22 @@ function TablaProduccion({
     dataPeso, 
     dataLote, 
     asingEmpleado, 
-    handleSeleccion,
+    handleSeleccionEnProduccion,
     dataGalpon,
-    
+   
 }){
+const handleSeleccion =(fila,seccion,datos)=>{
+    if (fila && fila.id) {
+        handleSeleccionEnProduccion(fila, seccion,datos);    
+    }
+}
 
     return(
         <div>
         <table className="tablaProduccion">
-            
             <thead>
                 <tr>
                 <th><button className={actividadControl==="Alimentacion" ? "active" :""}
-                        
                             onClick={()=>handleControlButton("Alimentacion")}>
                         <h4>Alimentacion</h4>
                         </button></th>
@@ -61,6 +64,7 @@ function TablaProduccion({
             <tbody>
                 <tr >
                     <td colSpan="8">
+                        
                         {actividadControl === "Mortalidad" &&(
                             <div>
                                 <h3>Mortalidad</h3>    
@@ -82,11 +86,7 @@ function TablaProduccion({
                                             <td> {decesos.descripcion} </td>
                                             <td> {FormatFecha(decesos.fecha_muerte)} </td>
                                             <td>
-                                            <button onClick={ ()=> handleSeleccion
-                                                    (decesos,
-                                                    "Mortalidad")}>
-                                                    Seleccionar
-                                            </button>
+                                            <button onClick={ ()=> handleSeleccion(decesos,"Mortalidad",mostrarMortalidad)}>Seleccionar</button>
                                             </td>
                                         </tr>
                                     ))}
@@ -117,7 +117,7 @@ function TablaProduccion({
                                         <td>{alimento.tipo}</td>
                                         <td>{alimento.cantidad_sacos}</td>
                                         <td>
-                                        <button onClick={()=>handleSeleccion(alimento , "Alimentacion")}>
+                                        <button onClick={()=>handleSeleccion(alimento , "Alimentacion",dataAlimento)}>
                                             Seleccionar
                                         </button>
                                         </td>
@@ -152,9 +152,7 @@ function TablaProduccion({
                                                 <td>{medicinas.cantidad}</td>
                                                 <td>{FormatFecha(medicinas.fecha_ingreso)}</td>
                                                 <td>
-                                                <button onClick={ ()=> handleSeleccion
-                                                    (medicinas,
-                                                    "Medicaciones")}>
+                                                <button onClick={()=> handleSeleccion(medicinas,"Medicaciones",dataMed)}>
                                                     Seleccionar
                                                 </button>
                                                 </td>
@@ -184,9 +182,7 @@ function TablaProduccion({
                                             <td> {FormatFecha(importes.fecha_gasto)} </td>  
                                             <td>
                                             <button onClick={ ()=> handleSeleccion
-                                                (importes,
-                                                "Gastos")}>
-                                                Seleccionar
+                                                (importes,"Gastos",dataGasto)}>Seleccionar
                                             </button>
                                             </td>
                                         </tr>
@@ -212,7 +208,7 @@ function TablaProduccion({
                                             <td>{pesoMedio.peso_promedio} </td>
                                             <td>{FormatFecha(pesoMedio.fecha_medicion)} </td>
                                             <td>
-                                            <button onClick={()=>handleSeleccion(pesoMedio , "Peso")}>
+                                            <button onClick={()=>handleSeleccion(pesoMedio , "Peso",dataPeso)}>
                                             Seleccionar
                                             </button>
                                             </td>
@@ -240,7 +236,7 @@ function TablaProduccion({
                                         <td>{lote.raza}</td>
                                         <td>{lote.cantidad}</td>
                                         <td>{lote.valor_unidad}</td>
-                                        <td><button onClick={()=>handleSeleccion(lote , "Lote")}>
+                                        <td><button onClick={()=>handleSeleccion(lote , "Lote",dataLote)}>
                                             Seleccionar
                                             </button></td>
                                     </tr>
@@ -267,7 +263,7 @@ function TablaProduccion({
                                                     <td>{empleado.nombre}</td>
                                                     <td>{empleado.apellido_paterno}</td>
                                                     <td>{empleado.apellido_materno}</td>
-                                                    <td><button onClick={()=>handleSeleccion(empleado, "Empleado")}>
+                                                    <td><button onClick={()=>handleSeleccion(empleado, "Empleado",asingEmpleado)}>
                                                         Seleccion
                                                         </button></td>
                                                 </tr>
@@ -295,19 +291,19 @@ function TablaProduccion({
                                                 <td>{galpon.capacidad}</td>
                                                 <td>{galpon.disponible? "si" : "no"}</td>
                                                 <td>
-                                                    <button onClick={()=>handleSeleccion(galpon, "Galpon")}>Seleccion</button>
+                                                    <button onClick={()=>handleSeleccion(galpon, "Galpon",dataGalpon)}>Seleccion</button>
                                                 </td>
                                             </tr>
                                             ))}
                                         </tbody>
                                     </table>
                                 </div>
-                            )}
+                            )}                            
                         </td>
                     </tr>
-            </tbody>
-        </table>
-    </div>
+                </tbody>
+            </table>
+        </div>
     );
 }
 export default TablaProduccion;

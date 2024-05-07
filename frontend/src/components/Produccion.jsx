@@ -1,5 +1,5 @@
 import "../assets/css/produccion.css"
-import React,{useState, useEffect} from "react"
+import React,{useState, useEffect,useReducer} from "react"
 import { getAllGalpones } from "../api/galpones.api"
 import { getAllMortalidad } from "../api/mortalidad.api"
 import { getAllAlimentos } from "../api/alimentos.api"
@@ -31,12 +31,26 @@ function Produccion (){
         Peso :[],
         Empleado:[],
         Lote:[],
-        Galpon:[],
+        Galpon:[]
     })
+    const [edicionActiva, setEdicionActiva]=useState(false)
+    const [filaEditada,setFilaEditada]=useState(null);
+    const [filaSeleccionadaId, setFilaSeleccionadaID] =useState(null);
 
     useEffect(()=>{
         obtenerDatosEmpleados();
     },[]);
+
+    const obtenerDatosEmpleados = async () =>{
+        try {
+            const idRolEmp = 4;
+            const empleados = await getPerfilesByRol(idRolEmp);
+            setAsignEmpleado(empleados);
+        } catch (error) {
+            console.log("error al obtener datos empleados", error);
+            setAsignEmpleado([]);
+        }
+    }
 
     const handleControlButton = async (control)=>{
         setIsloading(true);
@@ -57,7 +71,6 @@ function Produccion (){
                 break;
                 case "Empleado":
                     const perfilEmpleado = await obtenerDatosEmpleados();
-                    
                 break;
                 case "Peso":
                     const peso = await getAllPeso();
@@ -87,31 +100,28 @@ function Produccion (){
         }
     }
 
-    const obtenerDatosEmpleados = async () =>{
-        try {
-            const idRolEmp = 4;
-            const empleados = await getPerfilesByRol(idRolEmp);
-            setAsignEmpleado(empleados);
-        } catch (error) {
-            console.log("error al obtener datos empleados", error);
-            setAsignEmpleado([]);
-        }
-    }
+    const seccionesPermitidas =["Alimentacion", "Medicaciones", "Mortalidad", "Peso", "Gastos", "Empleado", "Lote", "Galpon"] ;
 
-    const handleSeleccion = (fila, seccion) =>{
-        const seccionesPermitidas =["Alimentacion", "Medicaciones", "Mortalidad", "Peso", "Gastos", "Empleado", "Lote", "Galpon"] ;
-        if(seccionesPermitidas.includes(seccion)){
-        const nuevaSeleccion = {fila, seccion};
-        setSeleccionPorSeccion(prevState =>{
-            const seleccionesPorSeccionActualizadas = {...prevState};
-            if (!seleccionesPorSeccionActualizadas.hasOwnProperty(seccion)) {
-                seleccionesPorSeccionActualizadas[seccion]=[];
-            }
-            const existe = seleccionesPorSeccionActualizadas[seccion].some(item =>item.fila&& item.fila.id === fila.id);
-            if (!existe) {
-                seleccionesPorSeccionActualizadas[seccion].push(nuevaSeleccion);
-            }
-                return seleccionesPorSeccionActualizadas;
+    const handleSeleccionEnProduccion = (fila, seccion,datos) =>{
+        // setSeleccionPorSeccion((prevState)=>{
+        //     const newState = {...prevState};
+        //     newState[seccion] = datos;
+        //     return newState;
+        // })
+
+        if (seccionesPermitidas.includes(seccion)) {
+            setFilaSeleccionadaID(fila.id);
+            setSeleccionPorSeccion((prevState)=>{
+                const newState = {...prevState};
+                newState[seccion] = newState[seccion]??[];
+                const existFila = newState[seccion].some((item) => item.fila.id ===fila.id)
+                if (!existFila) {
+                    newState[seccion] = [
+                        ...newState[seccion],
+                        {fila:{...fila},seccion}
+                    ];
+                }
+                return newState;
             });
         }
     }
@@ -119,18 +129,106 @@ function Produccion (){
     const handleEliminarSeleccion = (filaId,seccion) =>{
         setSeleccionPorSeccion((prevState) =>{
             const nuevaSeleccionPorSeccion = {...prevState};
-            const index= nuevaSeleccionPorSeccion[seccion].findIndex(item => item.fila.id === filaId);
-            if (index !== -1) {
-                nuevaSeleccionPorSeccion[seccion].splice(index,1);
-            }
+            nuevaSeleccionPorSeccion[seccion] = nuevaSeleccionPorSeccion[
+                seccion
+            ].filter((item) => item.fila.id  !== filaId);
             return nuevaSeleccionPorSeccion;
+            
         });
     }
     
-    
+    const handleEditar =(fila)=>{
+        setEdicionActiva(true);
+        setFilaEditada(fila);
+        setSeleccionPorSeccion((prevState)=>{
+            const newState = { ...prevState };
+            Object.keys(newState).forEach((seccion)=>{
+                newState[seccion]= newState[seccion].map((item)=>
+                    item.fila.id === fila.id ? {...item,fila} : item
+                )
+            })
+            return newState;
+        })
+    }
+
+    const handleGuardar =()=>{
+        setEdicionActiva(false);
+        setFilaEditada(null);
+    }
+
+    const handleCancelar =()=>{
+        setEdicionActiva(false);
+        setFilaEditada(null);
+    }
+    const renderFilaProduccion =(seleccion,seleccionIndex)=>{
+        const {fila,seccion} = seleccion;
+        const isEditActive = fila && fila.id === filaSeleccionadaId && edicionActiva;
+        return (
+            <tr key={`${fila.id}-${seleccionIndex}`}>
+                {Object.keys(fila).map((campo,campoIndex)=>
+                    isEditActive?(
+                    <td key={`${campo}-${campoIndex}`}>
+                        <input
+                            type="text"
+                            value={fila[campo]}
+                            onChange={(e)=>handleInputChange(e,campo)}
+                        />
+                    </td>
+                    ):(
+                        !["id",
+                        "fecha_asignacion",
+                        "fecha_update",
+                        "fecha_compra",
+                        "fecha_medicion",
+                        "fecha_muerte",
+                        "fecha_ingreso",
+                        "fecha_gasto"].includes(campo) && (
+                        <td key={`${campo}-${campoIndex}`}>{seleccion.fila[campo]}</td>
+                        )
+                    )
+                )}
+                <td>
+                    <button onClick={()=>handleEditar(fila)}>Editar</button>
+                </td>
+                <td>
+                    <button onClick={()=>handleEliminarSeleccion(fila.id,seccion)}>Eliminar</button>
+                </td>
+            </tr>
+        )
+    }
+
+    const renderSeccionProduccion =(seccion, seccionIndex)=>{
+        const selecciones = seleccionPorSeccion[seccion].filter((seleccion)=>seleccion.fila)
+        if (selecciones.length === 0) return null;
+        return(
+            <React.Fragment key={seccionIndex}>
+                <tr><th colSpan={10}>{seccion}</th></tr>
+                {selecciones.map((seleccion,index)=>
+                renderFilaProduccion(seleccion,index)
+                )}
+            </React.Fragment>
+        );
+    }
+
+    const handleInputChange =(e,cmapo)=>{
+        const valor = e.target.value;
+        setFilaEditada((prev)=>({
+            ...prev,
+            [campo]:valor,
+        }));
+        setSeleccionPorSeccion((prevState)=>{
+            const newState={...prevState}
+            newState[seleccion.seccion] = newState[seleccion.seccion].map((item)=>
+            item.fila.id === seleccion.fila.id ? {...item, fila:{...item.fila,[campo]:valor } }:item
+            )
+            return newState;
+        })
+    }
+
+
 
     return (
-    <div className="areaProduccion">    
+    <div className="areaProduccion"> 
         <TablaProduccion
             actividadControl={actividadControl}
             mostrarMortalidad={mostrarMortalidad}
@@ -142,7 +240,7 @@ function Produccion (){
             dataGalpon={dataGalpon}
             asingEmpleado={asignEmpleado}
             handleControlButton={handleControlButton}
-            handleSeleccion={handleSeleccion}
+            handleSeleccionEnProduccion={handleSeleccionEnProduccion}
             seleccionPorSeccion= {seleccionPorSeccion}
         />
         
@@ -151,77 +249,18 @@ function Produccion (){
                 <tr><th colSpan={9}><h4>Tabla de Produccion</h4></th></tr>
             </thead>
             <tbody>
-                {Object.keys(seleccionPorSeccion).map((seccion,seccionIndex)=>(
-                seleccionPorSeccion[seccion].length > 0 && (
-                    <React.Fragment key={seccionIndex}>
-                            <tr>
-                                <th colSpan={10}>{seccion}</th>
-                            </tr>
-                        {seleccionPorSeccion[seccion].map((seleccion, seleccionIndex) => (
-                            <tr key={`${seleccion.fila.id}-${seleccionIndex}`}>
-                                {seleccion.fila &&(<>
-                                    {seccion === "Mortalidad" && (
-                                    <>
-                                    <td>{seleccion.fila.cantidad}</td>
-                                    <td>{seleccion.fila.causa}</td>
-                                    <td>{seleccion.fila.descripcion}</td>
-                                    </>
-                                    )}{seccion === "Alimentacion" && (
-                                    <>
-                                    <td>{seleccion.fila.nombre}</td>
-                                    <td>{seleccion.fila.precio}</td>
-                                    <td>{seleccion.fila.cantidad}</td>
-                                    <td>{seleccion.fila.tipo}</td>
-                                    </>
-                                    )}{seccion === "Medicaciones" && (
-                                    <>
-                                    <td>{seleccion.fila.nombre}</td>
-                                    <td>{seleccion.fila.via}</td>
-                                    <td>{seleccion.fila.num_dosis}</td>
-                                    <td>{seleccion.fila.cantidad}</td>
-                                    </>
-                                    )}{seccion === "Gastos" && (
-                                    <>
-                                    <td>{seleccion.fila.detalle}</td>
-                                    <td>{seleccion.fila.importe}</td>
-                                    </>
-                                    )}{seccion === "Peso" && (
-                                    <>
-                                    <td>{seleccion.fila.peso_promedio}</td>
-                                    </>
-                                    )}{seccion === "Lote" && (
-                                    <>
-                                    <td>{seleccion.fila.raza}</td>
-                                    <td>{seleccion.fila.cantidad}</td>
-                                    <td>{seleccion.fila.valor_unidad}</td>
-                                    </>
-                                    )}{seccion === "Empleado" && (
-                                    <>
-                                    <td>{seleccion.fila.nombre}</td>
-                                    <td>{seleccion.fila.apellido_paterno}</td>
-                                    <td>{seleccion.fila.apellido_materno}</td>
-                                    </>
-                                    )}
-                                    
-                                    {seccion === "Galpon" && (
-                                    <>
-                                    <td>{seleccion.fila.num_galpon}</td>
-                                    <td>{seleccion.fila.capacidad}</td>
-                                    <td>{seleccion.fila.disponible? "si":"no"}</td>
-                                    </>
-                                    )}
-                                    
-                                </>)}
-                                <td>
-                                    <button onClick={()=>handleEliminarSeleccion(seleccion.fila.id, seleccion.seccion)}>Eliminar</button>
-                                </td>
-                            </tr>
-                        ))}
-                    </React.Fragment>
-                )
-            ))}
+                {Object.keys(seleccionPorSeccion).map((seccion,seccionIndex)=>
+                renderSeccionProduccion(seccion, seccionIndex)
+                )}
             </tbody>
         </table>
+        {edicionActiva && (
+            <div>
+                <button onClick={handleGuardar}>Guardar</button>
+                <button onClick={handleCancelar}>Cancelar</button>
+            </div>
+        )}        
+        
     </div>
     );
 }
