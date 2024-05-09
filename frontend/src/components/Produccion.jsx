@@ -36,6 +36,7 @@ function Produccion (){
     const [edicionActiva, setEdicionActiva]=useState(false)
     const [filaEditada,setFilaEditada]=useState(null);
     const [filaSeleccionadaId, setFilaSeleccionadaID] =useState(null);
+    const [camposEditar,setCamposEditar]=useState({});
 
     useEffect(()=>{
         obtenerDatosEmpleados();
@@ -137,58 +138,68 @@ function Produccion (){
         });
     }
     
-    const handleEditar =(fila)=>{
-        setEdicionActiva(true);
-        setFilaEditada(fila);
-        setSeleccionPorSeccion((prevState)=>{
-            const newState = { ...prevState };
-            Object.keys(newState).forEach((seccion)=>{
-                newState[seccion]= newState[seccion].map((item)=>
-                    item.fila.id === fila.id ? {...item,fila} : item
-                )
+    const handleEditar =(fila, seccion)=>{
+        if (fila) {
+            setEdicionActiva(true);
+            setFilaEditada({fila, seccion});
+            const campos= {};
+            Object.keys(fila).forEach((campo)=>{
+                if (!["id",
+                "fecha_asignacion",
+                "fecha_update",
+                "fecha_compra",
+                "fecha_medicion",
+                "fecha_muerte",
+                "fecha_ingreso",
+                "fecha_gasto"].includes(campo)) {
+                    campos[campo]= true;
+                }
             })
-            return newState;
-        })
+            // console.log("filaeditada", {fila,seccion})
+            setCamposEditar({[fila.id]:campos});
+        }
     }
 
     const handleGuardar =()=>{
         setEdicionActiva(false);
         setFilaEditada(null);
+        setCamposEditar({});
     }
 
     const handleCancelar =()=>{
         setEdicionActiva(false);
         setFilaEditada(null);
+        setCamposEditar({});
     }
-    const renderFilaProduccion =(seleccion,seleccionIndex)=>{
+    const renderFilaProduccion =(seleccion,seleccionIndex)=>{ 
         const {fila,seccion} = seleccion;
-        const isEditActive = fila && fila.id === filaSeleccionadaId && edicionActiva;
+        const isEditActive = filaEditada && filaEditada.fila.id === fila.id && filaEditada.seccion === seccion && edicionActiva;
         return (
             <tr key={`${fila.id}-${seleccionIndex}`}>
-                {Object.keys(fila).map((campo,campoIndex)=>
-                    isEditActive?(
-                    <td key={`${campo}-${campoIndex}`}>
-                        <input
-                            type="text"
-                            value={fila[campo]}
-                            onChange={(e)=>handleInputChange(e,campo)}
-                        />
-                    </td>
-                    ):(
-                        !["id",
-                        "fecha_asignacion",
-                        "fecha_update",
-                        "fecha_compra",
-                        "fecha_medicion",
-                        "fecha_muerte",
-                        "fecha_ingreso",
-                        "fecha_gasto"].includes(campo) && (
-                        <td key={`${campo}-${campoIndex}`}>{seleccion.fila[campo]}</td>
+                {Object.keys(fila).map((campo, campoIndex) => (
+                    !["id",
+                    "fecha_asignacion",
+                    "fecha_update",
+                    "fecha_compra",
+                    "fecha_medicion",
+                    "fecha_muerte",
+                    "fecha_ingreso",
+                    "fecha_gasto"].includes(campo)&&(
+                        <td key={`${campo}-${campoIndex}`}>
+                            {isEditActive && camposEditar[fila.id] && camposEditar[fila.id][campo] ? (
+                                    <input
+                                        type="text"
+                                        value={fila[campo]}
+                                        onChange={(e) => handleInputChange(e, campo, seleccion)}
+                                    />
+                            ) : (
+                                fila[campo]
+                            )}
+                        </td>
                         )
-                    )
-                )}
+                    ))}
                 <td>
-                    <button onClick={()=>handleEditar(fila)}>Editar</button>
+                    <button onClick={()=>handleEditar(fila,seccion)}>Editar</button>
                 </td>
                 <td>
                     <button onClick={()=>handleEliminarSeleccion(fila.id,seccion)}>Eliminar</button>
@@ -210,7 +221,7 @@ function Produccion (){
         );
     }
 
-    const handleInputChange =(e,cmapo)=>{
+    const handleInputChange =(e,campo,seleccion)=>{
         const valor = e.target.value;
         setFilaEditada((prev)=>({
             ...prev,
@@ -218,9 +229,9 @@ function Produccion (){
         }));
         setSeleccionPorSeccion((prevState)=>{
             const newState={...prevState}
-            newState[seleccion.seccion] = newState[seleccion.seccion].map((item)=>
-            item.fila.id === seleccion.fila.id ? {...item, fila:{...item.fila,[campo]:valor } }:item
-            )
+            newState[seleccion.seccion] = newState[seleccion.seccion].map(item=>
+            item.fila.id === seleccion.fila.id ? {...item, fila:{...item.fila,[campo]: valor } }:item
+            );
             return newState;
         })
     }
