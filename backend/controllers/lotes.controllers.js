@@ -5,7 +5,6 @@ export const getAllLotes = async(req,res) =>{
         const [result]= await pool.query("select * from lote");
         res.status(200).json(result);
     } catch (error) {
-        console.log(error);
         res.status(400).json({message:" erro al obtener los lote"});
     }
 }
@@ -26,7 +25,6 @@ export const getLote = async(req,res)=>{
             })
             }
     } catch (error) {
-        console.error(error);
         res.status(500).json({status:'server error',message:'Error internal del servidor'})
     }
 }
@@ -34,7 +32,6 @@ export const getLote = async(req,res)=>{
 export const createLote =async(req,res)=>{
     try{
     const {raza,cantidad,valor_unidad}=req.body;
-    //validar que no esten vacios
     if(!raza || !cantidad ||!valor_unidad ){
         return res.status(400).json({
             status:'fail',
@@ -50,7 +47,6 @@ export const createLote =async(req,res)=>{
             message : 'Se ha creado el lote correctamente',
         });
     }catch(error){
-        console.error(error);
         res.status(500).json({
             status:'server error',
             message:'Error interno del servidor',
@@ -78,12 +74,11 @@ export const updateLote = async(req,res)=>{
                     data:rowUpdated.rows[0]
                     })
                 } catch(e){
-                // console.log(e);
                 res.status(500).json({
                 status:'error',
                 message:'Server Error'
                 })
-            }                                   
+        }                                   
 }
 
 export const deleteLote=async (req,res) =>{
@@ -96,7 +91,6 @@ export const deleteLote=async (req,res) =>{
             console.log('no se encontro ningun con  este id ${id}');
             return result;
         }
-        console.log('res del server', res);
     }catch{
         return res.status(400).send({message:"Error interno del servidor"});
     }

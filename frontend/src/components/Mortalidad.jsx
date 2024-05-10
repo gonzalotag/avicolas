@@ -5,7 +5,6 @@ import { postMortalidad } from "../api/mortalidad.api";
 
 
 function Mortalidad(){
-    // const [mostrarMortalidad, setMostrarMortalidad]=useState(false);
     const [mortalidadData, setMortalidadData]=useState({
         cantidad:'',
         causa:'',

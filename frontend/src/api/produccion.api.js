@@ -8,7 +8,6 @@ async function getAllProduccion () {
         console.error("error al obtener todas las producciones",error);
         throw error;
     }
-    
 } 
 
 async function getProduccionItem (id) {          

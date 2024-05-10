@@ -68,7 +68,6 @@ function Almacen (){
 
     useEffect(()=>{
         const savedPage = localStorage.getItem("currentPage");
-        // console.log(savedPage);
         if (savedPage) {
             setCurrentPage(savedPage);
             localStorage.removeItem("currentPage");

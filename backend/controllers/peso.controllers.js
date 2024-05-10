@@ -5,7 +5,6 @@ export const getAllPeso = async (req,res) =>{
         const [result] =await pool.query("SELECT * FROM peso");
         res.status(200).json(result);
     } catch (error) {
-        console.log(error);
         res.status(500).send('Server error');
     }
 }
@@ -20,7 +19,6 @@ export const getPeso = async (req,res)=>{
             res.status(200).json(result[0])
             }
     } catch (error) {
-        console.log(error);
     }
 }
 
@@ -30,7 +28,6 @@ export const createPeso =async (req,res) =>{
         const result = await pool.query("insert into peso (peso_promedio) VALUES (?);", [peso_promedio]);
         res.status(200).json({message:"registro creado"});
     } catch (error) {
-        console.log(error);
         res.status(500).json({msg:'Error en el servidor'});
     }
 }
@@ -46,7 +43,6 @@ export const updatePeso  = async (req,res) =>{
            res.status(404).json({msg:`No se encontró el usuario con la ID "${id}"`});    
         }
     } catch (error) {
-       console.log(error);
        res.status(500).json({msg: 'Error en el servidor'});
     }
 }
@@ -64,7 +60,6 @@ export const deletePeso = async(req,res) =>{
         }
         return res.status(200).send("se elimino co exito");
     } catch (error) {
-        console.log(error);
         res.status(500).send("error interno del servidor");
     }
     

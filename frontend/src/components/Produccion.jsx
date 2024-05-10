@@ -104,12 +104,6 @@ function Produccion (){
     const seccionesPermitidas =["Alimentacion", "Medicaciones", "Mortalidad", "Peso", "Gastos", "Empleado", "Lote", "Galpon"] ;
 
     const handleSeleccionEnProduccion = (fila, seccion,datos) =>{
-        // setSeleccionPorSeccion((prevState)=>{
-        //     const newState = {...prevState};
-        //     newState[seccion] = datos;
-        //     return newState;
-        // })
-
         if (seccionesPermitidas.includes(seccion)) {
             setFilaSeleccionadaID(fila.id);
             setSeleccionPorSeccion((prevState)=>{
@@ -134,7 +128,6 @@ function Produccion (){
                 seccion
             ].filter((item) => item.fila.id  !== filaId);
             return nuevaSeleccionPorSeccion;
-            
         });
     }
     
@@ -144,26 +137,24 @@ function Produccion (){
             setFilaEditada({fila, seccion});
             const campos= {};
             Object.keys(fila).forEach((campo)=>{
-                if (!["id",
-                "fecha_asignacion",
-                "fecha_update",
-                "fecha_compra",
-                "fecha_medicion",
-                "fecha_muerte",
-                "fecha_ingreso",
-                "fecha_gasto"].includes(campo)) {
+                if (!["id","fecha_asignacion","fecha_update","fecha_compra","fecha_medicion","fecha_muerte","fecha_ingreso","fecha_gasto"].includes(campo)) {
                     campos[campo]= true;
                 }
             })
-            // console.log("filaeditada", {fila,seccion})
             setCamposEditar({[fila.id]:campos});
         }
     }
 
-    const handleGuardar =()=>{
-        setEdicionActiva(false);
-        setFilaEditada(null);
-        setCamposEditar({});
+    const handleGuardar = async ()=>{
+        try {
+            const response = await postProduccion ({subtablas:seleccionPorSeccion});
+            console.log(response);
+        } catch (error) {
+            console.error("error al guardar data", error);
+        }
+        // setEdicionActiva(false);
+        // setFilaEditada(null);
+        // setCamposEditar({});
     }
 
     const handleCancelar =()=>{
@@ -177,14 +168,7 @@ function Produccion (){
         return (
             <tr key={`${fila.id}-${seleccionIndex}`}>
                 {Object.keys(fila).map((campo, campoIndex) => (
-                    !["id",
-                    "fecha_asignacion",
-                    "fecha_update",
-                    "fecha_compra",
-                    "fecha_medicion",
-                    "fecha_muerte",
-                    "fecha_ingreso",
-                    "fecha_gasto"].includes(campo)&&(
+                    !["id","fecha_asignacion","fecha_update","fecha_compra","fecha_medicion","fecha_muerte","fecha_ingreso","fecha_gasto"].includes(campo)&&(
                         <td key={`${campo}-${campoIndex}`}>
                             {isEditActive && camposEditar[fila.id] && camposEditar[fila.id][campo] ? (
                                     <input
@@ -236,8 +220,6 @@ function Produccion (){
         })
     }
 
-
-
     return (
     <div className="areaProduccion"> 
         <TablaProduccion
@@ -270,7 +252,7 @@ function Produccion (){
                 <button onClick={handleGuardar}>Guardar</button>
                 <button onClick={handleCancelar}>Cancelar</button>
             </div>
-        )}        
+        )}
         
     </div>
     );

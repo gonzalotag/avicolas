@@ -3,7 +3,6 @@ import axios from "axios";
 async function getAllGalpones() {
     try {
         const response = await axios.get("http://localhost:4000/galpones");
-        // console.log('respuesta del api', response.data);
     if (Array.isArray(response.data)) {
         return response.data;
     }else{
@@ -23,7 +22,6 @@ async function postGalpones(formData){
         const result = await axios.post("http://localhost:4000/galpones", formData);
         return result.data;            
     } catch (error) {
-        // throw error;
     }
 }
 
@@ -36,6 +34,7 @@ async function patchGalpon(id,galponData) {
         throw error;
     }
 }
+
 async function deleteGalpon(id) {
     try {
         const res =await axios.delete(`http://localhost:4000/galpones/${id}`);

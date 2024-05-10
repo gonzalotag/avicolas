@@ -26,12 +26,10 @@ export const postLote = async (data) =>{
     } catch (error) {
         console.log("Error al crear el lote", error.message);
         throw error;
-        
     }
 }
 export const patchLote = async (id, data) =>{
     try {
-        console.log("URL , ")
         const respuesta=await axios.put(`${'http://localhost:4000/lote'}/${id}`,data);
         return respuesta.data;
         }catch(error){

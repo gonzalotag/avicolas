@@ -31,21 +31,10 @@ async function postMedicina(formData) {
             return response.data;
         } else {
             return null;
-            // console.log("error al agregar la medicina, verifique los datos");
         }
     } catch (error) {
-        if (error.response) {
             console.error("error de respuesta del servidor", error.response.data);
-            console.error("codigo de estado", error.response.status);
-            console.error("encabezado de respuesta", error.response.headers);
-        } else if (error.request) {
-            console.error("no se recibio respuesta del servidor")
-            console.error("detalles de la soliictud", error.request)
-        } else {
-            console.error("error en la configuracion de la solicitud", error.message)
         }
-    }
-    // alert("No se pudo agregar, verificar los datos")
         throw error;
 }
 
@@ -55,7 +44,6 @@ async function patchMedicina(id,medData) {
         return result;
     } catch (error) {
         console.error("No se pudo actualizar, verificar los datos o el id")
-        
     }
 }
 

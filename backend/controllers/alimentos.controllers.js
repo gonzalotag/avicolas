@@ -7,7 +7,6 @@ export const getAlimentos = async(req,res)=>{
     } catch (error) {
         console.log(error);
         return res.status (500).json({message:"error interno server"})
-
     }
 };
 
@@ -17,14 +16,12 @@ export const getAlimento = async(req,res)=>{
         const alimento = await pool.query('SELECT * FROM alimento WHERE id= ?',[id]);
         if(!alimento.length)
         return res.status(404).json({message:'El Alimento no existe'});
-    res.json(alimento[0])
+        res.json(alimento[0])
     }catch(error){
         console.log(error);
         return res.status(500).json({message:'Error en el servidor'})
 }
 };
-
-//controlador para insertar un nuevo alimento
 
 export const createAlimento =async(req,res)=>{
     const {nombre,precio,cantidad,tipo,cantidad_sacos}= req.body;
@@ -77,6 +74,3 @@ export const deleteAlimento = async (req,res)=>{
         return res.status(500).json({ message:'Se ha producido un erroren el servidor: ',err})
         }
 }
-
-
-

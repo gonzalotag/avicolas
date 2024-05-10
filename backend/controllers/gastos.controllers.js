@@ -5,7 +5,6 @@ export const getAllGastos =  async (req,res) =>{
         const [result] = await pool.query('SELECT * FROM gastos')
         res.json(result);
     }catch(error){
-        console.log(error); 
         res.status(400).send("Error al obtener los gastos");
     }
 }
@@ -17,8 +16,7 @@ export const getGasto = async (req,res) =>{
         if(!result.length) 
         return res.status(404).send("No existe el gasto con ese ID")                
         res.json(result[0]);
-    } catch (error) {   
-        console.log(error);                
+    } catch (error) {           
         res.status(500).send("Ocurrio un error en la base de datos")
     }
 }
@@ -29,8 +27,7 @@ export const  createGasto = async (req,res)=>{
         const result = await pool.query("INSERT INTO gastos (detalle,importe) VALUES (?,?)", [detalle,importe]);    
         const nuevoGastoId = result.insertId    
         res.status(201).json({id: nuevoGastoId});
-    } catch (error) {              
-        console.log(error);                 
+    } catch (error) {           
         res.status(500).send(`Hubo un error intentando crear el gasto ${importe}`);
     }
 }
@@ -56,8 +53,7 @@ export const  deleteGasto = async (req,res) =>{
             return res.status(404).send("no se ha eliminado el gasto");
         }
         return res.status(200).send("se elimino ") 
-    } catch (error) {                          
-        console.log(error);               
+    } catch (error) {
         res.status(500).send("Error interno del servidor");
     }
 }

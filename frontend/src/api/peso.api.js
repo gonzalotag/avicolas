@@ -33,7 +33,6 @@ async function postPeso(objPeso){
         }
     }catch(error){
         console.error("error al enviar solicitud post a peso" ,error);
-
     }
 }
 
@@ -43,7 +42,6 @@ async function patchPeso(id, objPeso){
        return respuesta.data;
    }catch(error){
       console.log('Error en el update');
-      console.log(error); 
    }
 }
 
