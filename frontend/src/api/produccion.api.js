@@ -11,23 +11,31 @@ async function getAllProduccion () {
 } 
 
 async function getProduccionItem (id) {          
-    const respuesta = await axios.get(`http://localhost:4000/produccion/${id}`);
-    return respuesta.data;        
+    try {
+        const respuesta = await axios.get(`http://localhost:4000/produccion/${id}`);
+        return respuesta.data;
+    } catch (error) {
+        console.error(`error al obtener la produccion con ID ${id}`,error)
+    }
 }
 
 async function postProduccion (prod){
     try {                  
-        const resp = await axios.post("http://localhost:4000/produccion",prod );                   
+        const resp = await axios.post("http://localhost:4000/produccion",prod );
+        return resp.data;    
     } catch (error) {
-        console.log(error);
+        console.log("error al crear la produccion",error);
+        throw error;
     }     
 }
 
 async function patchProduccion  (id, prod){
     try {
-        const result= await axios.patch(`http://localhost:4000/produccion${id}`, prod)
+        const result= await axios.patch(`http://localhost:4000/produccion/${id}`, prod)
+        return result.data;
     } catch (error) {
-        console.error('error al guardar nueva data' , error)
+        console.error('error al actualizar la produccion' , error);
+        throw error;
     }
 }
     
@@ -35,11 +43,12 @@ async function deleteProduccion  (id) {
     let confirmacion = window.confirm("¿Está seguro de eliminar la producción?");
     if (confirmacion) {             
         try{                              
-            const respuesta = await axios.delete(`http://localhost:4000/prodccion/${id}`);
+            const respuesta = await axios.delete(`http://localhost:4000/produccion/${id}`);
             
         }catch(error){
             console.log(error);
             alert("No se ha podido eliminar el registro");
+            throw error;
         }                     
     }                              
 }

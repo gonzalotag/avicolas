@@ -25,7 +25,7 @@ function Produccion (){
     
     const [seleccionPorSeccion, setSeleccionPorSeccion]=useState({
         Alimentacion:[],
-        Medicamentos:[],
+        Medicaciones:[],
         Mortalidad:[],
         Gastos:[],
         Peso :[],
@@ -109,7 +109,7 @@ function Produccion (){
             setSeleccionPorSeccion((prevState)=>{
                 const newState = {...prevState};
                 newState[seccion] = newState[seccion]??[];
-                const existFila = newState[seccion].some((item) => item.fila.id ===fila.id)
+                const existFila = newState[seccion].some((item) => item.fila.id === fila.id);
                 if (!existFila) {
                     newState[seccion] = [
                         ...newState[seccion],
@@ -120,13 +120,11 @@ function Produccion (){
             });
         }
     }
-
+    
     const handleEliminarSeleccion = (filaId,seccion) =>{
         setSeleccionPorSeccion((prevState) =>{
             const nuevaSeleccionPorSeccion = {...prevState};
-            nuevaSeleccionPorSeccion[seccion] = nuevaSeleccionPorSeccion[
-                seccion
-            ].filter((item) => item.fila.id  !== filaId);
+            nuevaSeleccionPorSeccion[seccion] = nuevaSeleccionPorSeccion[seccion].filter((item) => item.fila.id  !== filaId);
             return nuevaSeleccionPorSeccion;
         });
     }
@@ -145,16 +143,37 @@ function Produccion (){
         }
     }
 
-    const handleGuardar = async ()=>{
+    const guardarProduccion = async ()=>{
         try {
-            const response = await postProduccion ({subtablas:seleccionPorSeccion});
+            const datos = {
+                subtablas:Object.entries(seleccionPorSeccion).reduce((acc, [key,value]) =>{
+                    if (value.length > 0) {
+                        acc[key.toLowerCase()] = value.map(item => item.fila);    
+                    }
+                    return acc;
+                },{})
+            }
+            const response = await postProduccion(datos);
             console.log(response);
         } catch (error) {
             console.error("error al guardar data", error);
         }
-        // setEdicionActiva(false);
-        // setFilaEditada(null);
-        // setCamposEditar({});
+    }
+    
+    const handleGuardarSeleccion = async () => {
+        if (!isSeleccionCompleta) {
+            alert("debes seleccionar al menos una fila antes de guardar");
+            return;
+        }
+        await guardarProduccion();
+    }
+
+    const handleGuardar = async () => {
+        await guardarProduccion();
+    }
+
+    const isSeleccionCompleta = () => {
+        return seccionesPermitidas.every(seccion =>seleccionPorSeccion[seccion]?.length >0);
     }
 
     const handleCancelar =()=>{
@@ -162,7 +181,7 @@ function Produccion (){
         setFilaEditada(null);
         setCamposEditar({});
     }
-    const renderFilaProduccion =(seleccion,seleccionIndex)=>{ 
+    const renderFilaProduccion =(seleccion,seleccionIndex)=>{
         const {fila,seccion} = seleccion;
         const isEditActive = filaEditada && filaEditada.fila.id === fila.id && filaEditada.seccion === seccion && edicionActiva;
         return (
@@ -236,6 +255,8 @@ function Produccion (){
             handleSeleccionEnProduccion={handleSeleccionEnProduccion}
             seleccionPorSeccion= {seleccionPorSeccion}
         />
+
+        <button onClick={handleGuardarSeleccion} disabled={!isSeleccionCompleta()}>Guardar Seleccion</button>
         
         <table className="produccionProces">
             <thead>
@@ -253,7 +274,6 @@ function Produccion (){
                 <button onClick={handleCancelar}>Cancelar</button>
             </div>
         )}
-        
     </div>
     );
 }

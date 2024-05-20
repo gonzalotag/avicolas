@@ -77,7 +77,7 @@ create table perfil_contrasenia (
 );
 
 -- id_perfil compara si es igual al id de perfil si son iguales asigna la contrasenia
--- el update indica a q id de la tabla perfil se asigna la contrasenia no todos los 
+-- el update indica a que id de la tabla perfil se asigna la contrasenia no todos los 
 -- empleados pueden ser administrador
 insert into perfil_contrasenia(contrasenia, id_perfil) values
 ('clase', 3);
@@ -87,10 +87,6 @@ WHERE id = 1;
 
 create table produccion(
     id int AUTO_INCREMENT primary key,
-    galpones int,
-    alimentos varchar(20),
-    pollos_de_engorde int,
-    medicinas varchar(20),
     id_alimento int,
     id_galpon int,
     id_medicina int,
@@ -98,16 +94,15 @@ create table produccion(
     id_perfil int,
     id_peso int,
     id_gastos int,
+    data TEXT,
     foreign key (id_alimento) references alimento (id),
     foreign key (id_galpon) references galpon (id),
     foreign key (id_medicina) references medicina (id),
     foreign key (id_lote) references lote(id),
     foreign key (id_perfil) references perfil (id),
-    foreign key (id_empleado) references empleado(id),
     foreign key (id_mortalidad) references mortalidad(id),
     foreign key (id_peso) references peso(id),
     foreign key (id_gastos) references gastos(id),
-
 );
 
 create table alimento(

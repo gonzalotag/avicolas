@@ -1,10 +1,22 @@
 import axios from "axios";
 
 async function getAllMortalidad(){
-    const response = await axios.get("http://localhost:4000/mortalidad");
-    return response.data;
+    try {
+        const response = await axios.get("http://localhost:4000/mortalidad");
+        return response.data;
+    } catch (error) {
+        console.error("error al obtener registro", error);
+    }
 }
 
+async function getMortalidad(id){
+    try {
+        const result = await axios.get(`http://localhost:4000/mortalidad/${id}`)
+        return result.data;
+    } catch (error) {
+        console.error("error al obtener registro", error);
+    }
+}
 async function postMortalidad (mortalidadData){
     try {
         const respuesta=await axios.post('http://localhost:4000/mortalidad',mortalidadData);
@@ -41,9 +53,9 @@ async function  eliminarMortalidad(id){
 }
 
 export{
-    getAllMortalidad,   
+    getAllMortalidad,
+    getMortalidad,
     postMortalidad,
     patchMortalidad,
-    eliminarMortalidad
-    
+    eliminarMortalidad,
 }

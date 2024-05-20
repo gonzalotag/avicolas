@@ -5,17 +5,19 @@ export const getAllMortalidad = async(req,res)=>{
         const [result] = await pool.query('select * from mortalidad');
         res.json(result);
     } catch (error) {
+        console.log(error);
         return res.status(500).json({message: error.message});
     }
 };
 
-export const getMortalidad = (req,res) =>{
-    const {id}= req.params;try {
-        const [fila] = pool.query(`select * from mortalidad where id=${id}`);
-        if (fila.length >0) {
-            res.status(200).json(fila[0])
+export const getMortalidad = async (req,res) =>{
+    const {id}= req.params;
+    try {
+        const [fila] = await pool.query('select * from mortalidad where id=?',[id]);
+        if (fila.length>0) {
+            return res.status(200).json(result[0]);
         } else {
-            res.status(200).json({message: "no hay ese registro de mortalidad"});
+            return res.status(200).json({message: "no hay ese registro de mortalidad"});
         }
     } catch (error) {
         res.status(400).json({message: 'Error al buscar la mortalidad'});

@@ -5,6 +5,7 @@ export const getAllMedicinas =async (req,res)=>{
         const [result] = await pool.query("SELECT * FROM medicina");
         res.json(result);
     } catch (error) {
+        console.log(error)
         return res.status(500).json({message: error.message})
     }
 };
@@ -28,7 +29,7 @@ export const updateMedicinas =async (req,res)=>{
         if(isNaN(req.params.id)){
             return res.status(400).send("El ID debe ser numérico");
         }
-        const medicaExists= await getMedicinaById(req.params.id)
+        const medicaExists= getMedicina(req.params.id)
         if(!medicaExists)
         return res.status(400).json({message:'No se encontró la Medicina con ese ID'});
         const {nombre,via,num_dosis,precio,cantidad}= req.body;
