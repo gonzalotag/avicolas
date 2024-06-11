@@ -35,7 +35,6 @@ function AdminComponent(){
         navigate(buttonName, {replace:true});
     }
     
-
     return (
     <div className="espacioAdmin">
         <div className="espacioMenuAdmin">

@@ -1,6 +1,7 @@
 .almacenContainer{
     height: 100%;
     width: 100%;
+    padding-left: 10px;
     overflow-y: scroll;
     scroll-behavior: smooth;
     color: black;

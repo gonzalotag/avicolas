@@ -1,12 +1,62 @@
-.reportes{
+.reportesContainer {
+    display: block;
+    overflow-x: auto;
+    overflow-y: auto;
     height: 100%;
     width: 100%;
-    color: black;
+    padding-left: 10px;
     background: rgba(255, 255, 255, 0.46);
-    /* border-radius: 10px; */
-    /* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); */
-    /* backdrop-filter: blur(6.4px); */
-    /* -webkit-backdrop-filter: blur(6.4px); */
     /* border: 1px solid rgba(255, 255, 255, 0.23); */
+    scroll-behavior: smooth;
+}
 
+.tablaReportesContainer{
+    display: block;
+    width: 100%;
+    
+}
+
+.reportesTabla {
+    width: 100%;
+    overflow: auto;
+    border-collapse: collapse;
+}
+
+.reportesTabla th, .reportesTabla td{
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.reportesTabla th{   
+    /* background-color: #f2f2f2;  */
+    text-align: left;
+}
+
+.reportesTabla td:last-child{
+    max-width: 200px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.editForm {
+    margin-bottom: 20%;
+    overflow: auto;
+}
+
+.editForm form{
+    display:flex;
+    flex-direction: column;
+    /* flex-direction: row; */
+    /* flex-wrap: wrap; */
+    /* justify-content: space-between; */
+    /* align-content: stretch; */
+}
+
+.editForm label{
+    margin-bottom: 10px;
+}
+
+.editForm button{
+    margin-top: 10px;
+    padding: 5px 10px;
 }

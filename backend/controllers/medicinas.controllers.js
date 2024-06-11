@@ -11,7 +11,7 @@ export const getAllMedicinas =async (req,res)=>{
 };
 
 export const getMedicina=(req,res)=>{
-    const {id}=req.params;
+    const id=req.params;
     try {
         const [consult]= pool.query(`SELECT * FROM medicina WHERE id=${id}`);
         if (consult.length > 0) {

@@ -4,12 +4,6 @@ import { faCircleUser,faIndustry,faPerson,faWarehouse,faFileLines} from "@fortaw
 import ButtonComponent from "./ButtonComponent.jsx";
 import {Routes, Route, useNavigate, useLocation } from "react-router-dom"; 
 import { useEffect , useState } from 'react';
-// import Almacen from "./Almacen";
-// import Reportes from "./Reportes.jsx";
-// import Produccion from "./Produccion";
-// import TablaPersonal from "./TablaPersonal"
-// import ContenidoAdmin from "./ContenidoAdmin.jsx";
-
 
 function MenuAdmin (props){
     const{onEspacioDeTrabajoChange, perfiles, getPerfilesByRol, getRolesByName}= props;
@@ -18,7 +12,6 @@ function MenuAdmin (props){
 
     const getInitialSelectedButton = (pathname)=>{
         if (pathname.startsWith('/admin/')) {
-            // return pathname.replace('/admin/','');
             return pathname.slice('/admin/'.length);
         }
         return 'almacen';
@@ -29,13 +22,7 @@ function MenuAdmin (props){
     useEffect(()=>{
         const path = location.pathname;
         const buttonName = getInitialSelectedButton(path);
-        // if(path.startsWith('/admin/')){
-        //     const button = path.replace('/admin/','')
-        //     localStorage.setItem("selectedButton", button);
-        // }
         setSelectedButton(buttonName);
-        // navigate(`/admin/${buttonName}`,{replace: true});
-        // console.log("selectedButton", selectedButton);
     },[location.pathname]);
 
     const handlePageNavigation = (ruta) =>{
@@ -43,7 +30,6 @@ function MenuAdmin (props){
     }
 
     const handleButtonClick = (buttonName) =>{
-        // console.log('boton clickeado', buttonName);
         setSelectedButton(buttonName);
         onEspacioDeTrabajoChange(buttonName);
         handlePageNavigation(`/admin${buttonName}`);
@@ -68,7 +54,6 @@ function MenuAdmin (props){
             <div className='buttonTarea'  onClick={()=>{handleButtonClick('/reportes')}}> 
             <ButtonComponent nombreButton={"Reportes"}iconoButton={< FontAwesomeIcon icon={faFileLines}/>}/> 
             </div>    
-            {/* <ContenidoAdmin selectedButton={selectedButton}/> */}
         </div>        
     </div>
     );

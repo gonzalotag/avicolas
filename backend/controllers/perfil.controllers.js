@@ -6,7 +6,6 @@ export const getPerfiles = async(req, res) =>{
         "SELECT * FROM perfil"
     );      
     res.json(result)
-        // console.log(result)
     } catch (error) {
         return res.status(500).json({message: error.message})    
     }

@@ -10,9 +10,13 @@ async function getAllAlimentos(){
     
 }
 
-async function getAlimentosById(id){
-    const res = await axios.get(`http://localhost:4000/alimento/${id}`);
-    console.log(res.data)
+async function getAlimentosById(ids){
+    try {
+        const res = await Promise.all(ids.map(id =>axios.get(`http://localhost:4000/alimento/${id}`)));
+        return res.data;
+    } catch (error) {
+        console.error(`error al obtener alimento con el id:${id}`, error);
+    }
 }
 
 async function postAlimentos(formData){

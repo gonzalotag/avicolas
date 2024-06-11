@@ -3,20 +3,23 @@ import axios from "axios";
 async function getAllGalpones() {
     try {
         const response = await axios.get("http://localhost:4000/galpones");
-    if (Array.isArray(response.data)) {
         return response.data;
-    }else{
-        return [];
-    }    
     } catch (error) {
         throw error;   
     }
 }
 
-async function getGalpon(id) {
-    const response = await axios.get(`http://localhost:4000/galpones/${id}`);
-        return response.data;
+async function getGalpon(ids) {
+    try {
+        const response = await Promise.all(ids.map(id =>  axios.get(`http://localhost:4000/galpones/${id}`)));
+        return response.map(response => response.data);
+    } catch (error) {
+        console.error(`galpon con el id ${id} no encontrado`,error);
+        throw error;
+    }
 }
+
+
 async function postGalpones(formData){
     try {
         const result = await axios.post("http://localhost:4000/galpones", formData);

@@ -1,11 +1,11 @@
 import axios from "axios";
 
 async function getAllProduccion () {    
-    try {
-        const response = await axios.get('http://localhost:4000/produccion');         
-        return response;                
-    } catch (error) {
-        console.error("error al obtener todas las producciones",error);
+    try{
+        const response = await axios.get("http://localhost:4000/produccion")
+        return response.data;
+    }catch(error){
+        console.error("error al obtener todas las producciones", error);
         throw error;
     }
 } 
@@ -19,14 +19,14 @@ async function getProduccionItem (id) {
     }
 }
 
-async function postProduccion (prod){
-    try {                  
-        const resp = await axios.post("http://localhost:4000/produccion",prod );
-        return resp.data;    
+async function postProduccion (produccionData){
+    try {
+        const resp = await axios.post('http://localhost:4000/produccion', produccionData);
+        return resp.data;
     } catch (error) {
         console.log("error al crear la produccion",error);
         throw error;
-    }     
+    }
 }
 
 async function patchProduccion  (id, prod){
@@ -41,16 +41,17 @@ async function patchProduccion  (id, prod){
     
 async function deleteProduccion  (id) {            
     let confirmacion = window.confirm("¿Está seguro de eliminar la producción?");
-    if (confirmacion) {             
-        try{                              
+    if (confirmacion) {
+        try{
             const respuesta = await axios.delete(`http://localhost:4000/produccion/${id}`);
-            
+            console.log("respuesta de eliminacion", respuesta);
+            return respuesta.data;
         }catch(error){
-            console.log(error);
+            console.error("error al eliminar produccion", error);
             alert("No se ha podido eliminar el registro");
             throw error;
-        }                     
-    }                              
+        }
+    }
 }
 
 export {

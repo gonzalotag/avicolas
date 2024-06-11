@@ -15,7 +15,6 @@ export const getLote = async(id) =>{
         const respuesta = await axios.get(`http://localhost:4000/lote/${id}`);
         return respuesta.data;
     } catch (error) {
-        console.log("Error al obtener el lote");
         throw error;
     }
 }

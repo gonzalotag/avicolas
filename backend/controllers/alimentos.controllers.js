@@ -11,9 +11,9 @@ export const getAlimentos = async(req,res)=>{
 };
 
 export const getAlimento = async(req,res)=>{
-    const id= req.params.id;
+    
     try{
-        const alimento = await pool.query('SELECT * FROM alimento WHERE id= ?',[id]);
+        const [alimento] = await pool.query('SELECT * FROM alimento WHERE id= ?',[req.params.id]);
         if(!alimento.length)
         return res.status(404).json({message:'El Alimento no existe'});
         res.json(alimento[0])

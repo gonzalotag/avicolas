@@ -212,7 +212,7 @@ function Almacen (){
                     <th>Precio</th>
                     <th>Cantidad</th>
                     <th>Fecha de compra</th>
-                    <th>Cantidad de Sacos</th>
+                    <th>Cantidad de Alimento en Almacen</th>
                     <th>Tipo</th>
                     <th>Accion</th>
                 </tr>

@@ -5,8 +5,8 @@ async function getAllGastos(){
     return response.data;
 }   
 
-async function getGasto(){
-    const result = await axios.get("http://localhost:4000/gastos");
+async function getGasto(id){
+    const result = await axios.get(`http://localhost:4000/gastos${id}`);
     if(result.data.length === 0) throw new Error('No hay gastos');
     else return result.data[0];
 }

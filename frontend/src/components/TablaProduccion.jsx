@@ -53,13 +53,12 @@ const renderSubtabla = () => {
                             <th>Cantidad</th>
                             <th>Causa</th>
                             <th>Descripcion</th>
-                            <th>Registro de mortalidad</th>
-                            <th>Accion</th>
+                            {/* <th>Registro de mortalidad</th> */}
+                            <th>Seleccion</th>
                         </tr>
                     </thead>
                 <tbody>
-                    {renderRows(mostrarMortalidad,"Mortalidad",["cantidad","causa","descripcion","fecha_muerte"] )}
-                
+                    {renderRows(mostrarMortalidad,"Mortalidad",["cantidad","causa","descripcion",] )}
                 </tbody>
                 </table>
             );
@@ -78,7 +77,6 @@ const renderSubtabla = () => {
                     </thead>
                     <tbody>
                         {renderRows(dataAlimento, "Alimentacion",["nombre","precio","cantidad","tipo","cantidad_sacos"])}
-                    
                     </tbody>
                 </table>
             );
@@ -92,13 +90,12 @@ const renderSubtabla = () => {
                             <th>Dosis / dia</th>
                             <th>Precio</th>
                             <th>Cantidad en almacen</th>
-                            <th>Fecha compra</th>
+                            {/* <th>Fecha compra</th> */}
                             <th>Seleccion</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {renderRows(dataMed,"Medicaciones",["nombre","via","num_dosis","precio","cantidad","fecha_ingreso"])}
-                    
+                        {renderRows(dataMed,"Medicaciones",["nombre","via","num_dosis","precio","cantidad",])}
                     </tbody>
                 </table>
             );
@@ -109,13 +106,12 @@ const renderSubtabla = () => {
                 <tr>
                     <th>Gastos</th>
                     <th>Importe</th>
-                    <th>Fecha de importe</th>
+                    {/* <th>Fecha de importe</th> */}
                     <th>Seleccion</th>
                 </tr>
             </thead>
             <tbody>
-                {renderRows(dataGasto,"Gastos",["detalle","importe","fecha_gasto"])}
-                
+                {renderRows(dataGasto,"Gastos",["detalle","importe",])}
             </tbody>
             </table>
             );
@@ -125,13 +121,12 @@ const renderSubtabla = () => {
                 <thead>
                 <tr>
                     <th>Peso promedio</th>
-                    <th>Fecha de medicion</th>
+                    {/* <th>Fecha de medicion</th> */}
                     <th>Seleccion</th>
                 </tr>
                 </thead>
                 <tbody>
-                    {renderRows(dataPeso, "Peso",["peso_promedio","fecha_medicion"])}
-                
+                    {renderRows(dataPeso, "Peso",["peso_promedio",])}
                 </tbody>
                 </table>
             );
@@ -148,7 +143,6 @@ const renderSubtabla = () => {
                 </thead>
                 <tbody>
                     {renderRows(dataLote, "Lote",["raza","cantidad","valor_unidad"])}
-                
                 </tbody>
                 </table>
             );
@@ -160,7 +154,7 @@ const renderSubtabla = () => {
                             <th>Nombre:</th>
                             <th>Apellido Paterno:</th>
                             <th>Apellido Materno:</th>
-                            <th>Accion</th>
+                            <th>Seleccion</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -228,9 +222,9 @@ const renderSubtabla = () => {
                         <h4>Galpon</h4>
                         </button>
                         </div>
-                        <div>
+                    <div>
                         {renderSubtabla()}
-                        </div>
+                    </div>
             </div>
         </div>
     );
