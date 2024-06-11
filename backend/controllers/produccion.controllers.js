@@ -1,25 +1,61 @@
 import {pool} from "../db.js"
 
+const getRelatedData = async (id,tablaName) =>{
+    const [result] = await pool.query(`select * from ${tablaName} where id=?`,[id]);
+        return result[0] || null;
+    
+}
+
 export const getAllProduccion = async (req,res)=>{
+    // try {
+    //     const [results]= await pool.query('SELECT * FROM produccion' );
+    //     const producciones = results.map(produccion => ({
+    //             id:produccion.id,
+    //             id_alimento:produccion.id_alimento,
+    //             id_galpon:produccion.id_galpon,
+    //             id_medicina:produccion.id_medicina,
+    //             id_perfil:produccion.id_perfil,
+    //             id_lote:produccion.id_lote,
+    //             id_mortalidad:produccion.id_mortalidad,
+    //             id_gastos:produccion.id_gastos,
+    //             id_peso:produccion.id_peso,                
+    //     }));
+    //     res.json(producciones);
+    // } catch (error) {
+    //     console.error('error fetchign produccion data:', error);
+    //     return res.status(500).json({message: error.message})
+    // }
     try {
         const [results]= await pool.query('SELECT * FROM produccion' );
-        const producciones = results.map(produccion => ({
-                id:produccion.id,
-                id_alimento:produccion.id_alimento,
-                id_galpon:produccion.id_galpon,
-                id_medicina:produccion.id_medicina,
-                id_perfil:produccion.id_perfil,
-                id_lote:produccion.id_lote,
-                id_mortalidad:produccion.id_mortalidad,
-                id_gastos:produccion.id_gastos,
-                id_peso:produccion.id_peso,                
+        const producciones = await Promise.all(results.map(async (produccion) => {
+                const alimento= await getRelatedData(produccion.id_alimento,'alimento');
+                const galpon= await getRelatedData(produccion.id_galpon,'galpon');
+                const medicina= await getRelatedData(produccion.id_medicina,'medicina');
+                const perfil= await getRelatedData(produccion.id_perfil,'perfil');
+                const lote= await getRelatedData(produccion.id_lote,'lote');
+                const mortalidad= await getRelatedData(produccion.id_mortalidad,'mortalidad');
+                const gasto= await getRelatedData(produccion.id_gastos,'gastos');
+                const peso= await getRelatedData(produccion.id_peso,'peso');
+                
+                return{
+                    id: produccion.id,
+                    alimento,
+                    galpon,
+                    medicina,
+                    perfil,
+                    lote,
+                    mortalidad,
+                    gasto,
+                    peso
+                }
         }));
         res.json(producciones);
     } catch (error) {
-        console.error('error fetchign produccion data:', error);
-        return res.status(500).json({message: error.message})
+        console.error('error fetching produccion data',error);
+        return res.status(500).json({message:error.message});
     }
 }
+
 
 export const getProduccionItem = async (req,res)=>{
     try {
