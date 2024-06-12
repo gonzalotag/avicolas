@@ -1,20 +1,20 @@
 import React, {useEffect,useState} from 'react';
 import { getAllProduccion } from '../api/produccion.api';
 
-const ProduccionTabla =() =>{
-    const [producciones,setProducciones]=useState([]);
+const ProduccionTabla =({producciones, onEdit,onDelete}) =>{
+    // const [producciones,setProducciones]=useState([]);
 
-    useEffect(()=>{
-        const fetchData=async()=>{
-            try {
-                const data = await getAllProduccion();
-                setProducciones(data);
-            } catch (error) {
-                console.error('error fetchign Producciones', error);
-            }
-        }
-        fetchData();
-    },[])
+    // useEffect(()=>{
+    //     const fetchData=async()=>{
+    //         try {
+    //             const data = await getAllProduccion();
+    //             setProducciones(data);
+    //         } catch (error) {
+    //             console.error('error fetchign Producciones', error);
+    //         }
+    //     }
+    //     fetchData();
+    // },[])
 
     return(
         <table>
@@ -57,7 +57,7 @@ const ProduccionTabla =() =>{
                                 <>
                                     <div>Nombre: {produccion.medicina.nombre}</div>
                                     <div>Via: {produccion.medicina.via}</div>
-                                    <div># de Dosis: {produccion.medicina.Num_dosis}</div>
+                                    <div># de Dosis: {produccion.medicina.num_dosis}</div>
                                     <div>Precio: {produccion.medicina.precio}$</div>
                                     <div>Cantidad: {produccion.medicina.cantidad}</div>
                                 </>):'n/a'}</td>
@@ -93,8 +93,8 @@ const ProduccionTabla =() =>{
                                     <div>Peso Promedio: {produccion.peso.peso_promedio}</div>
                                 </>):'n/a'}</td>
                         <td>
-                            <button>editar</button>
-                            <button>borrar</button>
+                            <button onClick={()=>onEdit(produccion)}>Editar</button>
+                            <button onClick={()=>onDelete(produccion.id)}>Borrar</button>
                         </td>
                     </tr>
                 ))}
