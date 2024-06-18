@@ -37,12 +37,13 @@ async function postPeso(objPeso){
 }
 
 async function patchPeso(id, objPeso){
-   try{
-       const respuesta =await axios.patch(`http://localhost:4000/peso/${id}`, objPeso);
-       return respuesta.data;
-   }catch(error){
-      console.log('Error en el update');
-   }
+    try{
+        const respuesta =await axios.patch(`http://localhost:4000/peso/${id}`, objPeso);
+        return respuesta.data;
+    }catch(error){
+        console.log('Error en el update');
+        throw error;
+    }
 }
 
 async function deletePeso(id){

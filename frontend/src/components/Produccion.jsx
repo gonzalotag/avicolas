@@ -125,19 +125,7 @@ function Produccion (){
             return nuevaSeleccionPorSeccion;
         });
     }
-   // try {
-        //     const produccionData ={
-        //         subtablas:{}
-        //     }
-        //     Object.keys(seleccionPorSeccion).forEach((seccion) => {
-        //         produccionData.subtablas[seccion.toLowerCase()] = seleccionPorSeccion[seccion].map((item)=>item.fila);
-        //     });
-        
-        //     const response = await postProduccion(produccionData);
-        //     console.log(response);
-        // } catch (error) {
-        //     console.error("error al guardar data", error);
-        // }
+   
     const guardarProduccion = async ()=>{
         
         try {

@@ -24,10 +24,11 @@ async function postGasto(infoGastos){
 
 async function patchGasto(id,gastosData){
     try {
-        const response = await axios.patchGasto(`http://localhost:4000/gastos/${id}`,gastosData);
-        console.log(response.gastosData);
+        const response = await axios.patch(`http://localhost:4000/gastos/${id}`,gastosData);
+        return response.data;
     } catch (error) {
         console.error("Error en la petición Patch /gastos/" + error);
+        throw error;
     }
 }
 

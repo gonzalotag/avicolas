@@ -12,7 +12,7 @@ function NavBar(props){
     return <div className="navbar">
         <div className="icono">
             <img src={iconChiken} alt="Chiken Icon"/>{""}
-            Granja Avicola
+            <h3>GRANJA AVICOLA</h3>
         </div>
         <div className="espacioDeNavbar">
             

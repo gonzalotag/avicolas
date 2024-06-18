@@ -31,12 +31,19 @@ export const  createGasto = async (req,res)=>{
         res.status(500).send(`Hubo un error intentando crear el gasto ${importe}`);
     }
 }
-export const updateGasto = async (req,res) =>{    
+export const updateGasto = async (req,res) =>{
     const {id} = req.params;               
     const { detalle, importe } = req.body;               
     try {           
         const result = await pool.query('UPDATE gastos SET detalle= ?, importe= ? WHERE id=?', [detalle,importe,id] )
+        if (result.affectedRows === 0 ) {
+            res.status(404).json({message: 'no se encontroel gasto con el id proporcionado'})
+        }else{
+            res.status(200).json({message: 'gasto actualizado correctamemnte'});
+        }
     }catch(error){
+        console.log(error);
+        res.status(500).json({message: 'erroren el servidor' + error.message});
         throw error;
     }
 }

@@ -94,7 +94,7 @@ export const updatePerfil = async (req,res) =>{
             id,
             ]
         );
-        console.log('Datos a actualizar',req.body);
+        // console.log('Datos a actualizar',req.body);
         //responde los resultados en formato json
         res.json(result);
     } catch (error) {

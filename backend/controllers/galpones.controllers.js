@@ -47,24 +47,22 @@ export const createGalpon =async(req,res)=>{
 
 export const updateGalpon = async (req,res)=>{
     const {id}=req.params;
-    const datoActualizar=req.body;
-    const filtroWhere =`WHERE id_galpon='${id}'`;
-    const camposUpdate = Object.keys(datoActualizar).map((i,index)=>`${camposGalpon[index]} = '${datoActual.replace(/"/gi,"")}'`).join(",");
-    const query = genQuery(datoActualizar,'UPDATE','galpon',filtroWhere);
+    const {num_galpon,capacidad, disponible } = req.body;
     try {
-        const resultado =await pool.execute(query);
-        if (resultado.affectedRows) {
-            res.status(200).json({
-                status:'succes',
-                message:`Se actualizaron ${resultado.changedRows} registros`,});
-    } else {
-            res.status(404).json({status:'fail',message:"No se encontró el Registro a Actualizar"});
-            }
-            }catch(e){
-                console.log(e);
-                res.status(500).json({status:'fail',message:'Error en la base de datos'});
-            };
+        const result = await pool.query(
+            "update galpon set num_galpon =? , capacidad =? , disponible = ? where id = ?",
+            [num_galpon , capacidad , disponible, id]
+        );
+        if (result.affectedRows ===0) {
+            return res.status(404).json({status: 'no encontrado', message:'no se encontro el galpon '})
+        }
+        return res.status(200).json({status: 'actualizado', message:'se actualizaron los datos de galpon '})
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({status: 'error', message:'error en el servidor'})
+    }
 };
+
 export const deleteGalpon = async(req,res)=>{
      
     try {

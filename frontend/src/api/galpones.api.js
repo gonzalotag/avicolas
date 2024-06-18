@@ -31,7 +31,7 @@ async function postGalpones(formData){
 async function patchGalpon(id,galponData) {
     try {
         const result = await axios.patch(`http://localhost:4000/galpones/${id}`,galponData);
-        return result.galponData;
+        return result.data;
     } catch (error) {
         console.error('error al hacer solicitud patch',error);
         throw error;

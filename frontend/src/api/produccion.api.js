@@ -29,16 +29,16 @@ async function postProduccion (produccionData){
     }
 }
 
-async function patchProduccion  (id, prod){
+async function patchProduccion  (id, data){
     try {
-        const result= await axios.patch(`http://localhost:4000/produccion/${id}`, prod)
+        const result= await axios.patch(`http://localhost:4000/produccion/${id}`,data);
         return result.data;
     } catch (error) {
-        console.error('error al actualizar la produccion' , error);
+        console.error('error al actualizar la produccion' , error.response ? error.response.data : error.message);
         throw error;
     }
 }
-    
+
 async function deleteProduccion  (id) {            
     let confirmacion = window.confirm("¿Está seguro de eliminar la producción?");
     if (confirmacion) {

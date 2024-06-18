@@ -11,7 +11,7 @@ const router = Router();
 router.get("/alimento",getAlimentos );
 router.get("/alimento/:id", getAlimento);
 router.post("/alimento", createAlimento);
-router.patch("/alimento",updateAlimento);
+router.patch("/alimento/:id",updateAlimento);
 router.delete("/alimento/:id", deleteAlimento);
 
 export default router;

@@ -41,26 +41,27 @@ export const createAlimento =async(req,res)=>{
 
 export const updateAlimento = async(req,res)=>{
     const{id}=req.params;
-    const{nombre, descripcion}=req.body;
-    const data={nombre,descripcion};
+    const{nombre,precio,cantidad,cantidad_sacos,tipo}=req.body;
+    const data={nombre,precio,cantidad,cantidad_sacos,tipo};
     let editado=false;
     for(const key in data){
-        if(data[key]!=undefined){
+        if(data[key] !== undefined){
             editado=true;
             data[key]=data[key].toString().trim()
         }
     }
     if (!editado) {
-        return res.status(400).json({message:"No se ha modificado ningdato"});
+        return res.status(400).json({message:"No se ha modificado ningun dato"});
     }
     try{
-        const filasAfectadas=await pool.query('UPDATE alimento SET ? WHEREid=?',[data,id]);
-        if(filasAfectadas.affectedRows==0)
-        throw new Error("el alimento no existe")
-        res.status(200).json(filasAfectadas);
-        }catch(e){
-            console.log(e);
-        return res.status(500).json({message:"Error en el servidor"+ e.message})
+        const [rows]= await pool.query('UPDATE alimento SET ? WHERE id=?',[data,id]);
+        if(rows.affectedRows === 0){
+            throw new Error("el alimento no existe")
+        }
+        res.status(200).json({message: 'aliemnto actualizado correctamente'});
+        }catch(error){
+            console.log(error);
+            return res.status(500).json({message:"Error en el servidor"+ error.message})
         }
 };
 

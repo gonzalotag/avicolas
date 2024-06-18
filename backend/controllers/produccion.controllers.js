@@ -109,7 +109,7 @@ export const createProduccion = async (req,res)=>{
         const query = "insert into produccion (id_alimento,id_galpon,id_medicina,id_perfil,id_lote,id_mortalidad,id_gastos,id_peso) values (?,?,?,?,?,?,?,?)";
         const values = [id_alimento,id_galpon,id_medicina,id_perfil,id_lote,id_mortalidad,id_gastos,id_peso];
         
-        console.log("excuting query", query, values);
+        // console.log("excuting query", query, values);
         const [result] = await pool.query(query , values);
         if (result.affectedRows > 0) {
             return res.status(201).json({message: "produccion creada"});
@@ -120,25 +120,24 @@ export const createProduccion = async (req,res)=>{
         console.error("error en el controlador", error);
         return res.status(500).json({message:"error en el controlador" , error: error.message});
     }
-    
 }
 
 export const updateProduccion = async (req,res)=>{
-    const {id} = req.params;
-    const {subtablas} =req.body;
-    if (!subtablas || typeof subtablas !== 'object' || Object.keys(subtablas).length === 0) {
+    const { id } = req.params;
+    const { subtablas } =req.body;
+    if ( !subtablas || typeof subtablas !== 'object' || Object.keys(subtablas).length === 0){
         return res.status(400).json({message: "se requieren datos de subtablas"});
     }
     try {
-        const result = await  pool.query('UPDATE produccion set subtablas = ? WHERE id = ?',[JSON.stringify(subtablas),id]);
-        if (result.affectedRows >0) {
-            return res.status(200).json({message:"resgistro actualizado"});
+        const [result] = await pool.query('UPDATE produccion set subtablas = ? WHERE id = ?', [JSON.stringify(subtablas),id]);
+        if (result.affectedRows > 0) {
+            return res.status(200).json({message:'registro actualizado'});
         } else {
-            return res.status(404).json({message:"no se encontro el registro de produccion"})
+            return res.status(404).json({message:'no se encontro el registro de produccion'});
         }
     } catch (error) {
-        console.error("error en el controlador update", error);
-        return res.status(500).json({message: error.message})
+        console.error('error en el controlador update', error);
+        return res.status(500).json({message: error.message});
     }
 }
 

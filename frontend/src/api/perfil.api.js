@@ -68,21 +68,15 @@ export const postPerfil = async(data)=>{
     }
 };
 
-
-//funcion que actualiza la tabla perfil
 async function patchPerfil(id,perfilData,callback){
     try {
-        //pide la tarea patch a la api para actualizar le perfil con el id seleccionado
         const result = await axios.patch(`http://localhost:4000/perfil/${id}`, perfilData);
-        // console.log('perfil actualizado correctamente ', result.data);
-        //verifica la devolucion de la llamada y si esta es una funcion
         if(callback && typeof callback === 'function'){
             callback({status:200 ,data: result.data});
         }
         return result.data;    
     } catch (error) {
         console.error('error al hacer solicitud patch',error);
-        //verifica si se hizo una devolucion de la llamada y si tambien hay un error
         if(callback && error.response){
             console.log('codigo estado', error.response.status);
             callback({status: error.response.status , data :null});

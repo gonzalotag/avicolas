@@ -7,7 +7,6 @@ async function getAllAlimentos(){
     } catch (error) {
         console.error("error al obtener alimentos" ,  error);
     }
-    
 }
 
 async function getAlimentosById(ids){
@@ -33,14 +32,14 @@ async function postAlimentos(formData){
 
 async function patchAlimento(id,alimentoData){
     try {
-        const resultado=await axios({
-            method:'patch',
-            url:`http://localhost:4000/alimento/${id}`,
-            data:alimentoData
-            });
+        const resultado = await axios.patch(`http://localhost:4000/alimento/${id}`,alimentoData);
             return resultado.data;
             } catch (error) {
-                console.error('Error en la actualización de datos', error );
+                if (error.response) {
+                    console.error('Error en la actualizacion de datos', error.response.data);
+                } else {
+                    console.error('Error en la actualización de datos', error.message );    
+                }
                 throw error;
             }
 }

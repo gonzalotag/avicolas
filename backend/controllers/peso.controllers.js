@@ -32,18 +32,23 @@ export const createPeso =async (req,res) =>{
     }
 }
 
-export const updatePeso  = async (req,res) =>{
+export const updatePeso = async (req,res) =>{
     const {id} = req.params;
-    const {peso} = req.body;
+    const {peso_promedio} = req.body;
+    if (peso_promedio === undefined ) {
+        return res.status(400).json({message: "el campo peso  promedio es requerido"});
+    }
     try {
-        const result = await pool.query("update peso set peso=? where id=?", [peso,id]);
-        if(result.affectedRows>0){
-           res.status(200).json({msg:`Se actualizó correctamente el peso del usuario ${id}`});    
+        const [result] = await pool.query("UPDATE peso SET peso_promedio =? WHERE id=?", [peso_promedio,id]);
+        if(result.affectedRows === 0){
+            return res.status(404).json({message:`No se encontró el peso_promedio con la ID "${id}"`});
         } else {
-           res.status(404).json({msg:`No se encontró el usuario con la ID "${id}"`});    
+            return res.status(200).json({message:`Se actualizó correctamente el peso_promedio ${id}`});           
         }
     } catch (error) {
-       res.status(500).json({msg: 'Error en el servidor'});
+        console.log('error en el servidor' , error);
+        return res.status(500).json({msg: 'Error en el servidor'});
+        
     }
 }
 

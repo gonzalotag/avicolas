@@ -39,7 +39,6 @@ app.use(gastosRoutes);
 app.use(pesoRoutes);
 app.use(produccionRoutes);
 
-
 app.listen(PORT);
 app.use ((err, req, res,next)=>{
     console.error(err.stack);

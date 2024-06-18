@@ -24,31 +24,22 @@ export const getMedicina=(req,res)=>{
     }
 }
 
-export const updateMedicinas =async (req,res)=>{
+export const updateMedicina =async (req,res)=>{
+    const {id}=req.params;
+    const {nombre, via, num_dosis, precio, cantidad}=req.body;
     try {
-        if(isNaN(req.params.id)){
-            return res.status(400).send("El ID debe ser numérico");
-        }
-        const medicaExists= getMedicina(req.params.id)
-        if(!medicaExists)
-        return res.status(400).json({message:'No se encontró la Medicina con ese ID'});
-        const {nombre,via,num_dosis,precio,cantidad}= req.body;
-        if (!nombre|| !via|| !num_dosis|| !precio|| !cantidad) {
-            return res.status(400).json({message:'todos los campos son obligatorios'});
-        }
-        const medicinaUpdate={
-            nombre:(nombre)?nombre:medicaExists.nombre,
-            via:(via)?via:medicaExists.via,
-            num_dosis:(num_dosis>0)?num_dosis:medica.num_dosis,
-            precio:parseFloat(precio),
-            cantidad:parseInt(cantidad),
-            };
-            const result=await pool.query('UPDATE medicina SET ? WHERE id=?',[medicinaUpdate,req.params.id]);
-            res.status(201).json({message:'Se ha actualizado la información',data:result.affectedRows});
+        const [result] = await pool.query('UPDATE medicina SET nombre=?, via=?, num_dosis=?, precio=?, cantidad=? WHERE id=?',
+            [nombre, via , num_dosis, precio, cantidad, id]);
+            if (result.affectedRows === 0) {
+                res.status(404).json({message:'No se encontró la Medicina con ese ID'})
+            } else {
+                res.status(200).json({message:'medicina actualizada correctamente'});
+            }
     } catch (error) {
-        res.status.json({message:'error interno del servidor'})
+        res.status(500).json({message:'error interno del servidor' +error.message});
     }
 }
+
 export const createMedicinas = async (req,res)=>{
     try {
         const{nombreMedicina,viaMedicina,dosisMedicina,precioMedicina,cantidadMedicina}=req.body;

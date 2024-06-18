@@ -9,7 +9,7 @@ const router = Router();
 
 router.get("/mortalidad", getAllMortalidad);
 router.post("/mortalidad",createMortalidad );
-router.put("/mortalidad/",updateMortalidad);
+router.patch("/mortalidad/:id",updateMortalidad);
 router.delete("/mortalidad/:id", deleteMortalidad);
 
 export default router;

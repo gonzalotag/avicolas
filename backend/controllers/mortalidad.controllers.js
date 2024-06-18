@@ -37,12 +37,16 @@ export const createMortalidad =async(req,res)=>{
 };
 
 export const updateMortalidad = async (req,res) => {
-    const params=req.body;
     const {id}=req.params;
+    const data = req.body;
     try {
-        const result=await pool.query("UPDATE mortalidad SET ? WHERE id_mortalidad=?",[params,id]);
-        return  res.status(200).json(result);        
+        const [result]=await pool.query("UPDATE mortalidad SET ? WHERE id=?",[data,id]);
+        if (result.affectedRows === 0 ) {
+            return res.status(404).json({message: 'no se encontro registro de mortalidad'});
+        }
+        return res.status(200).json(result);        
     } catch (error) {
+        console.log(error);
         return res.status(500).json({message:'Error al editar la mortalidad'});
     }
 };

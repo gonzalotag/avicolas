@@ -35,11 +35,11 @@ async function postMortalidad (mortalidadData){
 
 async function patchMortalidad (id, mortalidadData) {
     try {
-        const respuesta = await axios.put(`http://localhost:4000/mortalidad/${id}`, mortalidadData);
+        const respuesta = await axios.patch(`http://localhost:4000/mortalidad/${id}`, mortalidadData);
         return respuesta.data;
     } catch (error){
         console.log(error);
-        return false;
+        throw error;
     }
 }
 

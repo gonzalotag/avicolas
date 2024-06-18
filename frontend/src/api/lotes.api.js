@@ -29,11 +29,11 @@ export const postLote = async (data) =>{
 }
 export const patchLote = async (id, data) =>{
     try {
-        const respuesta=await axios.put(`${'http://localhost:4000/lote'}/${id}`,data);
+        const respuesta=await axios.patch(`http://localhost:4000/lote/${id}`,data);
         return respuesta.data;
         }catch(error){
             console.log("Error al actualizar el lote: ", error.response.data.message);
-        throw error;
+            throw error;
         }
 };
 

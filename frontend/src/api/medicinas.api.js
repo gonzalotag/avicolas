@@ -40,10 +40,11 @@ async function postMedicina(formData) {
 
 async function patchMedicina(id,medData) {
     try {
-        const result = await axios.patch(`http://localhost:4000/medicina/${id}`, medData)
-        return result;
+        const result = await axios.patch(`http://localhost:4000/medicina/${id}`, medData);
+        return result.data;
     } catch (error) {
-        console.error("No se pudo actualizar, verificar los datos o el id")
+        console.error("No se pudo actualizar, verificar los datos o el id",error);
+        throw error;
     }
 }
 

@@ -60,24 +60,14 @@ export const updateLote = async(req,res)=>{
     const {raza,cantidad,valor_unidad}=req.body;
         try{
             const result = await pool.query(
-                "UPDATE LOTE SET raza=$2, cantidad=$3, valor_undad=$4 WHERE id=${id} RETURNING *",
-                [id,raza,cantidad,valor_unidad,id]);
-                if(result.rowCount<=0){
-                    return res.status(404).json({
-                        status:'not found',
-                        message:`No se encontró el lote con id ${id}`
-                    })
+                "UPDATE LOTE SET raza=?, cantidad=?, valor_unidad=? WHERE id=?",
+                [raza,cantidad,valor_unidad,id]);
+                if(result.afectedRows === 0){
+                    return res.status(404).json({status:'not found',message:`No se encontró el lote con id ${id}`});
                 }
-                    res.status(200).json({
-                    status:'succes',
-                    message:'Se actualizaron los datos del lote',
-                    data:rowUpdated.rows[0]
-                    })
-                } catch(e){
-                res.status(500).json({
-                status:'error',
-                message:'Server Error'
-                })
+                    res.status(200).json({status:'succes',message:'Se actualizaron los datos del lote',data:result});
+                } catch(error){console.log(error);
+                    res.status(500).json({status:'error',message:'Server Error'});
         }                                   
 }
 
