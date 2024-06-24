@@ -1,12 +1,18 @@
-/* .tablaProduccion{
-    background-color: #f0f0f0;
+.tablaProduccion {
+    
+    background: rgba(255, 255, 255, 0.46);
+    padding: 10px;
 }
-.tablaProduccion .selccionado:hover{
-    background-color: #e0e0e0;
+
+.menuTablaProd{
+    display: flex;
+    justify-content: space-around;
 }
-.tablaProduccion .seleccionado{
-    border-bottom: 2px solid #ccc;
+.menuTablaProd button{
+    display: flex;
+    background-color: #4CAF50;
 }
-.formEdicion{
-    background-color: #0fa517;
-} */
+
+.menuTablaProd button:hover{
+    background-color: #563e8e;
+}

@@ -1,30 +1,18 @@
 import React, {useEffect,useState} from 'react';
 import { getAllProduccion } from '../api/produccion.api';
+import "../assets/css/ProduccionTabla.css"
 
 const ProduccionTabla =({producciones, onEdit,onDelete}) =>{
-    // const [producciones,setProducciones]=useState([]);
-
-    // useEffect(()=>{
-    //     const fetchData=async()=>{
-    //         try {
-    //             const data = await getAllProduccion();
-    //             setProducciones(data);
-    //         } catch (error) {
-    //             console.error('error fetchign Producciones', error);
-    //         }
-    //     }
-    //     fetchData();
-    // },[])
-
+    
     return(
-        <table>
+        <table className="reportesTabla">
             <thead>
                 <tr>
                     <th>Alimento</th>
                     <th>Galpon</th>
                     <th>Medicina</th>
                     <th>Perfil</th>
-                    <th>lote</th>
+                    <th>Lote</th>
                     <th>Mortalidad</th>
                     <th>Gasto</th>
                     <th>Peso</th>

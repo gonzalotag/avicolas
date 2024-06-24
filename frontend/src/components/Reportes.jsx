@@ -1,5 +1,5 @@
 import"../assets/css/reportes.css"
-import React,{useState,useEffect} from "react";
+import React,{useState,useEffect,useRef} from "react";
 import { deleteProduccion, getAllProduccion, patchProduccion} from "../api/produccion.api"
 import { patchAlimento } from "../api/alimentos.api";
 import { patchGalpon } from "../api/galpones.api";
@@ -10,13 +10,14 @@ import { patchMortalidad } from "../api/mortalidad.api";
 import { patchPerfil } from "../api/perfil.api";
 import { patchPeso } from "../api/peso.api";
 import ProduccionTabla from "./ProduccionTabla";
-
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 function Reportes (){
     const [produccionData,setProduccionData] = useState([]);
     const [isEditing,setIsEditing] = useState(false);
-    const [editData,setEditData]= useState({})
-    
+    const [editData,setEditData]= useState({});
+    const reportTableRef = useRef(null);
 
     useEffect(()=>{
         fetchProduccionData();
@@ -46,40 +47,20 @@ function Reportes (){
         }
     }
 
-    
-
     const handleSave = async (e) =>{
         e.preventDefault();
         console.log('datos a enviar:', editData);
         
         try {
-            console.log('actualizando alimetno')
             await patchAlimento(editData.alimento.id,editData.alimento);
-            console.log('alimento actualizado')
-            console.log('actualizando galpon');
             await patchGalpon(editData.galpon.id,editData.galpon);
-            console.log('galpon actualizado', editData.galpon);
-            console.log('actualizando gasto');
             await patchGasto(editData.gasto.id,editData.gasto);
-            console.log('gasto actualizado');
-            console.log('actualizando lote')
             await patchLote(editData.lote.id,editData.lote);
-            console.log('lote actualizado');
-            console.log('actualizando medicina');
             await patchMedicina(editData.medicina.id,editData.medicina);
-            console.log('medicina actualizada');
-            console.log('actualizando mortalidad');
             await patchMortalidad(editData.mortalidad.id,editData.mortalidad);
-            console.log('mortalidad actualizada');
-            console.log('actualizando perfil');
             await patchPerfil(editData.perfil.id,editData.perfil);
-            console.log('perfil actualizado');
-            console.log('actualizando peso');
             await patchPeso(editData.peso.id,editData.peso);
-            console.log('peso actualizado');
-            // console.log('actualizando produccion');
-            // await patchProduccion(editData.id, editData);
-            // console.log('produccion actualizada');
+            
             setIsEditing(false);
             fetchProduccionData();
         } catch (error) {
@@ -106,14 +87,42 @@ function Reportes (){
         })
     }
 
+    const handlePrint = async() => {
+        try {
+            const input = reportTableRef.current;
+            if (!input) {
+                console.error("elemento con refernica reportTablaRef no encontrado");
+                return
+            }
+            const canvas = await html2canvas(input, {
+                scale:2,
+                useCORS: true,
+                // scrollX:0,
+                // scrollY:0,
+                // width:input.scrollWidth,
+                // heigth:input.scrollHeigth,
+            })
+            const imgData = canvas.toDataURL("img/png");
+            const pdf = new jsPDF ('','','');
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (canvas.height* pdfWidth)/canvas.width;
+
+            pdf.setFontSize(18);
+            pdf.text('reporteProduccion', pdfWidth/2,20, {aling:'center'});
+
+            const margin = 20;
+            const startY = 40;
+            pdf.addImage(imgData, "PNG",margin, startY, pdfWidth-margin *2, pdfHeight);
+            pdf.save('reporteProduccion.pdf');
+        } catch (error) {
+            console.error("error generating pdf ", error);
+        }
+    }
     return (
         <div className="reportesContainer">
-           <h1>Reportes Produccion</h1>
-           <ProduccionTabla
-                producciones={produccionData}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-           />
+           <h2>Reportes Produccion</h2>
+           <button onClick={handlePrint}>Guardar como PDF</button>
+
         {isEditing &&(
             <form onSubmit={handleSave}>
                 <div>
@@ -186,7 +195,6 @@ function Reportes (){
                     </label>
                     <h3>Lote</h3>
                     <label> Raza:
-                        {/* <input type="text" name="lote.raza" value={editData.lote?.raza} onChange={handleChange} /> */}
                         <select name="lote.raza" 
                             value={editData.lote?.raza}
                             onChange={handleChange}
@@ -209,7 +217,6 @@ function Reportes (){
                         <input type="number" name="mortalidad.cantidad" value={editData.mortalidad?.cantidad} onChange={handleChange} />
                     </label>
                     <label> Causa:
-                        {/* <input type="text" name="mortalidad.causa" value={editData.mortalidad?.causa} onChange={handleChange} /> */}
                         <select name="mortalidad.causa" 
                             value={editData.mortalidad?.causa}
                             onChange={handleChange}
@@ -243,8 +250,15 @@ function Reportes (){
                 <button type="button" onClick={handleCancelar}>Cancelar</button>
             </form>
         )}
+        <div ref={reportTableRef}>
+            <ProduccionTabla
+            producciones={produccionData}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            />
         </div>
         
+        </div>
     )
 }
 export default Reportes;

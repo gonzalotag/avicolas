@@ -188,43 +188,59 @@ const renderSubtabla = () => {
     return(
         <div>
             <div className="tablaProduccion">
-                        <div>
-                            <button className={actividadControl==="Alimentacion" ? "active" :""}
-                            onClick={()=>handleControlButton("Alimentacion")}>
-                        <h4>Alimentacion</h4>
-                        </button>
-                            <button className={actividadControl==="Medicaciones" ? "active" :""}
-                            onClick={()=>handleControlButton("Medicaciones")}>
-                        <h4>Medicaciones</h4>
-                        </button>
-                            <button className={actividadControl==="Mortalidad" ? "active" :""}
-                            onClick={()=>handleControlButton("Mortalidad")}>
-                        <h4>Mortalidad</h4>
-                        </button>
-                            <button className={actividadControl==="Peso" ? "active" :""}
-                            onClick={()=>handleControlButton("Peso")}>
-                        <h4>Peso</h4>
-                        </button>
-                            <button className={actividadControl==="Gastos" ? "active" :""}
-                            onClick={()=>handleControlButton("Gastos")}>
-                        <h4>Gastos</h4>
-                        </button>
-                            <button className={actividadControl==="Lote" ? "active" :""}
-                            onClick={()=>handleControlButton("Lote")}>
-                        <h4>Lote</h4>
-                        </button>
-                            <button className={actividadControl==="Empleado" ? "active" :""}
-                            onClick={()=>handleControlButton("Empleado")}>
-                        <h4>Empleado</h4>
-                        </button>
-                            <button className={actividadControl==="Galpon" ? "active" :""}
-                            onClick={()=>handleControlButton("Galpon")}>
-                        <h4>Galpon</h4>
-                        </button>
-                        </div>
+                <div className="menuTablaProd">
                     <div>
-                        {renderSubtabla()}
+                    <button className={actividadControl==="Alimentacion" ? "active" :""}
+                        onClick={()=>handleControlButton("Alimentacion")}>
+                        <h4>Alimentacion</h4>
+                    </button>
                     </div>
+                    <div>
+                    <button className={actividadControl==="Medicaciones" ? "active" :""}
+                        onClick={()=>handleControlButton("Medicaciones")}>
+                        <h4>Medicaciones</h4>
+                    </button>
+                    </div>
+                    <div>
+                    <button className={actividadControl==="Mortalidad" ? "active" :""}
+                        onClick={()=>handleControlButton("Mortalidad")}>
+                        <h4>Mortalidad</h4>
+                    </button>
+                    </div>
+                    <div>
+                    <button className={actividadControl==="Peso" ? "active" :""}
+                        onClick={()=>handleControlButton("Peso")}>
+                        <h4>Peso</h4>
+                    </button>
+                    </div>
+                    <div>
+                    <button className={actividadControl==="Gastos" ? "active" :""}
+                        onClick={()=>handleControlButton("Gastos")}>
+                        <h4>Gastos</h4>
+                    </button>
+                    </div>
+                    <div>
+                    <button className={actividadControl==="Lote" ? "active" :""}
+                        onClick={()=>handleControlButton("Lote")}>
+                        <h4>Lote</h4>
+                    </button>
+                    </div>
+                    <div>
+                    <button className={actividadControl==="Empleado" ? "active" :""}
+                        onClick={()=>handleControlButton("Empleado")}>
+                        <h4>Empleado</h4>
+                    </button>
+                    </div>
+                    <div>
+                    <button className={actividadControl==="Galpon" ? "active" :""}
+                        onClick={()=>handleControlButton("Galpon")}>
+                        <h4>Galpon</h4>
+                    </button>
+                    </div>
+                </div>
+                <div>
+                    {renderSubtabla()}
+                </div>
             </div>
         </div>
     );

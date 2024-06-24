@@ -1,0 +1,33 @@
+.reportesTabla{
+    width: 100%;
+    /* display: flex;
+    flex-direction: column;
+    align-items: center; */
+    
+    border-collapse: collapse;
+    margin-top: 20px ;
+}
+.reportesTabla th,
+.reportesTabla td{
+    /* display: flex;
+    flex-direction: column;
+    align-items: center; */
+    
+    padding: 8px;
+    vertical-align: top;
+}
+table{
+    width: 100%;
+    table-layout: fixed;
+    word-wrap: break-word;
+}
+
+.reportesTabla button{
+    background-color: #4CAF50;
+    color: #fff;    
+    padding: 10px 20px;
+    cursor: pointer;
+}
+.reportesTabla button:hover{
+    background-color: #563e8e;
+}

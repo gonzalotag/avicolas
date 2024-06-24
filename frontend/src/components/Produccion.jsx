@@ -201,7 +201,7 @@ function Produccion (){
             handleSeleccionEnProduccion={handleSeleccionEnProduccion}
             seleccionPorSeccion= {seleccionPorSeccion}
         />
-        <button onClick={handleGuardarSeleccion} disabled={!isSeleccionCompleta()}>Guardar Seleccion</button>
+        
         <table className="produccionProces">
             <thead>
                 <tr><th colSpan={9}><h4>Tabla de Produccion</h4></th></tr>
@@ -212,6 +212,7 @@ function Produccion (){
                 )}
             </tbody>
         </table>
+        <button onClick={handleGuardarSeleccion} disabled={!isSeleccionCompleta()}>Guardar Seleccion</button>
     </div>
     );
 }

@@ -3,6 +3,9 @@
     width: 100%;    
     background: rgba(255, 255, 255, 0.46);
     color: black;
+    overflow-y: auto;
+    overflow-x: auto;
+    scroll-behavior: smooth;
 }
 .alimentosForm{
     width: 250px;
