@@ -39,6 +39,9 @@
     align-items: center;
 
 }
+.formularioEdit button{
+    width: 100%;
+}
 .botonRegresar{
     height: auto;
     width: 20%;
@@ -62,6 +65,7 @@
 }
 .personalAEditar button{
     margin-top: 10px;
+    
 }
 .objetoDatos{
     height: 75%;

@@ -1,14 +1,24 @@
 .menu{
     display:flex;
-    /* flex-direction: row; */
+    /* flex-wrap: wrap; */
     justify-content: space-around;
     align-items: center;
     /* background-color: rgba(4, 49, 34, 0.46); */
     background: rgba(255, 255, 255, 0.46);
     padding:10px;
 }
+.menu >div{
+    flex: 1;
+    margin: 1px;
+}
 .menu button{
+    width: 100%;
+    height: 40px;
+    font-size: 18px;
     background-color: #4CAF50;
+    color: #fff;    
+    
+    padding-bottom: 10px;
 }
 .menu button:hover{
     background-color: #563e8e;

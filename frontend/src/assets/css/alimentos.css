@@ -13,3 +13,6 @@
     background: rgba(255, 255, 255, 0.46);
     border-radius: 10px;
 }
+.alimentosForm label{
+    width: 100%;
+}

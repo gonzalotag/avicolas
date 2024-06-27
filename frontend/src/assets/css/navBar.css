@@ -20,6 +20,15 @@ border: 1px solid rgba(255, 255, 255, 0.23); */
     display: flex;
     justify-content: center;
     align-items: center;
+    
+}
+.buttonLogout button{
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+}
+.buttonLogout button:hover{
+    background-color: #563e8e;
 }
 .espacioDeNavbar{
     width: 60%;

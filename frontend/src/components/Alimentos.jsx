@@ -70,7 +70,7 @@ function Alimentos (){
             </button>
             <h2>Registrar Alimentos</h2>
             <form className="alimentosForm" onSubmit= {handleSubmit}>
-                <label htmlFor='nombre'>Nombre de Alimentos:
+                <label htmlFor='nombre'>Nombre de Alimentos:</label>
                 <input 
                 type='text' 
                 name='nombre' 
@@ -78,8 +78,8 @@ function Alimentos (){
                 value={formData.nombre} 
                 onChange={handleChange}
                 required/>   
-                </label><br/><br/>
-                <label htmlFor='precio'>Precio de Compra:
+                <br/>
+                <label htmlFor='precio'>Precio de Compra:</label>
                 <input 
                 type='text' 
                 name='precio' 
@@ -88,8 +88,8 @@ function Alimentos (){
                 value={formData.precio}
                 onChange={handlePrecioChange}
                 required/>   
-                </label><br/><br/>
-                <label htmlFor='cantidad'>Cantidad Adquirida:
+                <br/>
+                <label htmlFor='cantidad'>Cantidad Adquirida:</label>
                 <input 
                 type='text' 
                 name='cantidad' 
@@ -97,8 +97,8 @@ function Alimentos (){
                 value={formData.cantidad}
                 onChange={handleCantidadChange}
                 required/>   
-                </label><br/><br/>
-                <label htmlFor="tipo">Tipo de Alimento:
+                <br/>
+                <label htmlFor="tipo">Tipo de Alimento:</label>
                     <select  
                     name="tipo"  
                     id="tipo"
@@ -109,9 +109,8 @@ function Alimentos (){
                         <option value='crecimineto'>crecimiento</option>
                         <option value='final'>final</option>
                     </select>
-                </label><br /><br />
-                <label htmlFor="cantidadsacos">
-                    Sacos Disponibles: 
+                <br />
+                <label htmlFor="cantidadsacos">Sacos Disponibles: </label>
                     <input 
                     type="text" 
                     name="cantidadsacos"
@@ -119,7 +118,7 @@ function Alimentos (){
                     value={formData.cantidad_sacos}
                     onChange={handleCantidadSacos}
                     />
-                </label><br /><br />
+                <br />
                 <button type= "submit"> Guardar </button>
             </form>
         </div>)

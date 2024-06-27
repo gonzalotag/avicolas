@@ -42,7 +42,7 @@ function Galpon (){
         </button>
         <h1>Galpon</h1>
         <form className="galponForm" onSubmit={handleSubmit}>
-        <label htmlFor='num_galpon'>Numero de Galpon:
+        <label htmlFor='num_galpon'>Numero de Galpon:</label>
             <input 
             type='text' 
             name='num_galpon' 
@@ -51,8 +51,8 @@ function Galpon (){
             onChange={handleChange}
             pattern="[0-9]*"
             required/>   
-        </label><br/><br/>
-        <label htmlFor='capacidad'>Capacidad:
+        <br/>
+        <label htmlFor='capacidad'>Capacidad:</label>
             <input 
             type='text' 
             name='capacidad' 
@@ -61,8 +61,8 @@ function Galpon (){
             onChange={handleChange}
             pattern="[0-9]*"
             required/>   
-        </label><br/><br/>
-        <label htmlFor='disponible'>Disponible:
+        <br/><br/>
+        <label htmlFor='disponible'>Disponible:</label>
             <select 
             name="disponible" 
             id="disponible"
@@ -73,7 +73,7 @@ function Galpon (){
                 <option value="1">Si </option>
                 <option value="0">No </option>
             </select>
-        </label>
+        
         <br/><br/>
         <button type="submit"> Guardar</button>
         </form>

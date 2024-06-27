@@ -1,11 +1,10 @@
 import"../assets/css/contenidoAdmin.css"
 
-function ContenidoAdmin (props){
+function ContenidoAdmin ({children}){
     
-    const {selectedButton}= props;
     return(
     <div className="contenidoAdmin">
-            contenido Admin
+            {children}
     </div>
     )
 }

@@ -2,7 +2,7 @@ import React, {useEffect,useState} from 'react';
 import { getAllProduccion } from '../api/produccion.api';
 import "../assets/css/ProduccionTabla.css"
 
-const ProduccionTabla =({producciones, onEdit,onDelete}) =>{
+const ProduccionTabla =({producciones, onEdit,onDelete, isPrinting}) =>{
     
     return(
         <table className="reportesTabla">
@@ -78,9 +78,14 @@ const ProduccionTabla =({producciones, onEdit,onDelete}) =>{
                                 <>
                                     <div>Peso Promedio: {produccion.peso.peso_promedio} kgs.</div>
                                 </>):'n/a'}</td>
-                        <td>
-                            <button onClick={()=>onEdit(produccion)}>Editar</button>
-                            <button onClick={()=>onDelete(produccion.id)}>Borrar</button>
+                        <td className={isPrinting? 'hide-on-print':''}>
+                            {!isPrinting &&(
+                                <div>
+                                <button onClick={()=>onEdit(produccion)}>Editar</button>
+                                <button onClick={()=>onDelete(produccion.id)}>Borrar</button>
+                                </div>
+                            )}
+                            
                         </td>
                     </tr>
                 ))}

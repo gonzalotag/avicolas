@@ -31,3 +31,16 @@ table{
 .reportesTabla button:hover{
     background-color: #563e8e;
 }
+@media print{
+    .reportesTabla td:last-child{
+        display:none;
+    }
+}
+@media print{
+    .reportesTabla button{
+        display:none;
+    }
+}
+.hide-on-print{
+    display:none;
+}

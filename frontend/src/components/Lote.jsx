@@ -49,7 +49,7 @@ function Lote(){
             </button>
             <h2>Lote a Registrar</h2>
             <form className="lotesForm" onSubmit={handleSubmit}>
-                <label htmlFor='raza'>Raza:</label> <br />
+                <label htmlFor='raza'>Raza:</label>
                 <select 
                 name='raza'
                 id='raza' 
@@ -61,8 +61,8 @@ function Lote(){
                 <option value="sussex clara">sussex clara</option>
                 <option value="new hampshire">new hampshire</option>
                 </select>
-                <br/><br/>
-                <label htmlFor='cantidad'>Cantidad:</label> <br />
+                <br/>
+                <label htmlFor='cantidad'>Cantidad:</label>
                 <input 
                 type='text' 
                 name='cantidad'
@@ -70,8 +70,8 @@ function Lote(){
                 value={formData.cantidad}
                 onChange={handleCantidadChange}
                 required/>   
-                <br /><br />
-                <label htmlFor='valor_unidad'>Valor Unidad:</label><br />
+                <br />
+                <label htmlFor='valor_unidad'>Valor Unidad:</label>
                 <input 
                 type='text' 
                 name='valor_unidad' 
@@ -79,7 +79,7 @@ function Lote(){
                 value={formData.valor_unidad}
                 onChange={handleUnidadChange}
                 required/>   
-                <br/><br/>
+                <br/>
                 <button type="submit">Guardar</button>
             </form>
         </div>

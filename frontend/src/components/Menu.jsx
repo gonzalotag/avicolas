@@ -7,25 +7,25 @@ const Menu =()=>{
     return(
         <div className="menu">
             <div onClick={()=>navigate('/medicinas')}>
-                <button><h4>Registrar Medicinas</h4></button>
+                <button><h5>Registrar Medicinas</h5></button>
             </div>
             <div onClick={()=>navigate('/galpon')}>            
-                <button><h4>Asignar Galpon</h4></button>
+                <button><h5>Asignar Galpon</h5></button>
             </div>
             <div onClick={()=>navigate('/alimentos')}>
-                <button><h4>Registrar Alimentos</h4></button>
+                <button><h5>Registrar Alimentos</h5></button>
             </div>
             <div onClick={()=>navigate('/lote')}>
-                <button><h4>Registrar Lote</h4></button>
+                <button><h5>Registrar Lote</h5></button>
             </div>
             <div onClick={()=>navigate('/mortalidad')}>
-                <button><h4>Registrar Mortalidad</h4></button>
+                <button><h5>Registrar Mortalidad</h5></button>
             </div>
             <div onClick={()=>navigate('/peso')}>
-                <button><h4>Registrar Peso</h4></button>
+                <button><h5>Registrar Peso</h5></button>
             </div>
             <div onClick={()=>navigate('/gastos')}>
-                <button><h4>Registrar Gasto</h4></button>
+                <button><h5>Registrar Gasto</h5></button>
             </div>
         </div>
     )                                      

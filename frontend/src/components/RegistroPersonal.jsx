@@ -186,19 +186,20 @@ function RegistroPersonal(){
                     <option value="activo">Activo</option>
                     <option value="inactivo">Inactivo</option>
                 </select>
-                    <label htmlFor="rol">Rol:</label>
-                        <select 
-                        title="selectRol"
-                        name="rol" 
-                        value={formData.rol}
-                        onChange={handleChange}>    
-                        <option value="">Seleccionar Rol</option>
-                        <option value="administrador">Administrador</option>
-                        <option value="proveedor" >Proveedor</option>
-                        <option value="cliente" >Cliente</option>
-                        <option value="empleado">Empleado</option>
-                        </select>
-                    <br />
+                <br />
+                <label htmlFor="rol">Rol:</label>
+                  <select
+                    title="selectRol"
+                    name="rol"
+                    value={formData.rol}
+                    onChange={handleChange}>
+                    <option value="">Seleccionar Rol</option>
+                    <option value="administrador">Administrador</option>
+                    <option value="proveedor" >Proveedor</option>
+                    <option value="cliente" >Cliente</option>
+                    <option value="empleado">Empleado</option>
+                  </select>
+                  <br />
                     {formData.rol === 'administrador' && (
                     <>
                     <label htmlFor="contrasenia">Contraseña:</label>

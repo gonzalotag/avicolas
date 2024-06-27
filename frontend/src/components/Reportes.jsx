@@ -17,6 +17,7 @@ function Reportes (){
     const [produccionData,setProduccionData] = useState([]);
     const [isEditing,setIsEditing] = useState(false);
     const [editData,setEditData]= useState({});
+    const [isPrinting, setIsPrinting] = useState(false);
     const reportTableRef = useRef(null);
 
     useEffect(()=>{
@@ -26,7 +27,7 @@ function Reportes (){
     const fetchProduccionData = async () =>{
         try {
             const response = await getAllProduccion();
-            console.log("produccion data", response);
+            // console.log("produccion data", response);
             setProduccionData(response);
         } catch (error) {
             console.error("Error al obtener los datos de produccion", error);
@@ -91,16 +92,19 @@ function Reportes (){
         try {
             const input = reportTableRef.current;
             if (!input) {
-                console.error("elemento con refernica reportTablaRef no encontrado");
+                console.error("elemento con referencia reportTablaRef no encontrado");
                 return
             }
+
+            const actionsColumn = input.querySelectorAll('th:last-child, td:last-child');
+            actionsColumn.forEach((column) => {
+                column.style.display = 'none';
+            });
+            
+            
             const canvas = await html2canvas(input, {
                 scale:2,
                 useCORS: true,
-                // scrollX:0,
-                // scrollY:0,
-                // width:input.scrollWidth,
-                // heigth:input.scrollHeigth,
             })
             const imgData = canvas.toDataURL("img/png");
             const pdf = new jsPDF ('','','');
@@ -108,12 +112,13 @@ function Reportes (){
             const pdfHeight = (canvas.height* pdfWidth)/canvas.width;
 
             pdf.setFontSize(18);
-            pdf.text('reporteProduccion', pdfWidth/2,20, {aling:'center'});
+            pdf.text('Reporte Produccion', pdfWidth/2,20, {align:'center'});
+            pdf.add
 
             const margin = 20;
             const startY = 40;
             pdf.addImage(imgData, "PNG",margin, startY, pdfWidth-margin *2, pdfHeight);
-            pdf.save('reporteProduccion.pdf');
+            pdf.save('reporte_Produccion.pdf');
         } catch (error) {
             console.error("error generating pdf ", error);
         }
@@ -121,8 +126,6 @@ function Reportes (){
     return (
         <div className="reportesContainer">
            <h2>Reportes Produccion</h2>
-           <button onClick={handlePrint}>Guardar como PDF</button>
-
         {isEditing &&(
             <form onSubmit={handleSave}>
                 <div>
@@ -257,7 +260,7 @@ function Reportes (){
             onDelete={handleDelete}
             />
         </div>
-        
+        <button onClick={handlePrint}>Guardar como PDF</button>
         </div>
     )
 }

@@ -18,7 +18,7 @@ function NavBar(props){
             
         </div>
         <div className="buttonLogout" >
-            {isAuth ? <button onClick={()=>{onLogout()}}>Cerrar Sesion</button>: null} 
+            {isAuth ? <button onClick={()=>{onLogout()}}> <h4>Cerrar Sesion</h4></button>: null} 
             {/* reemplazar por "null" cuando requiera cambio de pagina <button onClick={()=>{navigate('/login')}}> iniciar sesion</button> */}
         </div>
         

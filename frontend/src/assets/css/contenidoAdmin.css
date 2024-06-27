@@ -4,9 +4,23 @@
     color: white;
     background: rgba(255, 255, 255, 0.46);
     border-radius: 10px;
+    border: 1px solid #ccc;
+    overflow: hidden;
     /* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(6.4px);
     -webkit-backdrop-filter: blur(6.4px);
     border: 1px solid rgba(255, 255, 255, 0.23); */
 
+}
+.imagePresentation{
+    
+        max-height: 100%;
+        max-width: 100%;
+        width: auto;
+        height: auto;
+        
+        object-fit: contain;
+        object-position: center;
+        display: block;
+    
 }

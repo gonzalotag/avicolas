@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "../assets/css/AdminComponent.css"
-// import ContenidoAdmin from "./ContenidoAdmin";
+import ContenidoAdmin from "./ContenidoAdmin";
 import MenuAdmin from "./MenuAdmin";
 import { getPerfiles, getPerfilesByRol } from "../api/perfil.api";
 import {getAllRoles} from "../api/rol.api";
@@ -9,7 +9,7 @@ import Produccion from "./Produccion";
 import TablaPersonal from "./TablaPersonal";
 import Almacen from "./Almacen";
 import Reportes from "./Reportes";
-
+import presentacionImg from '../assets/images/presentacion.jpg'
 function AdminComponent(){
     const [perfiles, setPerfiles] = useState([]);
     const [roles, setRoles] = useState([]);
@@ -49,12 +49,16 @@ function AdminComponent(){
         <div className="espacioTrabajoAdmin">
             {/* es el espacio sobre el cual se mostrara todo el proyecto */}
             {/* {renderContenido()} */}
+            <ContenidoAdmin>
             <Routes>
                 <Route path='/almacen' element={<Almacen/>}/>
                 <Route path='/personal' element={<TablaPersonal/>}/>
                 <Route path='/produccion' element={<Produccion/>}/>
                 <Route path='/reportes' element={<Reportes/>}/>
+                <Route path='/' element={<img src ={presentacionImg} alt ="Presentacion" className="imagePresentation"/>}/>
+                <Route path='*' element={<navigate to= "/"/>}/>
             </Routes>
+            </ContenidoAdmin>
         </div>
     </div>
     );

@@ -103,7 +103,6 @@ const handleTextChange = (e, fieldName)=>{
                 <label htmlFor="apellido_apaterno">
                   Apellido Paterno
                 </label>
-                <br />
                 <input type="text" 
                 id="apellido_paterno" 
                 name="apellido_paterno"
@@ -156,8 +155,11 @@ const handleTextChange = (e, fieldName)=>{
                 onChange={handleInputChange}/>
                 <br />
                 <button type="button" onClick={handleGuardar}>Guardar</button>
+                
                 <button type="button" onClick={handleCancelar}>Cancelar</button>
+                
                 <button type="button" onClick={handleVistaPrevia}>Vista Previa</button>
+                
               </form >
               </div>         
               {mostrarVistaPrevia &&(

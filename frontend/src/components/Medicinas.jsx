@@ -52,7 +52,7 @@ function Medicinas (){
             </button>
             <h1 className="titulo">Medicinas</h1>
             <form className="medicForm" onSubmit={handleSubmit}>
-            <label htmlFor='nombreMedicina'>Nombre: </label><br />
+            <label htmlFor='nombreMedicina'>Nombre: </label>
                 <input 
                 type='text' 
                 name='nombreMedicina' 
@@ -60,8 +60,8 @@ function Medicinas (){
                 value={formData.nombreMedicina}
                 onChange={handleChange}
                 required/>   
-                <br/><br/>
-            <label htmlFor='viaMedicina'>via:</label><br />
+                <br/>
+            <label htmlFor='viaMedicina'>via:</label>
                 <select 
                 name="viaMedicina" 
                 id="viaMedicina"
@@ -71,16 +71,16 @@ function Medicinas (){
                     <option value="ocular">ocular</option>
                     <option value="intramuscular">intramuscular</option>
                 </select>
-                <br/><br/>
-            <label htmlFor='dosisMedicina'>Numero de Dosis:</label><br />
+                <br/>
+            <label htmlFor='dosisMedicina'>Numero de Dosis:</label>
                 <input type='text' 
                 name='dosisMedicina' 
                 id='dosisMedicina' 
                 value={formData.dosisMedicina}
                 onChange={(e)=>handleInputChange(e,'dosisMedicina')}
                 required/>   
-                <br/><br/>
-            <label htmlFor='precioMedicina'>Precio:</label><br />
+                <br/>
+            <label htmlFor='precioMedicina'>Precio:</label>
                 <input type='text' 
                 name='precioMedicina' 
                 id='precioMedicina'
@@ -88,15 +88,15 @@ function Medicinas (){
                 value={formData.precioMedicina}
                 onChange={handlePrecioChange}
                 required/>   
-                <br/><br/>
-            <label htmlFor='cantidadMedicina'>Cantidad:</label><br />
+                <br/>
+            <label htmlFor='cantidadMedicina'>Cantidad:</label>
                 <input type='text' 
                 name='cantidadMedicina' 
                 id='cantidadMedicina' 
                 value={formData.cantidadMedicina}
                 onChange={(e)=>handleInputChange(e,'cantidadMedicina')}
                 required/>   
-                <br/><br/>
+                <br/>
             <button type="submit">Guardar</button>
             </form>
            

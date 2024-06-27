@@ -41,7 +41,7 @@ return(
         </button>
         <h2>Registrar Peso</h2>
         <form className="pesoForm">
-            <h2>Registrar Peso</h2>
+            Registrar Peso
                 <input  
                     type='text'
                     name='peso_promedio'
@@ -51,7 +51,7 @@ return(
                     <br /><br />
                 <button
                     type="button" 
-                    onClick={(e)=>agregarRegistro(e)}>Agregar Registro
+                    onClick={(e)=>agregarRegistro(e)}>Agregar Peso
                 </button>
         </form>
     </div>
