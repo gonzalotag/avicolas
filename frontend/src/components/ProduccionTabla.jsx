@@ -11,7 +11,7 @@ const ProduccionTabla =({producciones, onEdit,onDelete, isPrinting}) =>{
                     <th>Alimento</th>
                     <th>Galpon</th>
                     <th>Medicina</th>
-                    <th>Perfil</th>
+                    <th>Empleado</th>
                     <th>Lote</th>
                     <th>Mortalidad</th>
                     <th>Gasto</th>
@@ -81,7 +81,7 @@ const ProduccionTabla =({producciones, onEdit,onDelete, isPrinting}) =>{
                         <td className={isPrinting? 'hide-on-print':''}>
                             {!isPrinting &&(
                                 <div>
-                                <button onClick={()=>onEdit(produccion)}>Editar</button>
+                                <button onClick={()=>onEdit(produccion)}> Editar </button>
                                 <button onClick={()=>onDelete(produccion.id)}>Borrar</button>
                                 </div>
                             )}

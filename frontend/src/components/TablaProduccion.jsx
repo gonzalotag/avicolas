@@ -67,7 +67,7 @@ const renderSubtabla = () => {
                 <table>
                     <thead>
                         <tr>
-                            <th>Nombre</th>
+                            <th >Nombre</th>
                             <th>Precio</th>
                             <th>Cantidad</th>
                             <th>Tipo</th>
@@ -176,7 +176,6 @@ const renderSubtabla = () => {
                     </thead>
                     <tbody>
                         {renderRows(dataGalpon,"Galpon",["num_galpon","capacidad","disponible"])}
-                        
                     </tbody>
                 </table>
             );

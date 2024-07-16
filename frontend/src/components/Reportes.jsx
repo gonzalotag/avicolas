@@ -126,9 +126,12 @@ function Reportes (){
     return (
         <div className="reportesContainer">
            <h2>Reportes Produccion</h2>
+           <div className="buttonPdf">
+           <button onClick={handlePrint}>Guardar como PDF</button>
+           </div>
         {isEditing &&(
             <form onSubmit={handleSave}>
-                <div>
+                <div className="editReporte">
                     <h3>Alimento</h3>
                     <label> Nombre Alimento:
                         <input type="text" name="alimento.nombre" value={editData.alimento?.nombre} onChange={handleChange} />
@@ -186,7 +189,7 @@ function Reportes (){
                     <label> Cantidad:
                         <input type="number" name="medicina.cantidad" value={editData.medicina?.cantidad} onChange={handleChange} />
                     </label>
-                    <h3>Perfil</h3>
+                    <h3>Empleado</h3>
                     <label> Nombre:
                         <input type="text" name="perfil.nombre" value={editData.perfil?.nombre} onChange={handleChange} />
                     </label>
@@ -247,10 +250,12 @@ function Reportes (){
                     <label> Peso Promedio:
                         <input type="number" name="peso.peso_promedio" value={editData.peso?.peso_promedio} onChange={handleChange} />
                     </label>
-                </div>
-                <br />
+                    <br />
                 <button type="submit">Guardar</button>
+                <br />
                 <button type="button" onClick={handleCancelar}>Cancelar</button>
+                </div>
+                
             </form>
         )}
         <div ref={reportTableRef}>
@@ -260,7 +265,7 @@ function Reportes (){
             onDelete={handleDelete}
             />
         </div>
-        <button onClick={handlePrint}>Guardar como PDF</button>
+        
         </div>
     )
 }

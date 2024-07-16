@@ -23,10 +23,12 @@ table{
 }
 
 .reportesTabla button{
+    /* display: flex; */
     background-color: #4CAF50;
     color: #fff;    
     padding: 10px 20px;
     cursor: pointer;
+    /* margin-right: 100%; */
 }
 .reportesTabla button:hover{
     background-color: #563e8e;

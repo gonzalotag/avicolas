@@ -177,7 +177,7 @@ function Produccion (){
         if (selecciones.length === 0) return null;
         return(
             <React.Fragment key={seccionIndex}>
-                <tr><th colSpan={6}>{seccion}</th></tr>
+                <tr><th colSpan={9}>{seccion}</th></tr>
                 {selecciones.map((seleccion,index)=>
                 renderFilaProduccion(seleccion,index)
                 )}
