@@ -60,7 +60,7 @@ function Gastos(){
                     />
                     <br />
                     <button
-                        type="button"
+                        type="submit"
                         onClick={(e) => guardarGastos(e)}>
                         Guardar
                     </button>
