@@ -100,7 +100,9 @@ function TablaPersonal(){
                             {/* boton q nos lleva de la pagina de '/personal' a '/editar' */}
                                     <button onClick={()=> navigate(`/editar/${data.id}`)}>Editar </button>
                             {/* elimina una fila de la tabla de personal (buscar por q elimina solo al seleccionar rol y no sin seleccionar) */}
-                                    <button onClick={() => deleteRow(data.id)}>Eliminar</button>
+                                    <button onClick={() => deleteRow(data.id)}>Eliminar
+                                        
+                                    </button>
                                 </td>
                             </tr>)
                             })}
