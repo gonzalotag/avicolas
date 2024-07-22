@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../assets/css/menu.css"
 
-const Menu =({})=>{
+const Menu =()=>{
     const navigate= useNavigate();   
     return(
         <div className="menu">
