@@ -4,10 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function ButtonComponent(props){
     const {nombreButton, iconoButton, isSelected} = props
-    return <div className="buttonContainer" >
+    return (
+    <div className={`buttonContainer ${isSelected ? 'active' :''}`} >
             {iconoButton}
             <p>{nombreButton}</p>
             <FontAwesomeIcon icon={faChevronLeft} />
-    </div>
+    </div>);
 }
 export default ButtonComponent;

@@ -103,7 +103,7 @@ function Almacen (){
     <div className="almacenContainer">
         <div className="almacenTabla">
             <Menu/>
-            <table className="tableAlmacen">
+            {/* <table className="tableAlmacen">
             <caption><h2>Datos de Almacen</h2></caption>
                 <thead>
                     <tr>
@@ -151,7 +151,7 @@ function Almacen (){
                         </td>
                     </tr>
                 </tbody>
-            </table>
+            </table> */}
         </div>
         <table>
             <caption><h2>Medicina</h2></caption>

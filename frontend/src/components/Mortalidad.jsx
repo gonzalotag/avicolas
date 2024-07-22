@@ -75,7 +75,7 @@ function Mortalidad(){
                             required
                         ></textarea>
                     <br />
-                <button type="button" onClick ={(e)=>guardarMortalidad(e)}
+                <button type="submit" onClick ={(e)=>guardarMortalidad(e)}
                 >Guardar </button>
             </form>
         </div>
