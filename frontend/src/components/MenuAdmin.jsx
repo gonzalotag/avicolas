@@ -2,7 +2,7 @@ import "../assets/css/menuAdmin.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser,faIndustry,faPerson,faWarehouse,faFileLines} from "@fortawesome/free-solid-svg-icons";
 import ButtonComponent from "./ButtonComponent.jsx";
-import {Routes, Route, useNavigate, useLocation } from "react-router-dom"; 
+import {useNavigate, useLocation } from "react-router-dom"; 
 import { useEffect , useState } from 'react';
 
 function MenuAdmin (props){
@@ -42,17 +42,17 @@ function MenuAdmin (props){
             <div className="nombreAdmin">Administrador</div>
         </div>
         <div className="buttonBox">
-            <div className='buttonTarea'  onClick={()=>{handleButtonClick('/almacen')}}>
-            <ButtonComponent nombreButton={"Almacen"} iconoButton={<FontAwesomeIcon icon={faWarehouse}/>} />
+            <div className={`buttonTarea ${selectedButton === 'almacen' ? 'active':''}`}  onClick={()=>{handleButtonClick('/almacen ')}}>
+            <ButtonComponent nombreButton={"Almacen"} iconoButton={<FontAwesomeIcon icon={faWarehouse}/>} isSelected={selectedButton ==='almacen'}/>
             </div>
-            <div className='buttonTarea'  onClick={()=>{handleButtonClick('/personal')}}> 
-            <ButtonComponent nombreButton={"Personal"}iconoButton={< FontAwesomeIcon icon={faPerson}/>}/> 
+            <div className={`buttonTarea ${selectedButton === 'personal' ? 'active':''}`}  onClick={()=>{handleButtonClick('/personal')}}> 
+            <ButtonComponent nombreButton={"Personal"}iconoButton={< FontAwesomeIcon icon={faPerson}/>} isSelected={selectedButton ==='personal'}/> 
             </div>
-            <div className='buttonTarea'  onClick={()=>{handleButtonClick('/produccion')}}> 
-            <ButtonComponent nombreButton={"Produccion"}iconoButton={< FontAwesomeIcon icon={faIndustry}/>}/> 
+            <div className={`buttonTarea ${selectedButton === 'produccion' ? 'active':''}`}  onClick={()=>{handleButtonClick('/produccion')}}> 
+            <ButtonComponent nombreButton={"Produccion"}iconoButton={< FontAwesomeIcon icon={faIndustry}/>} isSelected={selectedButton ==='produccion'}/> 
             </div>
-            <div className='buttonTarea'  onClick={()=>{handleButtonClick('/reportes')}}> 
-            <ButtonComponent nombreButton={"Reportes"}iconoButton={< FontAwesomeIcon icon={faFileLines}/>}/> 
+            <div className={`buttonTarea ${selectedButton === 'reportes' ? 'active':''}`}  onClick={()=>{handleButtonClick('/reportes')}}> 
+            <ButtonComponent nombreButton={"Reportes"}iconoButton={< FontAwesomeIcon icon={faFileLines}/>} isSelected={selectedButton ==='reportes'}/> 
             </div>    
         </div>        
     </div>

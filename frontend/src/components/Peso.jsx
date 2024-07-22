@@ -50,7 +50,7 @@ return(
                     required/> 
                     <br /><br />
                 <button
-                    type="button" 
+                    type="submit" 
                     onClick={(e)=>agregarRegistro(e)}>Agregar Peso
                 </button>
         </form>
