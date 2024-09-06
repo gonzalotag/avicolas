@@ -46,7 +46,6 @@ function TablaPersonal(){
         try {
             await deletePersona(id);
             alert('Fila eliminada');
-            // window.location.reload();
             navigate('/admin');
             } catch (error) {
                 console.error(error);

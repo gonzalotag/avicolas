@@ -139,6 +139,7 @@ function Produccion (){
             }
             const response = await postProduccion(produccionData);
             console.log(response);
+            alert("produccion guardada con exito");
         } catch (error) {
             console.error("error al guardar data", error);
         }

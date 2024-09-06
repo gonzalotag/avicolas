@@ -19,15 +19,21 @@ function Reportes (){
     const [editData,setEditData]= useState({});
     const [isPrinting, setIsPrinting] = useState(false);
     const reportTableRef = useRef(null);
+    const [fechaInicio, setFechaInicio] = useState('');
+    const [fechaFin, setFechaFin] = useState('');
+
 
     useEffect(()=>{
-        fetchProduccionData();
-    },[]);
+        fetchProduccionData(fechaInicio, fechaFin);
+    },[fechaInicio, fechaFin]);
     
-    const fetchProduccionData = async () =>{
+    const fetchProduccionData = async (fechaInicio, fechaFin) =>{
         try {
-            const response = await getAllProduccion();
-            // console.log("produccion data", response);
+            const response = await getAllProduccion({
+                fechaInicio: fechaInicio,
+                fechaFin: fechaFin,
+            });
+            
             setProduccionData(response);
         } catch (error) {
             console.error("Error al obtener los datos de produccion", error);
@@ -95,13 +101,10 @@ function Reportes (){
                 console.error("elemento con referencia reportTablaRef no encontrado");
                 return
             }
-
             const actionsColumn = input.querySelectorAll('th:last-child, td:last-child');
             actionsColumn.forEach((column) => {
                 column.style.display = 'none';
             });
-            
-            
             const canvas = await html2canvas(input, {
                 scale:2,
                 useCORS: true,
@@ -112,15 +115,27 @@ function Reportes (){
             const pdfHeight = (canvas.height* pdfWidth)/canvas.width;
 
             pdf.setFontSize(18);
-            pdf.text('Reporte Produccion', pdfWidth/2,20, {align:'center'});
+            pdf.text(`Reporte Produccion del ${fechaInicio} al ${fechaFin}`, pdfWidth/2,20, {align:'center'});
             pdf.add
 
             const margin = 20;
             const startY = 40;
-            pdf.addImage(imgData, "PNG",margin, startY, pdfWidth-margin *2, pdfHeight);
-            pdf.save('reporte_Produccion.pdf');
+            pdf.addImage(imgData, "PNG",20, 40, pdfWidth-40, pdfHeight);
+            pdf.save('reporte_Produccion_${fechaInicio}_${fechaFin}.pdf');
         } catch (error) {
             console.error("error generating pdf ", error);
+        }
+    }
+
+    const handleFiltrarPorFechas = async () =>{
+        try {
+            const response = await getAllProduccion({
+                fechaInicio: fechaInicio,
+                fechaFin: fechaFin,
+            });
+            setProduccionData(response);
+        } catch (error) {
+            console.error("error al obtener datos de la produccion",error);
         }
     }
     return (
@@ -129,6 +144,15 @@ function Reportes (){
            <div className="buttonPdf">
            <button onClick={handlePrint}>Guardar como PDF</button>
            </div>
+           <form className="fechaReporte">
+            <label>fecha Inicio</label>
+            <input type="date" value={fechaInicio} onChange={(e) => setFechaInicio(e.target.value)}/>
+            <br />
+            <label>fecha Fin</label>
+            <input type="date" value={fechaFin} onChange={(e) => setFechaFin(e.target.value)}/>
+            <br />
+            <button type="button" onClick={handleFiltrarPorFechas}>Filtrar</button>
+           </form>
         {isEditing &&(
             <form onSubmit={handleSave}>
                 <div className="editReporte">

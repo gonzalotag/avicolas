@@ -40,9 +40,7 @@
     word-wrap: break-word;
     white-space: pre-wrap;
 }
-/* .reportesTabla td button{
-    
-} */
+
 .editForm {
     margin-bottom: 20%;
     overflow: auto;
@@ -89,6 +87,9 @@ form button{
 form button:hover{
     background-color: #563e8e;
 } 
+.fechaReporte{
+    width: 200px;
+}
 .buttonPdf button{
     background-color: #4CAF50;
     color: #fff;    
