@@ -103,55 +103,6 @@ function Almacen (){
     <div className="almacenContainer">
         <div className="almacenTabla">
             <Menu/>
-            {/* <table className="tableAlmacen">
-            <caption><h2>Datos de Almacen</h2></caption>
-                <thead>
-                    <tr>
-                        <th>Medicinas</th>
-                        <th>Galpones</th>
-                        <th>Alimentos</th>
-                        <th>Empleados</th>
-                        <th>Lote</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            {medicina.map((medicina)=>(
-                                <div key={medicina.id}>
-                                    {medicina.nombre}
-                                </div>
-                            ))}
-                        </td>
-                        <td>
-                            {galpones.map((galpon)=>(
-                                <div key={galpon.id}>
-                                    #{galpon.num_galpon }
-                                </div>
-                            ))}
-                        </td>
-                        <td>
-                            {alimentos.map((alimento)=>(
-                                <div key={alimento.id}>
-                                    {alimento.nombre} 
-                                </div>
-                            ))}
-                        </td>
-                        <td>{empleado.map((perfil)=>(
-                            <div key={perfil.id}>
-                                {perfil.nombre} {perfil.apellido_paterno}
-                            </div>
-                        ))}</td>
-                        <td>
-                            {lotes && lotes.map((lote)=>(
-                                    <div key={lote.id}>
-                                        Raza {lote.raza} 
-                                    </div>
-                                ))}
-                        </td>
-                    </tr>
-                </tbody>
-            </table> */}
         </div>
         <table>
             <caption><h2>Medicina</h2></caption>
@@ -159,10 +110,10 @@ function Almacen (){
                 <tr>
                     <th>Nombre</th>
                     <th>Via</th>
-                    <th>Numero de <br />dosis</th>
+                    <th>Numero de <br/>dosis</th>
                     <th>Precio</th>
                     <th>Cantidad</th>
-                    <th>Fecha de <br />compra</th>
+                    <th>Fecha de <br/>compra</th>
                     <th>Accion</th>
                 </tr>
             </thead>
@@ -188,7 +139,7 @@ function Almacen (){
                     <th># Galpon</th>
                     <th>Capacidad</th>
                     <th>Disponible</th>
-                    <th>Fecha de <br />Asignacion</th>
+                    <th>Fecha de <br/>Asignacion</th>
                     <th>Accion</th>
                 </tr>
             </thead>
@@ -236,9 +187,9 @@ function Almacen (){
             <thead>
                 <tr>
                     <th>Raza</th>
-                    <th>Fecha de <br />ingreso</th>
+                    <th>Fecha de <br/>ingreso</th>
                     <th>Cantidad</th>
-                    <th>Valor por <br />unidad</th>
+                    <th>Valor por <br/>unidad</th>
                     <th>Accion</th>
                 </tr>
             </thead>

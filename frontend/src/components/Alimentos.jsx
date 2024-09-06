@@ -6,7 +6,6 @@ import {  postAlimentos } from "../api/alimentos.api";
 
 function Alimentos (){
     const navigate = useNavigate();
-    // console.log("objeto navigate",navigate);
     
     const [formData , setFormData] = useState({
         nombre:'',
@@ -25,7 +24,7 @@ function Alimentos (){
 
     const handleSubmit = async (e) =>{
         e.preventDefault();
-        console.log("datos en el formulario antes de enviar" , formData);
+        // console.log("datos en el formulario antes de enviar" , formData);
         try {
             const result = await postAlimentos(formData);
             console.log("resultado",result);
@@ -56,7 +55,6 @@ function Alimentos (){
 
     const handleCantidadSacos =(e)=>{
         const inputValue = e.target.value;
-        // console.log("valor saco ", inputValue );
         const isValidInput = /^\d+$/.test(inputValue);
         if (isValidInput|| inputValue === ''){
             setFormData({...formData, cantidad_sacos :inputValue });
@@ -118,7 +116,7 @@ function Alimentos (){
                     value={formData.cantidad_sacos}
                     onChange={handleCantidadSacos}
                     />
-                <br />
+                <br/>
                 <button type= "submit"> Guardar </button>
             </form>
         </div>)

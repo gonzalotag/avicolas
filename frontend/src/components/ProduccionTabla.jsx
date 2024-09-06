@@ -16,6 +16,7 @@ const ProduccionTabla =({producciones, onEdit,onDelete, isPrinting}) =>{
                     <th>Mortalidad</th>
                     <th>Gasto</th>
                     <th>Peso</th>
+                    <th>Fecha</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -78,6 +79,7 @@ const ProduccionTabla =({producciones, onEdit,onDelete, isPrinting}) =>{
                                 <>
                                     <div>Peso Promedio: {produccion.peso.peso_promedio} kgs.</div>
                                 </>):'n/a'}</td>
+                        <td></td>
                         <td className={isPrinting? 'hide-on-print':''}>
                             {!isPrinting &&(
                                 <div>
