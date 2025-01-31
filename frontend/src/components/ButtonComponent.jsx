@@ -8,7 +8,7 @@ function ButtonComponent(props){
     <div className={`buttonContainer ${isSelected ? 'active' :''}`} >
             {iconoButton}
             <p>{nombreButton}</p>
-            <FontAwesomeIcon icon={faChevronLeft} />
+            <FontAwesomeIcon icon={faChevronLeft}/>
     </div>);
 }
 export default ButtonComponent;

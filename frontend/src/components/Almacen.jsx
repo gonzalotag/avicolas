@@ -110,10 +110,10 @@ function Almacen (){
                 <tr>
                     <th>Nombre</th>
                     <th>Via</th>
-                    <th>Numero de <br />dosis</th>
+                    <th>Numero de <br/>dosis</th>
                     <th>Precio</th>
                     <th>Cantidad</th>
-                    <th>Fecha de <br />compra</th>
+                    <th>Fecha de <br/>compra</th>
                     <th>Accion</th>
                 </tr>
             </thead>
@@ -139,7 +139,7 @@ function Almacen (){
                     <th># Galpon</th>
                     <th>Capacidad</th>
                     <th>Disponible</th>
-                    <th>Fecha de <br />Asignacion</th>
+                    <th>Fecha de <br/>Asignacion</th>
                     <th>Accion</th>
                 </tr>
             </thead>
@@ -187,9 +187,9 @@ function Almacen (){
             <thead>
                 <tr>
                     <th>Raza</th>
-                    <th>Fecha de <br />ingreso</th>
+                    <th>Fecha de <br/>ingreso</th>
                     <th>Cantidad</th>
-                    <th>Valor por <br />unidad</th>
+                    <th>Valor por <br/>unidad</th>
                     <th>Accion</th>
                 </tr>
             </thead>
