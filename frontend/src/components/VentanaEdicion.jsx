@@ -11,7 +11,6 @@ function VentanaEdicion ({datosEditar, onClose, onSave}){
 
     const handleGuardar =()=>{
         onSave(datosEditados);
-        // onClose();
     }
 
     const handleCancelar =()=>{

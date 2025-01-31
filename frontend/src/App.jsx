@@ -26,6 +26,7 @@ function App() {
       setIsAuth(true);
       } 
   },[])
+
   const onLogout=()=>{
     localStorage.removeItem('userInfo');
     setIsAuth(false); 
@@ -82,7 +83,7 @@ function App() {
       element={<Peso isAuth={isAuth} Component={<AdminComponent/>}/>}
       />
       <Route 
-      path='/gastos' 
+      path='Almacen/gastos' 
       element={<Gastos isAuth={isAuth} Component={<AdminComponent/>}/>}
       />
     </Routes>

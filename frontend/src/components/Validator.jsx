@@ -23,26 +23,6 @@ function Validator(){
     }
 
     return
-    // <div className="validator">
-    //     <input 
-    //     type="text"
-    //     value={valid} 
-    //     onChange={(e) => setValid(e.target.valid)}/>
-    //     <button onClick={()=>isNotEmpty('este campo no debe ser vacio')}>
-    //         revisado no vacio
-    //     </button>
-    //     <button onClick={()=>isLength(10,50, 'este campo debe tener entre 2y 50 caracteres')}> 
-    //         revisado longitud
-    //     </button>
-    //     <button onClick={()=>isEmail('este campo debe ser un email valido')}>
-    //         revisado email
-    //     </button>
-    //     <div>
-    //         {result.map((error,index)=>(
-    //         <p key={index}>{item}</p>
-    //         ))}
-            
-    //     </div>
-    // </div>
+    
 }   
 export default Validator;

@@ -56,7 +56,6 @@ function Alimentos (){
 
     const handleCantidadSacos =(e)=>{
         const inputValue = e.target.value;
-        // console.log("valor saco ", inputValue );
         const isValidInput = /^\d+$/.test(inputValue);
         if (isValidInput|| inputValue === ''){
             setFormData({...formData, cantidad_sacos :inputValue });

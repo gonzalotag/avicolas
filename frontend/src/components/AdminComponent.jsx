@@ -48,7 +48,7 @@ function AdminComponent(){
         </div>
         <div className="espacioTrabajoAdmin">
             {/* es el espacio sobre el cual se mostrara todo el proyecto */}
-            {/* {renderContenido()} */}
+            
             <ContenidoAdmin>
             <Routes>
                 <Route path='/almacen' element={<Almacen/>}/>

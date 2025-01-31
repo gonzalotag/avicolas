@@ -23,7 +23,6 @@ function EditarPersonal ( ){
     const obtenerDatos = async ()=> {
       try {
         const datosPerfil = await getPerfilesById(id);
-        // console.log('datos obtenidos de perfil', datosPerfil);
         setPerfil(datosPerfil);
       } catch (error) {
         console.error('error al obtener datos del perfil', error);

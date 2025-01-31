@@ -27,7 +27,6 @@ function Reportes (){
     const fetchProduccionData = async () =>{
         try {
             const response = await getAllProduccion();
-            // console.log("produccion data", response);
             setProduccionData(response);
         } catch (error) {
             console.error("Error al obtener los datos de produccion", error);

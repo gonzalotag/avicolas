@@ -13,7 +13,6 @@ function TablaPersonal(){
 //las funciones obtener para obtener(perfilesByRol,Roles) cada vez q mostremos algo en pantalla (renderiza)
     useEffect(()=>{
         obtenerPerfilesByRol()
-        // console.log(perfilesByRol)
         obtenerRoles()
     },[])
     async function obtenerPerfilesByRol(){
@@ -22,7 +21,6 @@ function TablaPersonal(){
     }
     async function obtenerRoles(){
         setTipoRol (await  getAllRoles())
-        // console.log(tipoRol)
     }
 //aqui es donde se guarda los el dato colectado poder seleccionar roles 
     const handleSelect=(e) =>{
@@ -46,7 +44,6 @@ function TablaPersonal(){
         try {
             await deletePersona(id);
             alert('Fila eliminada');
-            // window.location.reload();
             navigate('/admin');
             } catch (error) {
                 console.error(error);
