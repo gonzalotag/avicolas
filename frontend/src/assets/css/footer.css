@@ -11,3 +11,10 @@ box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 /* border: 1px solid rgba(255, 255, 255, 0.23); */
 
 }
+@media (max-width: 768px) {
+    .footer {
+        height: 80px; /* Altura más pequeña para móviles */
+        padding: 5px; /* Menos padding en móviles */
+        font-size: 14px; /* Tamaño de fuente más pequeño */
+    }
+}
